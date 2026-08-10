@@ -1,0 +1,351 @@
+/* ═══════════════════════════════════════════════════════════════════
+   AGROTITAN · BASE
+   Variables, tipografía, reset y utilidades.
+
+   Mobile-first: los estilos de base son los del teléfono. Las media
+   queries agregan, nunca corrigen. Es deliberado — la mayoría de los
+   productores va a entrar desde el celular, muchos con señal débil.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Tipografías locales ───────────────────────────────────────────
+   Servidas desde el propio sitio, NO desde Google Fonts.
+
+   Dos motivos:
+   1. Privacidad — con Google Fonts, Google ve la IP de cada visitante.
+   2. Velocidad — una petición menos a otro servidor. Con señal débil
+      en el campo, cada petición externa cuesta segundos.
+
+   Licencia OFL: descargarlas y servirlas es legal.
+
+   ⚠ Si la carpeta fuentes/ está vacía, el sitio usa las tipografías
+     del sistema (ver la cascada de --tipo-*). Se ve distinto pero
+     funciona perfecto. Instrucciones en fuentes/LEEME.md
+   ────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Rajdhani";
+  src: url("../fuentes/rajdhani-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;   /* el texto se ve enseguida, aunque la fuente tarde */
+}
+
+@font-face {
+  font-family: "Rajdhani";
+  src: url("../fuentes/rajdhani-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../fuentes/ebgaramond-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../fuentes/ebgaramond-500italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── Variables ────────────────────────────────────────────────── */
+
+:root {
+  /* Paleta · definida en el prompt de identidad */
+  --obsidiana:   #0A0A0A;   /* fondo principal */
+  --acero:       #2B2B2B;   /* tarjetas y separaciones */
+  --oro:         #E5C158;   /* acentos, títulos, CTA secundario */
+  --verde:       #1B4332;   /* CTA principal, indicadores positivos */
+  --hueso:       #F5F3EE;   /* texto — blanco puro es muy duro */
+
+  /* Derivados, calculados a partir de los anteriores */
+  --oro-claro:   #F0D687;
+  --oro-tenue:   rgba(229, 193, 88, 0.16);
+  --verde-claro: #2D6A4F;
+  --acero-claro: #3A3A3A;
+  --hueso-tenue: rgba(245, 243, 238, 0.66);
+  --hueso-débil: rgba(245, 243, 238, 0.42);
+  --linea:       rgba(245, 243, 238, 0.12);
+
+  /* Tipografía · con cascada al sistema si falta el archivo */
+  --tipo-titulo: "Rajdhani", "Segoe UI Semibold", "Arial Narrow",
+                 system-ui, sans-serif;
+  --tipo-cuerpo: "EB Garamond", Georgia, "Times New Roman", serif;
+  --tipo-ui:     "Rajdhani", "Segoe UI", system-ui, sans-serif;
+
+  /* Escala tipográfica · fluida entre teléfono y monitor.
+     clamp(mínimo, preferido, máximo) evita las media queries para
+     tamaños de texto. */
+  --t-hero:   clamp(2.4rem, 7vw, 5rem);
+  --t-h2:     clamp(1.8rem, 4.5vw, 3rem);
+  --t-h3:     clamp(1.15rem, 2.4vw, 1.5rem);
+  --t-cuerpo: clamp(1rem, 1.6vw, 1.15rem);
+  --t-chico:  clamp(0.82rem, 1.2vw, 0.92rem);
+
+  /* Espaciado */
+  --e-1: 0.5rem;
+  --e-2: 1rem;
+  --e-3: 1.75rem;
+  --e-4: 3rem;
+  --e-5: 5rem;
+  --e-6: 8rem;
+
+  /* Layout */
+  --ancho-max: 1200px;
+  --ancho-texto: 68ch;    /* medida de lectura cómoda */
+  --radio: 4px;           /* esquinas apenas suavizadas: es una marca
+                             de ingeniería, no de aplicación */
+
+  --transicion: 180ms ease;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  /* compensa la barra fija al saltar a un ancla */
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--obsidiana);
+  color: var(--hueso);
+  font-family: var(--tipo-cuerpo);
+  font-size: var(--t-cuerpo);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;   /* ninguna sección debe desbordar a lo ancho */
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg, picture { display: block; max-width: 100%; }
+
+input, select, textarea, button { font: inherit; color: inherit; }
+
+button { cursor: pointer; }
+
+/* Respeta a quien pidió menos movimiento en su sistema operativo */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Titulares ─────────────────────────────────────────────────── */
+
+h1, h2, h3, h4 {
+  font-family: var(--tipo-titulo);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;   /* evita una palabra sola en la última línea */
+}
+
+h1 { font-size: var(--t-hero); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); letter-spacing: 0; }
+
+p { text-wrap: pretty; }
+
+a { color: var(--oro); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--oro-claro); }
+
+strong { color: var(--oro); font-weight: 600; }
+
+/* ── Foco visible ──────────────────────────────────────────────── */
+/* Quien navega con teclado tiene que ver dónde está parado. */
+
+:focus-visible {
+  outline: 2px solid var(--oro);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Utilidades de layout ──────────────────────────────────────── */
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--e-3);
+}
+
+.seccion {
+  padding-block: var(--e-5);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .seccion { padding-block: var(--e-6); }
+}
+
+.seccion--acero { background: #141414; }
+
+/* Encabezado de sección */
+.seccion__titulo {
+  color: var(--hueso);
+  margin-bottom: var(--e-2);
+}
+
+.seccion__bajada {
+  color: var(--hueso-tenue);
+  max-width: var(--ancho-texto);
+  margin-bottom: var(--e-4);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+
+/* Línea dorada corta sobre el título de cada sección.
+   Es el elemento que da unidad visual a todo el sitio. */
+.seccion__marca {
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--oro);
+  margin-bottom: var(--e-3);
+}
+
+/* Etiqueta pequeña en mayúsculas, encima de los títulos */
+.antetitulo {
+  font-family: var(--tipo-ui);
+  font-size: var(--t-chico);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: var(--e-1);
+}
+
+/* ── Botones ───────────────────────────────────────────────────── */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--tipo-ui);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.05em;
+  padding: 0.85em 1.9em;
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  text-decoration: none;
+  transition: background var(--transicion), border-color var(--transicion),
+              transform var(--transicion);
+  /* área táctil mínima cómoda para un dedo en el campo */
+  min-height: 48px;
+}
+
+.boton:active { transform: translateY(1px); }
+
+.boton--principal {
+  background: var(--verde);
+  color: var(--hueso);
+  border-color: var(--verde-claro);
+}
+.boton--principal:hover {
+  background: var(--verde-claro);
+  color: var(--hueso);
+}
+
+.boton--secundario {
+  background: transparent;
+  color: var(--oro);
+  border-color: var(--oro);
+}
+.boton--secundario:hover {
+  background: var(--oro-tenue);
+  color: var(--oro-claro);
+}
+
+.boton--bloque { width: 100%; }
+
+@media (min-width: 560px) {
+  .boton--bloque { width: auto; }
+}
+
+/* ── Tarjetas ──────────────────────────────────────────────────── */
+
+.tarjeta {
+  background: var(--acero);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: var(--e-3);
+  transition: border-color var(--transicion), transform var(--transicion);
+}
+
+.tarjeta:hover { transform: translateY(-3px); }
+
+.tarjeta--oro:hover  { border-color: var(--oro); }
+.tarjeta--verde:hover { border-color: var(--verde-claro); }
+
+/* Barra de acento arriba de la tarjeta */
+.tarjeta--oro   { border-top: 2px solid var(--oro); }
+.tarjeta--verde { border-top: 2px solid var(--verde-claro); }
+
+.tarjeta__titulo { margin-bottom: var(--e-1); color: var(--hueso); }
+.tarjeta__texto  { color: var(--hueso-tenue); font-size: 1.02rem; }
+
+/* ── Rejillas ──────────────────────────────────────────────────── */
+
+.rejilla {
+  display: grid;
+  gap: var(--e-2);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .rejilla--2 { grid-template-columns: repeat(2, 1fr); }
+  .rejilla    { gap: var(--e-3); }
+}
+
+@media (min-width: 900px) {
+  .rejilla--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Solo para lectores de pantalla ────────────────────────────── */
+
+.oculto-visual {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Saltar al contenido ───────────────────────────────────────── */
+
+.saltar {
+  position: absolute;
+  top: -100px; left: var(--e-2);
+  z-index: 200;
+  background: var(--oro);
+  color: var(--obsidiana);
+  padding: 0.7em 1.2em;
+  border-radius: var(--radio);
+  font-family: var(--tipo-ui);
+  font-weight: 600;
+  transition: top var(--transicion);
+}
+.saltar:focus { top: var(--e-2); color: var(--obsidiana); }
+
+/* ── Impresión ─────────────────────────────────────────────────── */
+/* Alguien puede querer imprimir la propuesta de servicios. */
+
+@media print {
+  body { background: #fff; color: #000; }
+  .barra, .whatsapp-flotante, .hero__fondo { display: none; }
+  .seccion { padding-block: 1.5rem; page-break-inside: avoid; }
+}

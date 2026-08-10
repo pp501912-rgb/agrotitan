@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img"
+     aria-label="AgroTitan">
+  <title>AgroTitan — Columna y espiga</title>
+  <desc>Una columna dórica minimalista cuyo fuste se convierte en una
+  espiga estilizada. Solidez clásica que nace de la tierra.</desc>
+
+  <!--
+    ISOTIPO 2 · COLUMNA DÓRICA + ESPIGA
+    ────────────────────────────────────────────────────────────────
+    El capitel y la basa son clásicos y sólidos. El fuste, en vez de
+    tener las estrías del orden dórico, tiene los granos de una espiga:
+    la estructura del capital sostenida por lo que produce la tierra.
+
+    Las estrías/granos son simétricos y se leen a cualquier tamaño.
+  -->
+
+  <defs>
+    <linearGradient id="oroCol" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#F0D687"/>
+      <stop offset="100%" stop-color="#D9B449"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Capitel ─────────────────────────────────────────────── -->
+  <rect x="30" y="18" width="60" height="7" rx="1" fill="url(#oroCol)"/>
+  <path d="M36 25 H84 L79 33 H41 Z" fill="url(#oroCol)" opacity="0.88"/>
+
+  <!-- ── Fuste convertido en espiga ──────────────────────────── -->
+  <!-- eje central -->
+  <rect x="57.5" y="33" width="5" height="54" fill="url(#oroCol)"/>
+
+  <!-- granos · pares simétricos, decrecientes hacia arriba -->
+  <g fill="#1B4332">
+    <!-- fila 1 (arriba, más chicos) -->
+    <path d="M57 38 q-9 1 -9 7 q7 1 9 -3 Z"/>
+    <path d="M63 38 q9 1 9 7 q-7 1 -9 -3 Z"/>
+    <!-- fila 2 -->
+    <path d="M57 50 q-10 1 -10 8 q8 1 10 -3 Z"/>
+    <path d="M63 50 q10 1 10 8 q-8 1 -10 -3 Z"/>
+    <!-- fila 3 (abajo, más grandes) -->
+    <path d="M57 63 q-11 1 -11 9 q9 1 11 -4 Z"/>
+    <path d="M63 63 q11 1 11 9 q-9 1 -11 -4 Z"/>
+  </g>
+
+  <!-- contorno dorado de los granos, para que respiren sobre el negro -->
+  <g fill="none" stroke="#E5C158" stroke-width="1.3" opacity="0.75">
+    <path d="M57 38 q-9 1 -9 7 q7 1 9 -3 Z"/>
+    <path d="M63 38 q9 1 9 7 q-7 1 -9 -3 Z"/>
+    <path d="M57 50 q-10 1 -10 8 q8 1 10 -3 Z"/>
+    <path d="M63 50 q10 1 10 8 q-8 1 -10 -3 Z"/>
+    <path d="M57 63 q-11 1 -11 9 q9 1 11 -4 Z"/>
+    <path d="M63 63 q11 1 11 9 q-9 1 -11 -4 Z"/>
+  </g>
+
+  <!-- ── Basa ────────────────────────────────────────────────── -->
+  <path d="M41 87 H79 L84 95 H36 Z" fill="url(#oroCol)" opacity="0.88"/>
+  <rect x="30" y="95" width="60" height="7" rx="1" fill="url(#oroCol)"/>
+
+  <!-- Línea de tierra -->
+  <rect x="24" y="105" width="72" height="2.5" rx="1"
+        fill="#1B4332"/>
+</svg>

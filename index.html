@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     AGROTITAN · SITIO INSTITUCIONAL
+     ═══════════════════════════════════════════════════════════════
+
+     Todo el texto de esta página sale de contenido.yaml. Si vas a
+     cambiar una palabra, cambiala TAMBIÉN allá: ese archivo lo lee
+     TITANOMAQUIA para saber qué ofrecés públicamente.
+
+     Buscá "⚠ REEMPLAZAR" para encontrar lo que falta completar
+     antes de publicar.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<title>AgroTitan · Evaluación de proyectos agropecuarios</title>
+<meta name="description" content="Factibilidad técnica, económica y financiera de proyectos agropecuarios. Ingenieros agrónomos y zootecnistas. Argentina, Chile, Uruguay y Paraguay.">
+<meta name="keywords" content="factibilidad proyecto agropecuario, evaluación económica agro, análisis financiero agropecuario Argentina, valuación de campos, proyecto de inversión frutales, rentabilidad nogal avellano cerezo arándano, evaluación proyecto avícola">
+<meta name="author" content="AgroTitan">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0A0A0A">
+
+<!-- Open Graph · así se ve cuando alguien comparte el link por WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="AgroTitan">
+<meta property="og:title" content="AgroTitan · El poder detrás de cada cosecha">
+<meta property="og:description" content="Evaluación técnica, económica y financiera de proyectos agropecuarios para inversores y productores.">
+<!-- ⚠ REEMPLAZAR al publicar -->
+<meta property="og:url" content="https://agrotitan.pages.dev">
+<meta property="og:image" content="https://agrotitan.pages.dev/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="img/isotipo-a.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/secciones.css">
+</head>
+<body>
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<!-- ═══ BARRA SUPERIOR ═══════════════════════════════════════════ -->
+<header class="barra" id="barra">
+  <div class="contenedor barra__interior">
+
+    <a class="logo" href="#" aria-label="AgroTitan, inicio">
+      <!-- ⚠ ELEGIR ISOTIPO · cambiá el src por img/isotipo-columna.svg
+           si preferís la columna. Están los dos en img/ -->
+      <img class="logo__marca" src="img/isotipo-a.svg" alt="" width="40" height="40">
+      <span class="logo__texto">Agro<em>Titan</em></span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#enfoque">Enfoque</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#arsenal">Herramientas</a>
+      <a href="#blog">Análisis</a>
+      <a class="nav__cta" href="#contacto">Contacto</a>
+    </nav>
+
+    <button class="menu-boton" id="menuBoton"
+            aria-expanded="false" aria-controls="nav"
+            aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- ═══ 1 · HERO ═════════════════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- ⚠ REEMPLAZAR IMAGEN · ver img/LEEME-IMAGENES.md
+       Va una foto aérea de campo al amanecer, 1920×1080 mínimo.
+       Mientras no esté, se ve el degradado de abajo, que funciona bien.
+       Cuando la tengas:
+         background-image: url("../img/hero.jpg");
+       en .hero__fondo dentro de secciones.css -->
+  <div class="hero__fondo" aria-hidden="true"></div>
+
+  <!-- Animación liviana: líneas de datos que recorren el fondo.
+       SVG + CSS, sin video ni librerías. Pesa menos de 1 KB. -->
+  <svg class="hero__lineas" viewBox="0 0 1200 600" preserveAspectRatio="none"
+       aria-hidden="true">
+    <path d="M0 480 L200 430 L380 455 L560 360 L760 395 L960 300 L1200 340"/>
+    <path d="M0 530 L220 500 L420 515 L620 450 L820 470 L1020 400 L1200 425"/>
+  </svg>
+
+  <div class="contenedor hero__interior">
+    <p class="antetitulo">Evaluación de proyectos agropecuarios</p>
+    <h1 class="hero__titulo">El poder detrás de<br>cada cosecha.</h1>
+    <p class="hero__subtitulo">
+      Evaluación técnica, económica y financiera de proyectos
+      agropecuarios para inversores y productores que lideran el sector.
+    </p>
+    <div class="hero__acciones">
+      <a class="boton boton--principal boton--bloque" href="#proyectos">
+        Ver Informes Titánicos
+      </a>
+      <a class="boton boton--secundario boton--bloque" href="#contacto">
+        Solicitar Evaluación
+      </a>
+    </div>
+    <p class="hero__paises">
+      Argentina <span>·</span> Chile <span>·</span> Uruguay <span>·</span> Paraguay
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 2 · NUESTRO ENFOQUE ══════════════════════════════════════ -->
+<section class="seccion" id="enfoque">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Quiénes somos</p>
+    <h2 class="seccion__titulo">Nuestro Enfoque</h2>
+    <p class="seccion__bajada">
+      Un proyecto agropecuario no se evalúa desde una sola disciplina.
+      La tierra responde a la agronomía; el capital, a los números.
+      Nosotros trabajamos las dos al mismo tiempo.
+    </p>
+
+    <div class="enfoque__texto">
+      <p>
+        Somos un equipo de <strong>ingenieros agrónomos y zootecnistas</strong>.
+        Cada proyecto que evaluamos pasa por manos que conocen el cultivo y
+        por manos que conocen el flujo de fondos. No tercerizamos el criterio
+        técnico ni el análisis financiero: los sostenemos juntos.
+      </p>
+
+      <div class="destacado">
+        <h3 class="destacado__titulo">Proyecto llave en mano</h3>
+        <p>
+          Entregamos el proyecto completo: relevamiento, análisis y
+          documentación lista para presentar ante un banco, un socio o un
+          directorio. A partir de ahí, el acompañamiento posterior se define
+          con cada productor según lo que el proyecto necesite — no todos
+          necesitan lo mismo, y no cobramos por lo que no hace falta.
+        </p>
+      </div>
+    </div>
+
+    <!-- Los 3 pilares -->
+    <div class="rejilla rejilla--3 pilares">
+
+      <article class="pilar">
+        <span class="pilar__numero" aria-hidden="true">01</span>
+        <h3 class="pilar__titulo">Análisis Técnico</h3>
+        <p class="pilar__texto">
+          Aptitud del suelo, clima, agua, manejo y tecnología. Determina si
+          el proyecto es posible antes de preguntarse si es rentable.
+        </p>
+      </article>
+
+      <article class="pilar">
+        <span class="pilar__numero" aria-hidden="true">02</span>
+        <h3 class="pilar__titulo">Análisis Económico</h3>
+        <p class="pilar__texto">
+          Costos de implantación y mantenimiento, márgenes brutos,
+          productividad esperada por hectárea. Determina cuánto deja.
+        </p>
+      </article>
+
+      <article class="pilar">
+        <span class="pilar__numero" aria-hidden="true">03</span>
+        <h3 class="pilar__titulo">Análisis Financiero</h3>
+        <p class="pilar__texto">
+          Flujo de fondos, período de repago, tasa interna de retorno y
+          sensibilidad. Determina si conviene, y bajo qué supuestos deja
+          de convenir.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 · COLUMNAS DEL COLOSO ══════════════════════════════════ -->
+<section class="seccion seccion--acero" id="servicios">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Servicios</p>
+    <h2 class="seccion__titulo">Columnas del Coloso</h2>
+    <p class="seccion__bajada">
+      Cinco líneas de trabajo. Se contratan por separado o como parte de
+      una evaluación integral.
+    </p>
+
+    <div class="rejilla rejilla--2 servicios">
+
+      <article class="tarjeta tarjeta--oro servicio">
+        <h3 class="tarjeta__titulo">Factibilidad técnica, económica y financiera</h3>
+        <p class="tarjeta__texto">
+          El estudio completo de un proyecto antes de comprometer capital.
+          Responde una sola pregunta con todo el rigor disponible: ¿esto se
+          puede hacer, y conviene hacerlo?
+        </p>
+      </article>
+
+      <article class="tarjeta tarjeta--verde servicio">
+        <h3 class="tarjeta__titulo">Márgenes brutos y rentabilidad proyectada</h3>
+        <p class="tarjeta__texto">
+          Cuánto deja cada hectárea, cada lote y cada campaña. Proyectado a
+          horizonte real de la inversión, no a un año aislado que puede ser
+          bueno por casualidad.
+        </p>
+      </article>
+
+      <article class="tarjeta tarjeta--oro servicio">
+        <h3 class="tarjeta__titulo">Impacto climático y de riesgo</h3>
+        <p class="tarjeta__texto">
+          Qué pasa con el proyecto si el año viene seco, si hay heladas
+          tardías o si el precio se cae. Un proyecto que solo cierra en el
+          escenario bueno no es un proyecto: es una apuesta.
+        </p>
+      </article>
+
+      <article class="tarjeta tarjeta--verde servicio">
+        <h3 class="tarjeta__titulo">Valuación de campos y proyectos</h3>
+        <p class="tarjeta__texto">
+          Cuánto vale realmente un campo según lo que puede producir, no
+          según lo que pide el mercado. Para comprar, para vender y para
+          respaldar una operación.
+        </p>
+      </article>
+
+      <article class="tarjeta tarjeta--oro servicio servicio--ancho">
+        <h3 class="tarjeta__titulo">Seguimiento y asesoramiento post-inversión</h3>
+        <p class="tarjeta__texto">
+          La evaluación no termina cuando se firma. Acompañamos la ejecución
+          y contrastamos lo proyectado contra lo que efectivamente pasa —
+          que es la única forma de que el próximo proyecto se evalúe mejor.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · PROYECTOS EJECUTADOS ═════════════════════════════════ -->
+<section class="seccion" id="proyectos">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Trayectoria</p>
+    <h2 class="seccion__titulo">Proyectos Ejecutados</h2>
+    <p class="seccion__bajada">
+      Trabajos realizados en frutales extensivos y producciones intensivas.
+      Los detalles de cada caso se comparten en reunión, con el
+      consentimiento del productor involucrado.
+    </p>
+
+    <!-- ⚠ IMPORTANTE · NO agregar acá superficies, ubicaciones,
+         rentabilidades ni nombres. Un caso se puede identificar por
+         combinación de datos aunque no diga el nombre del cliente. -->
+
+    <div class="rejilla rejilla--3 proyectos">
+
+      <article class="proyecto">
+        <!-- ⚠ REEMPLAZAR IMAGEN · nogal, 800×600 · ver LEEME-IMAGENES.md -->
+        <div class="proyecto__imagen proyecto__imagen--nogal" aria-hidden="true"></div>
+        <div class="proyecto__cuerpo">
+          <span class="proyecto__tipo">Frutal extensivo</span>
+          <h3 class="proyecto__rubro">Nogal</h3>
+          <p class="proyecto__texto">
+            Evaluación de implantación con horizonte de largo plazo y
+            análisis de los años improductivos iniciales.
+          </p>
+          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
+        </div>
+      </article>
+
+      <article class="proyecto">
+        <!-- ⚠ REEMPLAZAR IMAGEN · avellano, 800×600 -->
+        <div class="proyecto__imagen proyecto__imagen--avellano" aria-hidden="true"></div>
+        <div class="proyecto__cuerpo">
+          <span class="proyecto__tipo">Frutal extensivo</span>
+          <h3 class="proyecto__rubro">Avellano</h3>
+          <p class="proyecto__texto">
+            Estudio de aptitud y proyección de rendimiento en zona de
+            expansión del cultivo.
+          </p>
+          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
+        </div>
+      </article>
+
+      <article class="proyecto">
+        <!-- ⚠ REEMPLAZAR IMAGEN · cerezo, 800×600 -->
+        <div class="proyecto__imagen proyecto__imagen--cerezo" aria-hidden="true"></div>
+        <div class="proyecto__cuerpo">
+          <span class="proyecto__tipo">Frutal extensivo</span>
+          <h3 class="proyecto__rubro">Cerezo</h3>
+          <p class="proyecto__texto">
+            Análisis de ventana comercial y su impacto sobre el retorno del
+            proyecto.
+          </p>
+          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
+        </div>
+      </article>
+
+      <article class="proyecto">
+        <!-- ⚠ REEMPLAZAR IMAGEN · arándano, 800×600 -->
+        <div class="proyecto__imagen proyecto__imagen--arandano" aria-hidden="true"></div>
+        <div class="proyecto__cuerpo">
+          <span class="proyecto__tipo">Frutal intensivo</span>
+          <h3 class="proyecto__rubro">Arándano</h3>
+          <p class="proyecto__texto">
+            Evaluación de inversión con estructura de costos de alta
+            intensidad de mano de obra.
+          </p>
+          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
+        </div>
+      </article>
+
+      <article class="proyecto">
+        <!-- ⚠ REEMPLAZAR IMAGEN · galpón avícola, 800×600 -->
+        <div class="proyecto__imagen proyecto__imagen--avicola" aria-hidden="true"></div>
+        <div class="proyecto__cuerpo">
+          <span class="proyecto__tipo">Producción intensiva</span>
+          <h3 class="proyecto__rubro">Avícola black-out</h3>
+          <p class="proyecto__texto">
+            Proyecto de galpones en sistema de ambiente controlado, con
+            análisis de eficiencia de conversión y consumo energético.
+          </p>
+          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
+        </div>
+      </article>
+
+      <article class="proyecto proyecto--aviso">
+        <div class="proyecto__cuerpo">
+          <h3 class="proyecto__rubro">Confidencialidad</h3>
+          <p class="proyecto__texto">
+            No publicamos nombres, superficies ni resultados de nuestros
+            clientes. La información de un proyecto es del productor, no
+            nuestra.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · EL ARSENAL ═══════════════════════════════════════════ -->
+<section class="seccion seccion--acero" id="arsenal">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Herramientas</p>
+    <h2 class="seccion__titulo">
+      El Arsenal
+      <span class="etiqueta-proximo">Próximamente</span>
+    </h2>
+    <p class="seccion__bajada">
+      Herramientas de cálculo abiertas para que puedas hacer tus propias
+      estimaciones antes de llamarnos.
+    </p>
+
+    <div class="rejilla rejilla--3 arsenal">
+
+      <article class="arsenal__item">
+        <h3 class="arsenal__titulo">Calculadora de retorno</h3>
+        <p class="arsenal__texto">
+          Retorno estimado de una inversión frutal según superficie y rubro.
+        </p>
+      </article>
+
+      <article class="arsenal__item">
+        <h3 class="arsenal__titulo">Simulador de costos de implantación</h3>
+        <p class="arsenal__texto">
+          Costo de puesta en marcha según insumos y densidad de plantación.
+        </p>
+      </article>
+
+      <article class="arsenal__item">
+        <h3 class="arsenal__titulo">Análisis de sensibilidad</h3>
+        <p class="arsenal__texto">
+          Cómo cambia el resultado si cambia el precio, el rinde o el clima.
+        </p>
+      </article>
+
+    </div>
+
+    <p class="arsenal__nota">
+      Estas herramientas van a dar estimaciones orientativas, no
+      evaluaciones. Un número calculado en dos minutos no reemplaza un
+      estudio de factibilidad, y no vamos a presentarlo como si lo hiciera.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 6 · BLOG ═════════════════════════════════════════════════ -->
+<section class="seccion" id="blog">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Publicaciones</p>
+    <h2 class="seccion__titulo">Análisis y Recursos</h2>
+    <p class="seccion__bajada">
+      Publicamos análisis técnico y económico del sector. Sin especulación
+      de mercado ni pronósticos de precios: no es lo que hacemos.
+    </p>
+
+    <div class="rejilla rejilla--2 categorias">
+      <article class="categoria">
+        <h3 class="categoria__nombre">Rentabilidad por rubro</h3>
+        <p class="categoria__texto">Números y márgenes por cultivo y por sistema productivo.</p>
+      </article>
+      <article class="categoria">
+        <h3 class="categoria__nombre">Contexto de mercado</h3>
+        <p class="categoria__texto">Hacia dónde se mueve la inversión en el sector, y por qué.</p>
+      </article>
+      <article class="categoria">
+        <h3 class="categoria__nombre">Casos de estudio</h3>
+        <p class="categoria__texto">Proyectos reales, publicados con autorización.</p>
+      </article>
+      <article class="categoria">
+        <h3 class="categoria__nombre">Guías técnicas</h3>
+        <p class="categoria__texto">Cómo se evalúa un proyecto, explicado en detalle.</p>
+      </article>
+    </div>
+
+    <!-- ⚠ Todavía sin artículos publicados.
+         Cuando escribas el primero: duplicá articulo.html, completalo,
+         y reemplazá este bloque por una rejilla de tarjetas. -->
+    <div class="blog__vacio">
+      <p>
+        Estamos preparando los primeros análisis. Si querés que te avise
+        cuando publiquemos, <a href="#contacto">escribinos</a>.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 7 · CONTACTO ═════════════════════════════════════════════ -->
+<section class="seccion seccion--acero" id="contacto">
+  <div class="contenedor">
+
+    <span class="seccion__marca"></span>
+    <p class="antetitulo">Contacto</p>
+    <h2 class="seccion__titulo">Solicitar Evaluación</h2>
+    <p class="seccion__bajada">
+      Contanos qué proyecto tenés en mente. Te respondemos con una primera
+      devolución sobre qué tipo de evaluación necesita.
+    </p>
+
+    <div class="contacto">
+
+      <!-- ── El formulario ──────────────────────────────────────────
+           NO envía a ningún servidor. Arma el mensaje y lo abre en
+           WhatsApp o en tu correo.
+
+           Es deliberado: así el mensaje del cliente va DIRECTO a vos,
+           sin que ningún servicio intermediario lo lea. Además no hay
+           nada que configurar ni que pagar, y no puede dejar de
+           funcionar porque un tercero cierre.
+           ──────────────────────────────────────────────────────── -->
+      <form class="formulario" id="formularioContacto" novalidate>
+
+        <div class="campo">
+          <label for="nombre">Nombre y apellido <span class="req">*</span></label>
+          <input type="text" id="nombre" name="nombre" required
+                 autocomplete="name" placeholder="Juan Pérez">
+          <p class="campo__error" data-error="nombre"></p>
+        </div>
+
+        <div class="campo-fila">
+          <div class="campo">
+            <label for="pais">País <span class="req">*</span></label>
+            <select id="pais" name="pais" required>
+              <option value="">Elegí…</option>
+              <option>Argentina</option>
+              <option>Chile</option>
+              <option>Uruguay</option>
+              <option>Paraguay</option>
+              <option>Otro</option>
+            </select>
+            <p class="campo__error" data-error="pais"></p>
+          </div>
+
+          <div class="campo">
+            <label for="perfil">Sos <span class="req">*</span></label>
+            <select id="perfil" name="perfil" required>
+              <option value="">Elegí…</option>
+              <option>Productor</option>
+              <option>Inversor</option>
+              <option>Institución financiera</option>
+              <option>Otro</option>
+            </select>
+            <p class="campo__error" data-error="perfil"></p>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="rubro">Rubro de interés</label>
+          <!-- input + datalist: se puede elegir de la lista tocando la
+               flechita, O escribir directamente lo que uno busca si no
+               está en las opciones. No hace falta tocar contacto.js:
+               .value funciona igual que en un <select>. -->
+          <input type="text" id="rubro" name="rubro" list="listaRubros"
+                 placeholder="Elegí una opción o escribí el tuyo"
+                 autocomplete="off">
+          <datalist id="listaRubros">
+            <option value="Frutales extensivos (nogal, avellano, cerezo)">
+            <option value="Frutales intensivos (arándano y otros)">
+            <option value="Producción avícola">
+            <option value="Ganadería">
+            <option value="Agricultura extensiva">
+            <option value="Todavía no lo defino">
+          </datalist>
+        </div>
+
+        <div class="campo">
+          <label for="mensaje">Contanos del proyecto <span class="req">*</span></label>
+          <textarea id="mensaje" name="mensaje" rows="5" required
+                    placeholder="Superficie aproximada, zona, en qué etapa está y qué necesitás resolver."></textarea>
+          <p class="campo__ayuda">
+            Cuanto más concreto, mejor podemos orientarte en la primera respuesta.
+          </p>
+          <p class="campo__error" data-error="mensaje"></p>
+        </div>
+
+        <div class="formulario__acciones">
+          <button type="submit" class="boton boton--principal boton--bloque"
+                  data-via="whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/>
+            </svg>
+            Enviar por WhatsApp
+          </button>
+
+          <button type="submit" class="boton boton--secundario boton--bloque"
+                  data-via="email">
+            Enviar por correo
+          </button>
+        </div>
+
+        <p class="formulario__nota">
+          Tus datos van directo a nosotros por WhatsApp o correo.
+          <strong>Este sitio no guarda información, no usa cookies y no
+          tiene rastreadores de terceros.</strong>
+        </p>
+
+      </form>
+
+      <!-- ── Datos de contacto ─────────────────────────────────── -->
+      <aside class="contacto__datos">
+
+        <div class="contacto__bloque">
+          <h3 class="contacto__titulo">Respondemos personalmente</h3>
+          <p class="contacto__texto">
+            Leemos todas las consultas. Te respondemos personalmente — no hay
+            respuestas automáticas de nuestro lado.
+          </p>
+        </div>
+
+        <div class="contacto__bloque">
+          <h3 class="contacto__titulo">Directo</h3>
+          <!-- ⚠ REEMPLAZAR · el número real va en js/contacto.js,
+               en la constante WHATSAPP. Cambialo en un solo lugar. -->
+          <p class="contacto__dato">
+            <a href="#" id="enlaceWhatsapp">WhatsApp</a>
+          </p>
+          <!-- ⚠ REEMPLAZAR · el correo real va en js/contacto.js -->
+          <p class="contacto__dato">
+            <a href="#" id="enlaceEmail">contacto@agrotitan.com</a>
+          </p>
+        </div>
+
+        <div class="contacto__bloque">
+          <h3 class="contacto__titulo">Dónde trabajamos</h3>
+          <p class="contacto__texto">
+            Argentina · Chile · Uruguay · Paraguay
+          </p>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ 8 · FOOTER ═══════════════════════════════════════════════ -->
+<footer class="pie">
+  <div class="contenedor">
+
+    <div class="pie__superior">
+
+      <div class="pie__marca">
+        <a class="logo" href="#" aria-label="AgroTitan, inicio">
+          <img class="logo__marca" src="img/isotipo-a.svg" alt="" width="36" height="36">
+          <span class="logo__texto">Agro<em>Titan</em></span>
+        </a>
+        <p class="pie__eslogan">La fuerza de la tierra. La precisión del capital.</p>
+        <p class="pie__descripcion">
+          Evaluación de proyectos agropecuarios. Ingeniería agronómica y
+          análisis financiero en el mismo equipo.
+        </p>
+      </div>
+
+      <nav class="pie__nav" aria-label="Navegación del pie">
+        <h4 class="pie__titulo">Secciones</h4>
+        <a href="#enfoque">Enfoque</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#blog">Análisis</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="pie__nav">
+        <h4 class="pie__titulo">Operamos en</h4>
+        <span>Argentina</span>
+        <span>Chile</span>
+        <span>Uruguay</span>
+        <span>Paraguay</span>
+      </div>
+
+      <div class="pie__nav">
+        <h4 class="pie__titulo">Seguinos</h4>
+        <a href="https://www.linkedin.com/in/agro-titan-251367428"
+           target="_blank" rel="noopener">LinkedIn</a>
+        <!-- ⚠ A CONFIRMAR: ver la nota en contenido.yaml sobre este link -->
+        <a href="https://www.instagram.com/augustoniente/"
+           target="_blank" rel="noopener">Instagram</a>
+      </div>
+
+    </div>
+
+    <div class="pie__legal">
+      <p>
+        Los análisis publicados en este sitio son de carácter orientativo y no
+        constituyen recomendación de inversión. Cada proyecto requiere un
+        estudio particular. AgroTitan no garantiza resultados productivos ni
+        financieros.
+      </p>
+      <p class="pie__copy">
+        <span id="anio">2026</span> AgroTitan
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ═══ WHATSAPP FLOTANTE ════════════════════════════════════════ -->
+<a class="whatsapp-flotante" id="whatsappFlotante" href="#"
+   aria-label="Escribinos por WhatsApp" rel="noopener">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/>
+  </svg>
+  <span class="whatsapp-flotante__texto">Consultar</span>
+</a>
+
+<script src="js/navegacion.js"></script>
+<script src="js/contacto.js"></script>
+</body>
+</html>

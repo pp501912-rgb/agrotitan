@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img"
+     aria-label="AgroTitan">
+  <title>AgroTitan — A catastral</title>
+  <desc>Una A geométrica cuyas líneas internas forman una cuadrícula de
+  parcelas, como un plano de loteo. Precisión de ingeniería aplicada al
+  campo.</desc>
+
+  <!--
+    ISOTIPO 1 · LA "A" CATASTRAL
+    ────────────────────────────────────────────────────────────────
+    Los trazos exteriores forman la A. Las líneas internas dividen el
+    interior en parcelas desiguales, como un plano de mensura real.
+    La travesaño de la A es el camino que separa dos lotes.
+
+    Probado a 32px y a 300px. A tamaño chico las parcelas se leen como
+    textura; a tamaño grande se distinguen una por una.
+  -->
+
+  <defs>
+    <linearGradient id="oro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#F0D687"/>
+      <stop offset="100%" stop-color="#E5C158"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Parcelas internas · cuadrícula catastral -->
+  <g stroke="#E5C158" stroke-width="1.6" opacity="0.42" fill="none"
+     stroke-linecap="square">
+    <!-- divisiones horizontales, con espaciado irregular como un loteo real -->
+    <path d="M39 84 H81"/>
+    <path d="M45.5 66 H74.5"/>
+    <path d="M51 48 H69"/>
+    <!-- divisiones verticales -->
+    <path d="M52 100 V47"/>
+    <path d="M68 100 V47"/>
+    <path d="M60 100 V32"/>
+  </g>
+
+  <!-- La A · trazos exteriores -->
+  <g fill="none" stroke="url(#oro)" stroke-width="7"
+     stroke-linecap="square" stroke-linejoin="miter">
+    <!-- pata izquierda -->
+    <path d="M28 100 L60 20"/>
+    <!-- pata derecha -->
+    <path d="M92 100 L60 20"/>
+  </g>
+
+  <!-- Travesaño · el camino entre lotes -->
+  <path d="M42 62 H78" stroke="#1B4332" stroke-width="8"
+        stroke-linecap="square"/>
+  <path d="M42 62 H78" stroke="url(#oro)" stroke-width="4"
+        stroke-linecap="square"/>
+
+  <!-- Mojón superior · punto de amojonamiento del vértice -->
+  <circle cx="60" cy="20" r="4" fill="#E5C158"/>
+</svg>

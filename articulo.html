@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PLANTILLA DE ARTÍCULO
+
+     Para publicar un análisis:
+     1. Copiá este archivo con un nombre descriptivo, por ejemplo
+        blog/rentabilidad-nogal-2026.html
+     2. Reemplazá TODO lo que dice ⚠ REEMPLAZAR
+     3. Agregá el artículo a contenido.yaml, en blog.articulos
+     4. Agregá la tarjeta en la sección Blog de index.html
+
+     El tono: autoridad y análisis, nunca especulación de precios.
+     "Radiografía de la campaña: hacia dónde fluye el capital verde"
+     y no "te contamos cómo viene la soja".
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ⚠ REEMPLAZAR · título y descripción -->
+<title>Título del análisis · AgroTitan</title>
+<meta name="description" content="Resumen del artículo en una o dos frases. Es lo que se lee en Google y al compartir por WhatsApp.">
+<meta name="author" content="AgroTitan">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="AgroTitan">
+<meta property="og:title" content="Título del análisis">
+<meta property="og:description" content="Resumen del artículo.">
+
+<link rel="icon" href="img/isotipo-a.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/secciones.css">
+
+<style>
+/* Estilos propios del artículo. Van acá y no en secciones.css porque
+   solo aplican a esta plantilla. */
+
+.articulo {
+  padding-block: 8rem var(--e-5);
+}
+
+.articulo__cabecera {
+  max-width: var(--ancho-texto);
+  margin-bottom: var(--e-4);
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--linea);
+}
+
+.articulo__categoria {
+  display: inline-block;
+  font-family: var(--tipo-ui);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  border: 1px solid var(--oro);
+  border-radius: 100px;
+  padding: 0.3em 0.9em;
+  margin-bottom: var(--e-2);
+}
+
+.articulo__titulo { margin-bottom: var(--e-2); }
+
+.articulo__bajada {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  color: var(--hueso-tenue);
+  font-style: italic;
+}
+
+.articulo__meta {
+  font-family: var(--tipo-ui);
+  font-size: var(--t-chico);
+  color: var(--hueso-débil);
+  letter-spacing: 0.06em;
+  margin-top: var(--e-2);
+}
+
+/* El cuerpo tiene medida de lectura acotada: un texto largo a todo el
+   ancho de un monitor es incómodo de leer. */
+.articulo__cuerpo {
+  max-width: var(--ancho-texto);
+  font-size: 1.12rem;
+  line-height: 1.75;
+}
+
+.articulo__cuerpo > * + * { margin-top: var(--e-2); }
+
+.articulo__cuerpo h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-top: var(--e-4);
+  color: var(--hueso);
+}
+
+.articulo__cuerpo h3 {
+  color: var(--oro);
+  margin-top: var(--e-3);
+}
+
+.articulo__cuerpo ul,
+.articulo__cuerpo ol { padding-left: 1.4em; }
+.articulo__cuerpo li { margin-top: 0.5em; }
+
+.articulo__cuerpo blockquote {
+  border-left: 3px solid var(--oro);
+  padding: var(--e-1) 0 var(--e-1) var(--e-3);
+  font-style: italic;
+  color: var(--oro);
+  margin-block: var(--e-3);
+}
+
+/* Tablas de números · con scroll propio para que no rompan el móvil */
+.tabla-envoltorio {
+  overflow-x: auto;
+  margin-block: var(--e-3);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+.articulo__cuerpo table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--tipo-ui);
+  font-size: 0.98rem;
+  min-width: 420px;
+}
+.articulo__cuerpo th,
+.articulo__cuerpo td {
+  padding: 0.8em 1em;
+  text-align: left;
+  border-bottom: 1px solid var(--linea);
+}
+.articulo__cuerpo th {
+  background: var(--acero);
+  color: var(--oro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.articulo__cuerpo tbody tr:last-child td { border-bottom: 0; }
+
+.aviso-metodo {
+  border: 1px dashed rgba(229, 193, 88, 0.35);
+  border-radius: var(--radio);
+  padding: var(--e-2) var(--e-3);
+  margin-block: var(--e-4);
+  font-size: 1rem;
+  color: var(--hueso-tenue);
+}
+.aviso-metodo strong { display: block; margin-bottom: 0.3rem; }
+
+.articulo__cierre {
+  max-width: var(--ancho-texto);
+  margin-top: var(--e-5);
+  padding-top: var(--e-3);
+  border-top: 1px solid var(--linea);
+}
+
+.volver {
+  display: inline-block;
+  font-family: var(--tipo-ui);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: var(--e-3);
+}
+.volver::before { content: "← "; }
+</style>
+</head>
+<body>
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="barra desplazada" id="barra">
+  <div class="contenedor barra__interior">
+    <a class="logo" href="index.html" aria-label="AgroTitan, inicio">
+      <img class="logo__marca" src="img/isotipo-a.svg" alt="" width="40" height="40">
+      <span class="logo__texto">Agro<em>Titan</em></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="index.html#enfoque">Enfoque</a>
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#proyectos">Proyectos</a>
+      <a href="index.html#blog">Análisis</a>
+      <a class="nav__cta" href="index.html#contacto">Contacto</a>
+    </nav>
+    <button class="menu-boton" id="menuBoton" aria-expanded="false"
+            aria-controls="nav" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="contenido">
+<article class="seccion articulo">
+  <div class="contenedor">
+
+    <a class="volver" href="index.html#blog">Volver a Análisis</a>
+
+    <header class="articulo__cabecera">
+      <!-- ⚠ REEMPLAZAR · una de las cuatro categorías -->
+      <span class="articulo__categoria">Rentabilidad por rubro</span>
+
+      <!-- ⚠ REEMPLAZAR -->
+      <h1 class="articulo__titulo">
+        Título del análisis, en tono de autoridad
+      </h1>
+
+      <!-- ⚠ REEMPLAZAR · una o dos frases que resuman la conclusión -->
+      <p class="articulo__bajada">
+        La bajada adelanta a qué conclusión llega el análisis. Quien lee
+        tiene que poder decidir en cinco segundos si le interesa seguir.
+      </p>
+
+      <!-- ⚠ REEMPLAZAR fecha -->
+      <p class="articulo__meta">
+        <time datetime="2026-01-01">1 de enero de 2026</time>
+        · AgroTitan
+      </p>
+    </header>
+
+    <div class="articulo__cuerpo">
+
+      <!-- ⚠ REEMPLAZAR TODO LO DE ABAJO ─────────────────────────
+           Lo que sigue es un ejemplo de estructura y de tono, no
+           contenido real. Borralo entero y escribí el tuyo.
+           ──────────────────────────────────────────────────────── -->
+
+      <p>
+        Primer párrafo: planteá el problema o la pregunta concreta que el
+        análisis responde. Sin rodeos ni introducción genérica sobre la
+        importancia del sector.
+      </p>
+
+      <h2>El planteo</h2>
+
+      <p>
+        Qué se está evaluando y por qué importa ahora. Si hay un supuesto
+        que sostiene todo el análisis, decilo acá y no al final.
+      </p>
+
+      <blockquote>
+        Una cita o una idea que valga la pena destacar. Se usa poco: si
+        todo está destacado, nada lo está.
+      </blockquote>
+
+      <h2>Los números</h2>
+
+      <p>
+        Presentá los datos con su origen. Un número sin fuente no es un
+        dato.
+      </p>
+
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr>
+              <th>Concepto</th>
+              <th>Valor</th>
+              <th>Observación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ejemplo</td>
+              <td>—</td>
+              <td>Reemplazar por datos reales</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Qué cambia si cambian los supuestos</h3>
+
+      <p>
+        Un análisis que solo muestra el escenario favorable no es un
+        análisis. Mostrá qué pasa si el precio baja, si el rinde falla o
+        si el año viene seco.
+      </p>
+
+      <div class="aviso-metodo">
+        <strong>Cómo se calculó</strong>
+        Qué supuestos se usaron, de dónde salieron los precios y los
+        rendimientos, y qué NO contempla este análisis. Esta sección es
+        obligatoria en todos los artículos con números: sin ella, los
+        números no se pueden evaluar.
+      </div>
+
+      <h2>Conclusión</h2>
+
+      <p>
+        A qué conclusión se llega, y con qué nivel de confianza. Si los
+        datos no alcanzan para concluir, se dice — es una conclusión
+        legítima y más útil que forzar una respuesta.
+      </p>
+
+      <!-- ⚠ FIN DEL EJEMPLO ─────────────────────────────────────── -->
+
+    </div>
+
+    <footer class="articulo__cierre">
+      <h3 class="contacto__titulo">¿Tenés un proyecto para evaluar?</h3>
+      <p class="contacto__texto" style="margin-bottom:1.5rem">
+        Este análisis es general. Cada proyecto tiene sus propias
+        condiciones de suelo, clima, escala y financiamiento.
+      </p>
+      <a class="boton boton--principal" href="index.html#contacto">
+        Solicitar Evaluación
+      </a>
+    </footer>
+
+  </div>
+</article>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__legal">
+      <p>
+        Los análisis publicados en este sitio son de carácter orientativo y
+        no constituyen recomendación de inversión. Cada proyecto requiere un
+        estudio particular. AgroTitan no garantiza resultados productivos ni
+        financieros.
+      </p>
+      <p class="pie__copy"><span id="anio">2026</span> AgroTitan</p>
+    </div>
+  </div>
+</footer>
+
+<a class="whatsapp-flotante" id="whatsappFlotante" href="#"
+   aria-label="Escribinos por WhatsApp" rel="noopener">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/>
+  </svg>
+  <span class="whatsapp-flotante__texto">Consultar</span>
+</a>
+
+<script src="js/navegacion.js"></script>
+<script src="js/contacto.js"></script>
+</body>
+</html>

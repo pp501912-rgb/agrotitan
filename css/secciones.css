@@ -1,0 +1,656 @@
+/* ═══════════════════════════════════════════════════════════════════
+   AGROTITAN · SECCIONES
+   Estilos específicos, en el mismo orden que el HTML.
+   Las variables y utilidades están en base.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── BARRA SUPERIOR ────────────────────────────────────────────── */
+
+.barra {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transicion), background var(--transicion);
+}
+
+/* La línea dorada aparece recién al bajar. Arriba de todo el hero
+   respira sin cortes. Lo maneja navegacion.js */
+.barra.desplazada {
+  border-bottom-color: var(--linea);
+  background: rgba(10, 10, 10, 0.95);
+}
+
+.barra__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2);
+  min-height: 4.5rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--hueso);
+  flex-shrink: 0;
+}
+
+.logo__marca { width: 38px; height: 38px; }
+
+.logo__texto {
+  font-family: var(--tipo-titulo);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.logo__texto em { font-style: normal; color: var(--oro); }
+
+/* Navegación · en el teléfono es un panel desplegable */
+.nav {
+  position: fixed;
+  inset: 4.5rem 0 auto 0;
+  background: rgba(10, 10, 10, 0.98);
+  border-bottom: 1px solid var(--linea);
+  flex-direction: column;
+  padding: var(--e-2) var(--e-3) var(--e-3);
+  gap: 0;
+  display: none;
+}
+.nav.abierto { display: flex; }
+
+.nav a {
+  font-family: var(--tipo-ui);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--hueso);
+  text-decoration: none;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--linea);
+  transition: color var(--transicion);
+}
+.nav a:last-child { border-bottom: 0; }
+.nav a:hover, .nav a.activo { color: var(--oro); }
+
+.nav__cta { color: var(--oro) !important; }
+
+/* Botón hamburguesa */
+.menu-boton {
+  background: none;
+  border: 0;
+  width: 44px; height: 44px;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  padding: 0;
+}
+.menu-boton span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--hueso);
+  transition: transform var(--transicion), opacity var(--transicion);
+}
+.menu-boton[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-boton[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-boton[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (min-width: 900px) {
+  .menu-boton { display: none; }
+  .nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--e-3);
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .nav a { padding: 0; border: 0; font-size: 0.98rem; }
+  .nav__cta {
+    border: 1px solid var(--oro) !important;
+    border-radius: var(--radio);
+    padding: 0.55em 1.2em !important;
+  }
+  .nav__cta:hover { background: var(--oro-tenue); }
+}
+
+/* ── 1 · HERO ──────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  min-height: 92vh;
+  min-height: 92svh;      /* svh evita el salto por la barra del navegador móvil */
+  display: flex;
+  align-items: center;
+  padding-block: 7rem var(--e-5);
+  overflow: hidden;
+}
+
+/* ⚠ REEMPLAZAR IMAGEN
+   Cuando tengas la foto aérea, descomentá background-image.
+   Mientras tanto el degradado se ve bien y no pesa nada. */
+.hero__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(27, 67, 50, 0.55), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(229, 193, 88, 0.10), transparent 65%),
+    linear-gradient(170deg, #0F1410 0%, var(--obsidiana) 60%);
+  /* background-image: url("../img/hero.jpg");
+     background-size: cover;
+     background-position: center; */
+}
+
+/* Overlay para que el texto se lea sobre cualquier foto */
+.hero__fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+              rgba(10,10,10,0.92) 0%,
+              rgba(10,10,10,0.72) 45%,
+              rgba(10,10,10,0.45) 100%);
+}
+
+/* Líneas de datos · animación liviana, sin video ni librerías */
+.hero__lineas {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  z-index: 1;
+  opacity: 0.5;
+}
+.hero__lineas path {
+  fill: none;
+  stroke: var(--oro);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 10;
+  animation: recorrer 30s linear infinite;
+}
+.hero__lineas path:nth-child(2) {
+  stroke: var(--verde-claro);
+  stroke-width: 1.2;
+  animation-duration: 44s;
+  animation-direction: reverse;
+  opacity: 0.8;
+}
+@keyframes recorrer { to { stroke-dashoffset: -320; } }
+
+.hero__interior { position: relative; z-index: 2; }
+
+.hero__titulo { margin-bottom: var(--e-2); }
+
+.hero__subtitulo {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  color: var(--hueso-tenue);
+  max-width: 44ch;
+  margin-bottom: var(--e-3);
+}
+
+.hero__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  margin-bottom: var(--e-4);
+}
+
+@media (min-width: 560px) {
+  .hero__acciones { flex-direction: row; flex-wrap: wrap; }
+}
+
+.hero__paises {
+  font-family: var(--tipo-ui);
+  font-size: var(--t-chico);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hueso-débil);
+}
+.hero__paises span { color: var(--oro); margin-inline: 0.3em; }
+
+/* ── 2 · ENFOQUE ───────────────────────────────────────────────── */
+
+.enfoque__texto {
+  max-width: var(--ancho-texto);
+  margin-bottom: var(--e-4);
+}
+.enfoque__texto p { margin-bottom: var(--e-2); }
+
+.destacado {
+  border-left: 3px solid var(--oro);
+  padding: var(--e-2) 0 var(--e-2) var(--e-3);
+  margin-top: var(--e-3);
+}
+.destacado__titulo {
+  color: var(--oro);
+  margin-bottom: var(--e-1);
+}
+
+.pilares { margin-top: var(--e-4); }
+
+.pilar {
+  border-top: 1px solid var(--linea);
+  padding-top: var(--e-2);
+  position: relative;
+}
+
+.pilar__numero {
+  display: block;
+  font-family: var(--tipo-ui);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--oro);
+  opacity: 0.28;
+  margin-bottom: var(--e-1);
+}
+
+.pilar__titulo { margin-bottom: var(--e-1); }
+.pilar__texto { color: var(--hueso-tenue); font-size: 1.02rem; }
+
+/* ── 3 · SERVICIOS ─────────────────────────────────────────────── */
+
+.servicio { display: flex; flex-direction: column; }
+
+/* La quinta tarjeta ocupa el ancho completo en pantallas grandes */
+@media (min-width: 640px) {
+  .servicio--ancho { grid-column: 1 / -1; }
+}
+
+/* ── 4 · PROYECTOS ─────────────────────────────────────────────── */
+
+.proyecto {
+  background: var(--acero);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transicion), transform var(--transicion);
+}
+.proyecto:hover {
+  border-color: var(--oro);
+  transform: translateY(-3px);
+}
+
+/* ⚠ REEMPLAZAR IMÁGENES
+   Cada .proyecto__imagen--X es un lugar para una foto de 800×600.
+   Mientras no estén, cada rubro tiene su propio degradado — no un
+   rectángulo gris. Ver img/LEEME-IMAGENES.md
+   Para poner la foto:
+     background-image: url("../img/proyecto-nogal.jpg");
+     background-size: cover; background-position: center; */
+.proyecto__imagen {
+  aspect-ratio: 4 / 3;
+  position: relative;
+  background: var(--acero-claro);
+}
+.proyecto__imagen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.6));
+}
+
+.proyecto__imagen--nogal    { background: linear-gradient(145deg, #2D4A32, #1A2B1E); }
+.proyecto__imagen--avellano { background: linear-gradient(145deg, #3A4A2A, #222D18); }
+.proyecto__imagen--cerezo   { background: linear-gradient(145deg, #4A2A2E, #2B181B); }
+.proyecto__imagen--arandano { background: linear-gradient(145deg, #2A3350, #181D2E); }
+.proyecto__imagen--avicola  { background: linear-gradient(145deg, #4A422A, #2B2718); }
+
+.proyecto__cuerpo {
+  padding: var(--e-3);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.proyecto__tipo {
+  font-family: var(--tipo-ui);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 0.4rem;
+}
+
+.proyecto__rubro { margin-bottom: var(--e-1); }
+
+.proyecto__texto {
+  color: var(--hueso-tenue);
+  font-size: 1rem;
+  flex: 1;
+  margin-bottom: var(--e-2);
+}
+
+.proyecto__cta {
+  font-family: var(--tipo-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  align-self: flex-start;
+}
+.proyecto__cta::after {
+  content: " →";
+  transition: margin var(--transicion);
+  display: inline-block;
+}
+.proyecto__cta:hover::after { margin-left: 0.3em; }
+
+/* La tarjeta de confidencialidad se distingue de las demás */
+.proyecto--aviso {
+  background: transparent;
+  border-style: dashed;
+  border-color: rgba(229, 193, 88, 0.3);
+}
+.proyecto--aviso:hover { transform: none; }
+.proyecto--aviso .proyecto__rubro {
+  color: var(--oro);
+  font-size: 1.1rem;
+}
+
+/* ── 5 · ARSENAL ───────────────────────────────────────────────── */
+
+.etiqueta-proximo {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: var(--tipo-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+  border: 1px solid var(--oro);
+  border-radius: 100px;
+  padding: 0.35em 0.9em;
+  margin-left: 0.7rem;
+  transform: translateY(-0.25em);
+}
+
+.arsenal__item {
+  border: 1px dashed rgba(245, 243, 238, 0.18);
+  border-radius: var(--radio);
+  padding: var(--e-3);
+  opacity: 0.72;
+}
+
+.arsenal__titulo { margin-bottom: var(--e-1); color: var(--hueso); }
+.arsenal__texto  { color: var(--hueso-débil); font-size: 1rem; }
+
+.arsenal__nota {
+  margin-top: var(--e-3);
+  max-width: var(--ancho-texto);
+  font-size: var(--t-chico);
+  color: var(--hueso-débil);
+  font-style: italic;
+  border-left: 2px solid var(--linea);
+  padding-left: var(--e-2);
+}
+
+/* ── 6 · BLOG ──────────────────────────────────────────────────── */
+
+.categoria {
+  border-left: 2px solid var(--verde-claro);
+  padding-left: var(--e-2);
+}
+.categoria__nombre { margin-bottom: 0.3rem; color: var(--hueso); }
+.categoria__texto  { color: var(--hueso-tenue); font-size: 1rem; }
+
+.blog__vacio {
+  margin-top: var(--e-4);
+  padding: var(--e-3);
+  border: 1px dashed var(--linea);
+  border-radius: var(--radio);
+  text-align: center;
+  color: var(--hueso-tenue);
+}
+
+/* ── 7 · CONTACTO ──────────────────────────────────────────────── */
+
+/* minmax(0, 1fr) y no 1fr.
+   `1fr` equivale a `minmax(auto, 1fr)`, y ese `auto` no baja del
+   min-content de la columna. Como el formulario tiene inputs con ancho
+   intrínseco, la columna se plantaba en ~372px y desbordaba la página
+   en pantallas angostas. Con minmax(0, …) la columna puede achicarse
+   todo lo que haga falta. */
+.contacto {
+  display: grid;
+  gap: var(--e-4);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .contacto {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: var(--e-5);
+  }
+}
+
+.formulario { display: flex; flex-direction: column; gap: var(--e-2); }
+
+/* min-width: 0 es obligatorio acá.
+   Un <input> trae un ancho intrínseco de ~20 caracteres que NO se achica
+   dentro de flex o grid: por defecto un elemento no baja de su
+   min-content. Sin esto, el formulario desborda 120px en pantallas de
+   280px (teléfonos viejos, ventana partida en Android, plegables
+   cerrados) y aparece barra horizontal en toda la página. */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.campo input,
+.campo select,
+.campo textarea { width: 100%; }
+
+.campo-fila {
+  display: grid;
+  gap: var(--e-2);
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+@media (min-width: 560px) {
+  .campo-fila { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+.campo label {
+  font-family: var(--tipo-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--hueso);
+}
+.req { color: var(--oro); }
+
+.campo input,
+.campo select,
+.campo textarea {
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 0.8em 1em;
+  color: var(--hueso);
+  font-family: var(--tipo-cuerpo);
+  font-size: 1.02rem;
+  transition: border-color var(--transicion);
+  /* 16px mínimo evita que el iPhone haga zoom al enfocar */
+  min-height: 48px;
+}
+
+.campo textarea { resize: vertical; min-height: 130px; line-height: 1.55; }
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus { border-color: var(--oro); outline: none; }
+
+.campo input::placeholder,
+.campo textarea::placeholder { color: var(--hueso-débil); }
+
+.campo select { cursor: pointer; }
+/* Las opciones del desplegable las dibuja el sistema: hay que forzar
+   el color o en Windows salen blancas sobre blanco. */
+.campo select option { background: var(--acero); color: var(--hueso); }
+
+.campo__ayuda {
+  font-size: var(--t-chico);
+  color: var(--hueso-débil);
+}
+
+.campo__error {
+  font-family: var(--tipo-ui);
+  font-size: 0.88rem;
+  color: #E88;
+  min-height: 0;
+  display: none;
+}
+.campo__error.visible { display: block; }
+
+.campo.con-error input,
+.campo.con-error select,
+.campo.con-error textarea { border-color: #E88; }
+
+.formulario__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  margin-top: var(--e-1);
+}
+@media (min-width: 560px) {
+  .formulario__acciones { flex-direction: row; }
+}
+
+.formulario__nota {
+  font-size: var(--t-chico);
+  color: var(--hueso-débil);
+  line-height: 1.5;
+}
+.formulario__nota strong { color: var(--hueso-tenue); font-weight: 400; }
+
+.contacto__datos { display: flex; flex-direction: column; gap: var(--e-3); }
+
+.contacto__bloque {
+  border-top: 1px solid var(--linea);
+  padding-top: var(--e-2);
+}
+
+.contacto__titulo {
+  font-size: 1.05rem;
+  color: var(--oro);
+  margin-bottom: 0.4rem;
+}
+
+.contacto__texto { color: var(--hueso-tenue); font-size: 1rem; }
+
+.contacto__dato { font-size: 1.05rem; margin-bottom: 0.3rem; }
+
+/* ── 8 · PIE ───────────────────────────────────────────────────── */
+
+.pie {
+  background: #060606;
+  border-top: 1px solid var(--linea);
+  padding-block: var(--e-4) var(--e-3);
+}
+
+.pie__superior {
+  display: grid;
+  gap: var(--e-3);
+  grid-template-columns: 1fr;
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--linea);
+}
+
+@media (min-width: 640px) {
+  .pie__superior { grid-template-columns: 1fr 1fr; gap: var(--e-4); }
+}
+@media (min-width: 900px) {
+  .pie__superior { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}
+
+.pie__eslogan {
+  font-family: var(--tipo-cuerpo);
+  font-style: italic;
+  color: var(--oro);
+  margin: var(--e-2) 0 0.6rem;
+}
+
+.pie__descripcion {
+  color: var(--hueso-débil);
+  font-size: 0.98rem;
+  max-width: 40ch;
+}
+
+.pie__nav { display: flex; flex-direction: column; gap: 0.55rem; }
+
+.pie__titulo {
+  font-family: var(--tipo-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hueso-débil);
+  margin-bottom: 0.3rem;
+}
+
+.pie__nav a, .pie__nav span {
+  font-size: 0.98rem;
+  text-decoration: none;
+  color: var(--hueso-tenue);
+}
+.pie__nav a:hover { color: var(--oro); }
+
+.pie__legal { padding-top: var(--e-3); }
+
+.pie__legal p {
+  font-size: 0.85rem;
+  color: var(--hueso-débil);
+  line-height: 1.55;
+  max-width: 80ch;
+}
+
+.pie__copy { margin-top: var(--e-2); }
+.pie__copy::before { content: "© "; }
+
+/* ── WHATSAPP FLOTANTE ─────────────────────────────────────────── */
+
+.whatsapp-flotante {
+  position: fixed;
+  right: var(--e-2);
+  bottom: var(--e-2);
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #128C7E;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.85rem 1.1rem;
+  border-radius: 100px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  font-family: var(--tipo-ui);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background var(--transicion), transform var(--transicion);
+  min-height: 52px;
+}
+.whatsapp-flotante:hover {
+  background: #25D366;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* En pantallas chicas queda solo el ícono, para no tapar contenido */
+@media (max-width: 480px) {
+  .whatsapp-flotante__texto { display: none; }
+  .whatsapp-flotante { padding: 0.9rem; }
+}
