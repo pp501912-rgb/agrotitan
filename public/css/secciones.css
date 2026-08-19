@@ -299,11 +299,49 @@
   background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.6));
 }
 
-.proyecto__imagen--nogal    { background: linear-gradient(145deg, #2D4A32, #1A2B1E); }
-.proyecto__imagen--avellano { background: linear-gradient(145deg, #3A4A2A, #222D18); }
-.proyecto__imagen--cerezo   { background: linear-gradient(145deg, #4A2A2E, #2B181B); }
-.proyecto__imagen--arandano { background: linear-gradient(145deg, #2A3350, #181D2E); }
-.proyecto__imagen--avicola  { background: linear-gradient(145deg, #4A422A, #2B2718); }
+.proyecto__imagen--nogal        { background: linear-gradient(145deg, #2D4A32, #1A2B1E); }
+.proyecto__imagen--avellano     { background: linear-gradient(145deg, #3A4A2A, #222D18); }
+.proyecto__imagen--cerezo       { background: linear-gradient(145deg, #4A2A2E, #2B181B); }
+.proyecto__imagen--arandano     { background: linear-gradient(145deg, #2A3350, #181D2E); }
+.proyecto__imagen--vid          { background: linear-gradient(145deg, #3D2A46, #221829); }
+.proyecto__imagen--avicola      { background: linear-gradient(145deg, #4A422A, #2B2718); }
+.proyecto__imagen--avicola-trad { background: linear-gradient(145deg, #45392A, #281F16); }
+.proyecto__imagen--feedlot      { background: linear-gradient(145deg, #43342A, #261C16); }
+.proyecto__imagen--tambo        { background: linear-gradient(145deg, #2F3A42, #1A2126); }
+.proyecto__imagen--ganaderia    { background: linear-gradient(145deg, #3A3025, #201A12); }
+.proyecto__imagen--postproyecto { background: linear-gradient(145deg, #2C3A38, #181F1E); }
+
+/* Los dos casos completos de arriba */
+.proyecto__imagen--alternativas { background: linear-gradient(145deg, #2D4A32, #1A2B1E); }
+.proyecto__imagen--formulacion  { background: linear-gradient(145deg, #2C3A38, #181F1E); }
+
+/* Los íconos se definen una vez en index.html (<symbol>) y cada tarjeta
+   los reusa con <use>. Este contenedor los oculta sin sacarlos del DOM
+   — display:none rompería las referencias en algunos navegadores. */
+.ico-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Ícono ilustrativo centrado sobre el degradado, mientras no hay foto real.
+   aspect-ratio en lugar de height:% para que no se deforme: el contenedor
+   no es cuadrado, así que un 34% de ancho y 34% de alto dan medidas
+   distintas y el dibujo sale estirado. */
+.proyecto__icono {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 34%;
+  max-width: 88px;
+  height: auto;
+  aspect-ratio: 1;
+  color: var(--oro);
+  opacity: 0.55;
+}
 
 .proyecto__cuerpo {
   padding: var(--e-3);
@@ -356,6 +394,74 @@
 .proyecto--aviso .proyecto__rubro {
   color: var(--oro);
   font-size: 1.1rem;
+}
+
+/* Casos completos destacados — más grandes que las tarjetas, arriba
+   de la grilla. Puede haber más de uno (ver contenido.yaml → casos). */
+.casos-completos { margin-bottom: var(--e-3); }
+
+.proyecto-modelo {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--acero);
+  border: 1px solid var(--oro);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+.proyecto-modelo + .proyecto-modelo { margin-top: var(--e-3); }
+@media (min-width: 720px) {
+  .proyecto-modelo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+}
+
+.proyecto-modelo__imagen {
+  position: relative;
+  min-height: 220px;
+}
+.proyecto-modelo__imagen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.6));
+}
+.proyecto-modelo__imagen .proyecto__icono { width: 30%; max-width: 110px; }
+
+.proyecto-modelo__cuerpo {
+  padding: var(--e-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.proyecto-modelo__etiqueta {
+  display: inline-block;
+  font-family: var(--tipo-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verde-claro);
+  margin-bottom: 0.4rem;
+}
+
+.proyecto-modelo__titulo { margin: 0.2rem 0 var(--e-1); }
+
+.proyecto-modelo__resumen {
+  color: var(--hueso-tenue);
+  margin-bottom: var(--e-2);
+}
+
+.proyecto-modelo__detalle { display: grid; gap: var(--e-2); }
+.proyecto-modelo__detalle dt {
+  font-family: var(--tipo-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--oro);
+  margin-bottom: 0.25rem;
+}
+.proyecto-modelo__detalle dd {
+  margin: 0;
+  color: var(--hueso-tenue);
+  font-size: 0.98rem;
 }
 
 /* ── 5 · ARSENAL ───────────────────────────────────────────────── */
