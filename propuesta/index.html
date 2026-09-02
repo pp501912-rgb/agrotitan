@@ -1,0 +1,1169 @@
+<meta charset="utf-8">
+<title>Maqueta AgroTitan</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   AGROTITAN · MAQUETA DE PROPUESTA
+   Marca conservada: obsidiana + oro + verde, títulos en Rajdhani.
+   Cambia el cuerpo: IBM Plex Sans (más robusto en bloques largos) y
+   IBM Plex Mono para cifras y unidades, que van en columnas.
+   Diseño comprometido con el tema oscuro: todo color se pinta explícito.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --obsidiana:#0B0C0A;
+  --acero:#141613;
+  --superficie:#1B1E19;
+  --superficie-alta:#232720;
+  --oro:#E5C158;
+  --oro-claro:#F1D98C;
+  --oro-tenue:rgba(229,193,88,.14);
+  --verde:#1B4332;
+  --verde-claro:#2D6A4F;
+  --verde-vivo:#4EA37A;
+  --arcilla:#C4674A;
+  --hueso:#F2F0E9;
+  --hueso-2:rgba(242,240,233,.72);
+  --hueso-3:rgba(242,240,233,.50);
+  --linea:rgba(242,240,233,.11);
+  --linea-fuerte:rgba(242,240,233,.20);
+
+  --display:"Rajdhani","Segoe UI Semibold","Arial Narrow",system-ui,sans-serif;
+  --texto:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --dato:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+
+  --ancho:1120px;
+  --medida:66ch;
+  --r:3px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+body{
+  margin:0;
+  background:var(--obsidiana);
+  color:var(--hueso);
+  font-family:var(--texto);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+.contenedor{width:100%;max-width:var(--ancho);margin:0 auto;padding:0 24px}
+.medida{max-width:var(--medida)}
+
+/* ── tipografía ───────────────────────────────────────────────── */
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:clamp(2.5rem,6.2vw,4.35rem)}
+h2{font-size:clamp(1.85rem,3.9vw,2.7rem)}
+h3{font-size:1.3rem;line-height:1.2}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0 0 1.05em}
+a{color:var(--oro);text-underline-offset:3px}
+strong{font-weight:600;color:var(--hueso)}
+
+.eyebrow{
+  font-family:var(--dato);font-size:.72rem;font-weight:600;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--oro);
+  margin:0 0 .7rem;
+}
+.bajada{font-size:1.12rem;color:var(--hueso-2);max-width:var(--medida)}
+.chico{font-size:.9rem;color:var(--hueso-3)}
+
+/* marcador de dato faltante — tiene que saltar a la vista */
+.falta{
+  font-family:var(--dato);font-size:.86em;font-weight:600;
+  color:var(--oro-claro);background:var(--oro-tenue);
+  border:1px dashed rgba(229,193,88,.55);
+  border-radius:var(--r);padding:.05em .4em;white-space:nowrap;
+}
+
+/* ── secciones ────────────────────────────────────────────────── */
+section{padding:clamp(56px,7vw,104px) 0;border-top:1px solid var(--linea)}
+.banda{background:var(--acero)}
+.sec-cab{margin-bottom:clamp(28px,4vw,48px)}
+.sec-cab h2{margin-bottom:.5rem}
+
+/* ── barra ────────────────────────────────────────────────────── */
+.barra{
+  position:sticky;top:0;z-index:50;background:rgba(11,12,10,.93);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--linea);
+}
+.barra .contenedor{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--hueso);font-family:var(--display);font-weight:700;font-size:1.32rem;letter-spacing:.01em}
+.logo em{color:var(--oro);font-style:normal}
+.barra nav{margin-left:auto;display:flex;gap:22px;align-items:center}
+.barra nav a{font-size:.9rem;color:var(--hueso-2);text-decoration:none;font-weight:500}
+.barra nav a:hover{color:var(--oro)}
+@media(max-width:900px){.barra nav{display:none}}
+
+/* ── botones ──────────────────────────────────────────────────── */
+.boton{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:var(--display);font-weight:700;font-size:1.02rem;letter-spacing:.02em;
+  padding:14px 26px;border-radius:var(--r);text-decoration:none;border:1px solid transparent;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease;
+}
+.boton--wa{background:var(--verde-claro);color:#fff;border-color:#3E8A66}
+.boton--wa:hover{background:#37805E;transform:translateY(-1px)}
+.boton--linea{border-color:rgba(229,193,88,.5);color:var(--oro)}
+.boton--linea:hover{border-color:var(--oro);background:var(--oro-tenue)}
+.boton--chico{padding:10px 18px;font-size:.94rem}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--oro);outline-offset:3px;border-radius:2px;
+}
+
+/* ── hero ─────────────────────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;padding:clamp(56px,8vw,92px) 0 0;border-top:0}
+.hero__fondo{position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 78% 6%,rgba(45,106,79,.30),transparent 62%),
+  radial-gradient(90% 70% at 8% 96%,rgba(229,193,88,.09),transparent 60%);
+  pointer-events:none}
+.hero__interior{position:relative}
+.hero h1{margin-bottom:1.1rem}
+.hero__bajada{font-size:1.22rem;color:var(--hueso-2);max-width:56ch;margin-bottom:1.9rem}
+.hero__acciones{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1.3rem}
+.hero__paises{font-family:var(--dato);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hueso-3);margin:0}
+
+/* franja de cifras */
+.cifras{
+  position:relative;margin-top:clamp(40px,5vw,64px);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.cifra{padding:22px 20px;border-left:1px solid var(--linea)}
+.cifra:first-child{border-left:0;padding-left:0}
+.cifra__n{font-family:var(--display);font-weight:700;font-size:1.5rem;color:var(--oro);display:block;line-height:1.15}
+.cifra__t{font-size:.83rem;color:var(--hueso-3);display:block;margin-top:3px}
+@media(max-width:760px){
+  .cifras{grid-template-columns:repeat(2,1fr)}
+  .cifra:nth-child(3){border-left:0;padding-left:0}
+  .cifra:nth-child(n+3){border-top:1px solid var(--linea)}
+}
+
+/* ── rejillas ─────────────────────────────────────────────────── */
+.rejilla{display:grid;gap:20px}
+.r2{grid-template-columns:repeat(2,1fr)}
+.r3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.r2,.r3{grid-template-columns:1fr}}
+
+.tarjeta{background:var(--superficie);border:1px solid var(--linea);border-radius:var(--r);padding:24px}
+.tarjeta h3{margin-bottom:.5rem}
+.tarjeta p:last-child{margin-bottom:0}
+
+/* pilares: sin caja, separados por regla — no todo es tarjeta */
+.pilar{border-top:2px solid var(--oro);padding-top:16px}
+.pilar__preg{font-family:var(--dato);font-size:.78rem;color:var(--oro);letter-spacing:.04em;display:block;margin-bottom:.45rem}
+.pilar h3{margin-bottom:.5rem}
+.pilar p{font-size:.97rem;color:var(--hueso-2);margin-bottom:0}
+
+/* supuestos: lista de definiciones, formato de ficha técnica */
+.supuestos{border-top:1px solid var(--linea-fuerte);margin-top:clamp(32px,4vw,48px)}
+.sup{display:grid;grid-template-columns:minmax(180px,240px) 1fr;gap:8px 28px;
+  padding:13px 0;border-bottom:1px solid var(--linea)}
+.sup dt{font-family:var(--dato);font-size:.83rem;font-weight:600;color:var(--oro);letter-spacing:.02em}
+.sup dd{margin:0;font-size:.96rem;color:var(--hueso-2)}
+@media(max-width:700px){.sup{grid-template-columns:1fr;gap:4px}}
+
+/* etapas: secuencia real, por eso van numeradas */
+.etapa{display:grid;grid-template-columns:auto 1fr;gap:0 22px;padding:26px 0;border-bottom:1px solid var(--linea)}
+.etapa:first-of-type{border-top:1px solid var(--linea)}
+.etapa__n{font-family:var(--display);font-weight:700;font-size:2.1rem;color:var(--oro);line-height:1;opacity:.85;grid-row:span 2}
+.etapa h3{margin-bottom:.4rem}
+.etapa p{margin-bottom:0;color:var(--hueso-2);font-size:.98rem}
+.etapa__meta{font-family:var(--dato);font-size:.8rem;color:var(--hueso-3);margin-top:.6rem;display:flex;flex-wrap:wrap;gap:6px 18px}
+@media(max-width:620px){.etapa{grid-template-columns:1fr}.etapa__n{grid-row:auto;margin-bottom:6px;font-size:1.5rem}}
+</style>
+<style>
+/* ── índice del informe ───────────────────────────────────────── */
+.informe{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,4vw,52px);align-items:start}
+@media(max-width:960px){.informe{grid-template-columns:1fr}}
+
+.indice{border-top:1px solid var(--linea-fuerte)}
+.cap{border-bottom:1px solid var(--linea)}
+.cap summary{
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:baseline;
+  padding:13px 0;cursor:pointer;list-style:none;
+}
+.cap summary::-webkit-details-marker{display:none}
+.cap__n{font-family:var(--dato);font-size:.8rem;font-weight:600;color:var(--oro)}
+.cap__t{font-family:var(--display);font-weight:600;font-size:1.06rem;letter-spacing:.01em}
+.cap__mas{font-family:var(--dato);font-size:1rem;color:var(--hueso-3);transition:transform .18s ease}
+.cap[open] .cap__mas{transform:rotate(45deg);color:var(--oro)}
+.cap__cuerpo{padding:0 0 16px 34px;color:var(--hueso-2);font-size:.95rem}
+.cap__cuerpo ul{margin:0;padding-left:18px}
+.cap__cuerpo li{margin-bottom:5px}
+.cap:hover .cap__t{color:var(--oro-claro)}
+
+.entrega{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+.pildora{font-family:var(--dato);font-size:.78rem;color:var(--hueso-2);
+  border:1px solid var(--linea-fuerte);border-radius:100px;padding:5px 13px}
+
+/* ── gráfico ──────────────────────────────────────────────────── */
+.grafico{background:var(--superficie);border:1px solid var(--linea);border-radius:var(--r);padding:20px}
+.grafico__cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:2px}
+.grafico__tit{font-family:var(--display);font-weight:700;font-size:1.08rem}
+.grafico__nota{font-size:.8rem;color:var(--hueso-3);margin:0 0 14px}
+.lienzo{position:relative}
+.lienzo svg{display:block;width:100%;height:auto;overflow:visible}
+.mandos{display:grid;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--linea)}
+.mando{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.mando label{font-size:.88rem;color:var(--hueso-2)}
+.mando output{font-family:var(--dato);font-size:.88rem;font-weight:600;color:var(--oro);
+  font-variant-numeric:tabular-nums;min-width:4.5ch;text-align:right}
+.mando input[type=range]{grid-column:1/-1;width:100%;accent-color:#E5C158;height:22px;background:transparent}
+.lectura{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--linea)}
+.lectura div{min-width:0}
+.lectura dt{font-size:.76rem;color:var(--hueso-3);margin-bottom:2px}
+.lectura dd{margin:0;font-family:var(--dato);font-weight:600;font-size:1.12rem;color:var(--hueso);font-variant-numeric:tabular-nums}
+.veredicto{margin-top:14px;font-size:.9rem;padding:10px 13px;border-radius:var(--r);border:1px solid;display:flex;gap:9px;align-items:flex-start}
+.veredicto[data-estado=cierra]{border-color:rgba(78,163,122,.45);background:rgba(78,163,122,.10);color:#8FD3B2}
+.veredicto[data-estado=no]{border-color:rgba(196,103,74,.45);background:rgba(196,103,74,.10);color:#E0A08A}
+.veredicto b{font-weight:600}
+.tip{position:absolute;pointer-events:none;background:var(--superficie-alta);border:1px solid var(--linea-fuerte);
+  border-radius:var(--r);padding:7px 10px;font-family:var(--dato);font-size:.78rem;line-height:1.45;
+  color:var(--hueso);white-space:nowrap;opacity:0;transition:opacity .12s ease;z-index:5}
+.tip.on{opacity:1}
+
+/* ── caso ─────────────────────────────────────────────────────── */
+.caso{border-left:2px solid var(--oro);padding-left:clamp(20px,3vw,36px)}
+.caso__cita{font-family:var(--display);font-weight:600;font-size:clamp(1.35rem,2.6vw,1.85rem);
+  line-height:1.24;color:var(--oro-claro);margin:0 0 1.4rem;text-wrap:balance}
+.caso__cuerpo{max-width:var(--medida)}
+.caso dt{font-family:var(--dato);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--oro);margin-top:1.1rem;margin-bottom:.25rem}
+.caso dd{margin:0;color:var(--hueso-2)}
+
+/* ── rubros ───────────────────────────────────────────────────── */
+.rubros{columns:3;column-gap:36px}
+@media(max-width:860px){.rubros{columns:2}}
+@media(max-width:520px){.rubros{columns:1}}
+.rubro{break-inside:avoid;padding:11px 0;border-bottom:1px solid var(--linea)}
+.rubro__n{font-family:var(--display);font-weight:600;font-size:1.06rem}
+.rubro__d{font-size:.86rem;color:var(--hueso-3);display:block}
+.rubro__g{font-family:var(--dato);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--oro);margin:22px 0 4px;grid-column:1/-1}
+.rubro__g:first-child{margin-top:0}
+
+/* ── precios ──────────────────────────────────────────────────── */
+.tabla-envoltura{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.94rem}
+caption{text-align:left;font-size:.85rem;color:var(--hueso-3);padding-bottom:10px}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--linea);vertical-align:top}
+thead th{font-family:var(--dato);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--oro);border-bottom:1px solid var(--linea-fuerte);font-weight:600}
+tbody th{font-family:var(--display);font-weight:600;font-size:1.02rem;color:var(--hueso)}
+td.num{font-family:var(--dato);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ── carril productor ─────────────────────────────────────────── */
+.carril{background:var(--superficie);border:1px solid var(--linea);border-left:2px solid var(--verde-vivo);
+  border-radius:var(--r);padding:clamp(24px,3vw,36px)}
+.carril h2{font-size:clamp(1.5rem,3vw,2.05rem);margin-bottom:.6rem}
+
+/* ── contacto ─────────────────────────────────────────────────── */
+.contacto{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,56px);align-items:start}
+@media(max-width:860px){.contacto{grid-template-columns:1fr}}
+.contacto__datos{border-top:1px solid var(--linea-fuerte);padding-top:18px}
+.contacto__datos h4{color:var(--oro);margin-bottom:.3rem}
+.contacto__datos p{font-size:.95rem;color:var(--hueso-2)}
+.qué-mandar{font-size:.95rem;color:var(--hueso-2);padding-left:20px;margin:0}
+.qué-mandar li{margin-bottom:6px}
+
+/* ── pie ──────────────────────────────────────────────────────── */
+.pie{background:var(--acero);border-top:1px solid var(--linea);padding:44px 0 30px;font-size:.9rem}
+.pie__grilla{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:28px;margin-bottom:28px}
+@media(max-width:760px){.pie__grilla{grid-template-columns:1fr}}
+.pie h4{font-family:var(--dato);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hueso-3);margin-bottom:10px;font-weight:600}
+.pie a{display:block;color:var(--hueso-2);text-decoration:none;padding:3px 0}
+.pie a:hover{color:var(--oro)}
+.pie__legal{border-top:1px solid var(--linea);padding-top:18px;color:var(--hueso-3);font-size:.82rem;max-width:80ch}
+.pie__eslogan{font-family:var(--display);font-weight:600;color:var(--oro);font-size:1.05rem;margin:.6rem 0 .4rem}
+
+/* ── aviso de maqueta ─────────────────────────────────────────── */
+.aviso{background:var(--oro);color:#221B05;padding:11px 24px;font-size:.88rem;text-align:center;font-weight:500}
+.aviso b{font-weight:600}
+</style>
+
+<div class="aviso">
+  <b>Maqueta de propuesta.</b> Todo lo que aparece <span style="border:1px dashed #7A5F12;border-radius:3px;padding:0 4px">así</span> es un dato que falta y que tenés que completar vos. Nada de eso está inventado.
+</div>
+
+<header class="barra">
+  <div class="contenedor">
+    <a class="logo" href="#inicio">
+      <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 6 L38 42 H31 L24 22 L17 42 H10 Z" fill="none" stroke="#E5C158" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M17.5 32 H30.5" fill="none" stroke="#E5C158" stroke-width="2.4"/>
+      </svg>
+      <span>Agro<em>Titan</em></span>
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#quienes">Quiénes somos</a>
+      <a href="#metodo">Método</a>
+      <a href="#informe">El informe</a>
+      <a href="#etapas">Cómo trabajamos</a>
+      <a href="#precios">Precios</a>
+      <a class="boton boton--linea boton--chico" href="#contacto">Escribinos</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ═══ 1 · HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero__fondo" aria-hidden="true"></div>
+  <div class="contenedor hero__interior">
+    <p class="eyebrow">Evaluación de proyectos agropecuarios</p>
+    <h1>Ningún imperio se levantó<br>sobre tierra sin medir.</h1>
+    <p class="hero__bajada">
+      Antes de que inmovilices capital en un campo, alguien tiene que decirte
+      con números si conviene, cuánto tarda en volver y en qué escenario deja
+      de cerrar. Eso es lo que hacemos, y te lo entregamos por escrito.
+    </p>
+    <div class="hero__acciones">
+      <a class="boton boton--wa" href="https://wa.me/5491158735770?text=Hola%2C%20quiero%20evaluar%20un%20proyecto%20agropecuario." target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+        Escribinos por WhatsApp
+      </a>
+      <a class="boton boton--linea" href="#informe">Ver qué incluye el informe</a>
+    </div>
+    <p class="hero__paises">Argentina · Chile · Uruguay · Paraguay</p>
+
+    <div class="cifras">
+      <div class="cifra"><span class="cifra__n"><span class="falta">[X]</span> años</span><span class="cifra__t">evaluando proyectos agropecuarios</span></div>
+      <div class="cifra"><span class="cifra__n"><span class="falta">[X]</span> proyectos</span><span class="cifra__t">técnica y financieramente evaluados</span></div>
+      <div class="cifra"><span class="cifra__n"><span class="falta">[X]</span> ha</span><span class="cifra__t">analizadas a campo</span></div>
+      <div class="cifra"><span class="cifra__n">USD <span class="falta">[X]</span> M</span><span class="cifra__t">en inversión estudiada</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 2 · QUIÉNES SOMOS ═════════════════════════════════════════ -->
+<section class="banda" id="quienes">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Quiénes somos</p>
+      <h2>Un agrónomo y un financista, sobre el mismo modelo</h2>
+      <p class="bajada">
+        En un proyecto agropecuario conviven dos lógicas: la biológica, que decide
+        cuánto puede producir la tierra, y la económica, que decide si eso justifica
+        la inversión. La mayoría de los estudios las trabaja por separado y las pega
+        al final. Nosotros no.
+      </p>
+    </div>
+
+    <div class="rejilla r2">
+      <div class="medida">
+        <p>
+          Somos <strong>ingenieros agrónomos y zootecnistas</strong>. El rendimiento
+          que estima el agrónomo es exactamente el número que entra en el flujo de
+          fondos: no hay traducción en el medio, no hay un supuesto que aparece
+          después y que nadie recuerda de dónde salió.
+        </p>
+        <p>
+          Eso importa cuando el resultado se discute. Si un banco, un socio o el
+          asesor del inversor pregunta de dónde sale un rinde, la respuesta está en
+          el mismo documento, con la fuente al lado.
+        </p>
+        <p class="chico" style="margin-bottom:0">
+          <strong style="color:var(--oro)">Por qué no publicamos nombres de clientes.</strong>
+          La información de un proyecto le pertenece al productor. Publicamos el
+          método, no el cliente: sin nombres, sin superficies y sin resultados.
+        </p>
+      </div>
+
+      <div class="tarjeta">
+        <h3 style="color:var(--oro);font-size:1.05rem">El equipo, en números</h3>
+        <dl class="sup" style="border:0;margin-top:14px">
+          <div class="sup" style="padding-top:0"><dt>Profesionales</dt><dd><span class="falta">[X] ingenieros agrónomos y [X] zootecnistas]</span></dd></div>
+          <div class="sup"><dt>Formación</dt><dd><span class="falta">[universidades de egreso]</span></dd></div>
+          <div class="sup"><dt>Matrículas</dt><dd><span class="falta">[colegio profesional y estado de matrícula]</span></dd></div>
+          <div class="sup"><dt>Ejercicio</dt><dd><span class="falta">[X] años combinados</span> de ejercicio profesional</dd></div>
+          <div class="sup" style="border-bottom:0"><dt>Territorio</dt><dd><span class="falta">[provincias y regiones donde trabajaron]</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 · MÉTODO ════════════════════════════════════════════════ -->
+<section id="metodo">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Método</p>
+      <h2>Tres estudios encadenados</h2>
+      <p class="bajada">
+        Cada uno responde una pregunta, y el resultado de cada uno alimenta al
+        siguiente. Si el primero se equivoca, los otros dos se equivocan con él:
+        por eso el primero se hace a campo.
+      </p>
+    </div>
+
+    <div class="rejilla r3">
+      <article class="pilar">
+        <span class="pilar__preg">¿Qué puede producir este campo?</span>
+        <h3>Análisis técnico</h3>
+        <p>
+          Aptitud del suelo, agua disponible y su calidad, clima de la zona y
+          tecnología aplicable. De acá sale el rendimiento esperado, el número del
+          que dependen todos los cálculos que vienen después.
+        </p>
+      </article>
+      <article class="pilar">
+        <span class="pilar__preg">¿Cuánto deja por año?</span>
+        <h3>Análisis económico</h3>
+        <p>
+          Al rendimiento esperado le aplicamos precios de referencia y le restamos
+          los costos directos de implantación y manejo. Sale el margen bruto, en la
+          unidad que manda en cada caso: por hectárea, por cabeza o por litro.
+        </p>
+      </article>
+      <article class="pilar">
+        <span class="pilar__preg">¿Conviene inmovilizar el capital?</span>
+        <h3>Análisis financiero</h3>
+        <p>
+          Flujo de fondos a lo largo de toda la vida del proyecto, medido con VAN,
+          TIR y período de repago, y comparado contra el costo de oportunidad: lo
+          que ese mismo dinero rendiría en la mejor alternativa disponible.
+        </p>
+      </article>
+    </div>
+
+    <div class="supuestos">
+      <h3 style="margin:clamp(32px,4vw,48px) 0 6px">Los supuestos que declaramos</h3>
+      <p class="chico" style="max-width:var(--medida)">
+        Un modelo sin supuestos declarados es una opinión con decimales. Esto es lo
+        que fijamos por escrito en cada informe, antes del primer número.
+      </p>
+      <dl style="margin:18px 0 0">
+        <div class="sup"><dt>Moneda de evaluación</dt><dd><span class="falta">[dólares constantes / pesos corrientes / ambos]</span>, y el criterio de conversión usado.</dd></div>
+        <div class="sup"><dt>Tasa de descuento</dt><dd><span class="falta">[cómo se determina y contra qué alternativa se compara]</span>. Es la variable que más mueve el VAN, así que va explícita.</dd></div>
+        <div class="sup"><dt>Horizonte y valor terminal</dt><dd><span class="falta">[horizonte típico por rubro]</span>. Qué se hace con el monte y con la tierra al final del período: en frutales de vida larga, el valor terminal puede ser la mitad del resultado.</dd></div>
+        <div class="sup"><dt>Tratamiento impositivo</dt><dd><span class="falta">[IVA, ganancias, retenciones, regímenes de promoción aplicables]</span>. Un flujo antes y uno después de impuestos son dos proyectos distintos.</dd></div>
+        <div class="sup"><dt>Flujo evaluado</dt><dd><span class="falta">[del proyecto, del inversionista, o ambos]</span>. Con y sin financiamiento son dos TIR y responden dos preguntas distintas.</dd></div>
+        <div class="sup"><dt>Fuentes de datos</dt><dd><span class="falta">[INTA, bolsas de cereales y comercio, ODEPA, series propias, datos del cliente]</span>. Cada precio y cada rinde de referencia lleva su fuente al lado.</dd></div>
+        <div class="sup"><dt>Tratamiento del riesgo</dt><dd><span class="falta">[sensibilidad determinista sobre las variables críticas / simulación con distribuciones]</span>, sobre series históricas de rindes y precios.</dd></div>
+        <div class="sup" style="border-bottom:0"><dt>Relevamiento a campo</dt><dd>Análisis de suelo, balance hídrico, horas de frío, disponibilidad y calidad del agua de riego, y mapa de ambientes. El escritorio no alcanza.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · EL INFORME ════════════════════════════════════════════ -->
+<section class="banda" id="informe">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">El entregable</p>
+      <h2>Qué recibís exactamente</h2>
+      <p class="bajada">
+        Un informe que se puede leer, discutir y presentar. Abajo está el índice
+        completo, capítulo por capítulo. Tocá cualquiera para ver qué hay adentro.
+      </p>
+    </div>
+
+    <div class="informe">
+      <div>
+        <div class="indice">
+          <details class="cap" open>
+            <summary><span class="cap__n">01</span><span class="cap__t">Resumen ejecutivo y recomendación</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>La recomendación, en una página, con las condiciones bajo las que se sostiene.</li>
+                <li>Indicadores principales: VAN, TIR, período de repago.</li>
+                <li>Los tres escenarios donde el proyecto deja de cerrar.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">02</span><span class="cap__t">Relevamiento y aptitud productiva</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Análisis de suelo y clasificación por ambiente.</li>
+                <li>Agua: disponibilidad, calidad y balance hídrico.</li>
+                <li>Clima de la zona y su variabilidad. Riesgos agroclimáticos.</li>
+                <li>Mapa de ambientes del establecimiento.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">03</span><span class="cap__t">Modelo productivo</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Escala, tecnología aplicada y planteo de manejo.</li>
+                <li>Curva de producción hasta el régimen pleno.</li>
+                <li>Rendimiento esperado, con su fundamento y su fuente.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">04</span><span class="cap__t">Inversión y estructura de costos</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Inversión inicial discriminada por rubro.</li>
+                <li>Costos operativos anuales y su evolución.</li>
+                <li>Margen bruto por unidad: hectárea, cabeza o litro.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">05</span><span class="cap__t">Evaluación financiera</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Flujo de fondos a horizonte completo.</li>
+                <li>VAN, TIR y período de repago, contra el costo de oportunidad.</li>
+                <li>Escenario con y sin financiamiento.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">06</span><span class="cap__t">Riesgo y sensibilidad</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Sensibilidad sobre las variables que más pesan: precio y nivel de producción alcanzado.</li>
+                <li>Umbrales: desde dónde el proyecto deja de cerrar.</li>
+                <li>Riesgo climático sobre series históricas de la zona.</li>
+              </ul>
+            </div>
+          </details>
+          <details class="cap">
+            <summary><span class="cap__n">07</span><span class="cap__t">Anexos</span><span class="cap__mas">+</span></summary>
+            <div class="cap__cuerpo">
+              <ul>
+                <li>Planillas de cálculo, entregadas abiertas: podés cambiar un supuesto y ver qué pasa.</li>
+                <li>Análisis de laboratorio y documentación de respaldo.</li>
+                <li><span class="falta">[otros anexos que entregan]</span></li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+        <div class="entrega">
+          <span class="pildora"><span class="falta">[X]</span> páginas aprox.</span>
+          <span class="pildora">PDF + planilla de cálculo abierta</span>
+          <span class="pildora">Reunión de presentación incluida</span>
+          <span class="pildora"><span class="falta">[¿presentación ante el banco?]</span></span>
+        </div>
+      </div>
+
+      <!-- gráfico -->
+      <figure class="grafico" style="margin:0">
+        <div class="grafico__cab">
+          <figcaption class="grafico__tit">El capítulo 06, en vivo</figcaption>
+        </div>
+        <p class="grafico__nota">
+          Flujo acumulado descontado de una inversión frutal. Movés el precio y el
+          rinde y ves dónde deja de cerrar. <strong style="color:var(--oro-claro)">Ejemplo ilustrativo</strong>, no es tu proyecto.
+        </p>
+
+        <div class="lienzo">
+          <svg id="svg" viewBox="0 0 520 300" role="img" aria-labelledby="g-tit g-desc">
+            <title id="g-tit">Flujo de fondos acumulado y descontado, año por año</title>
+            <desc id="g-desc">La curva arranca negativa por la inversión inicial y los años improductivos, y cruza el cero cuando el proyecto termina de repagarse.</desc>
+          </svg>
+          <div class="tip" id="tip" role="status"></div>
+        </div>
+
+        <div class="mandos">
+          <div class="mando">
+            <label for="precio">Precio del producto</label>
+            <output id="precio-val" for="precio">0 %</output>
+            <input type="range" id="precio" min="-40" max="30" value="0" step="1" aria-describedby="precio-val">
+          </div>
+          <div class="mando">
+            <label for="rinde">Rendimiento alcanzado</label>
+            <output id="rinde-val" for="rinde">0 %</output>
+            <input type="range" id="rinde" min="-40" max="20" value="0" step="1" aria-describedby="rinde-val">
+          </div>
+        </div>
+
+        <dl class="lectura">
+          <div><dt>VAN (índice)</dt><dd id="van">—</dd></div>
+          <div><dt>TIR</dt><dd id="tir">—</dd></div>
+          <div><dt>Repago</dt><dd id="repago">—</dd></div>
+        </dl>
+
+        <p class="veredicto" id="veredicto" data-estado="cierra"></p>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · EL CASO ═══════════════════════════════════════════════ -->
+<section id="caso">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Cómo decidimos</p>
+      <h2>Un caso donde el número más alto era la peor opción</h2>
+    </div>
+    <div class="caso">
+      <p class="caso__cita">
+        «La alternativa de mayor margen bruto exigía una inversión que el productor
+        sólo podía afrontar endeudándose. Le recomendamos la que rendía menos.»
+      </p>
+      <div class="caso__cuerpo">
+        <dl>
+          <dt>La situación</dt>
+          <dd>
+            Un productor con un campo en producción tradicional llegó con una
+            sospecha antes que con un proyecto: intuía que su tierra podía rendir
+            más de lo que estaba rindiendo.
+          </dd>
+          <dt>Cómo lo abordamos</dt>
+          <dd>
+            Relevamos la aptitud productiva y armamos el mapa de ambientes, para
+            saber qué podía producir cada sector. Sobre esa base modelizamos las
+            alternativas —seguir igual, intensificar la actividad actual, o
+            reconvertir una parte del campo— y calculamos el margen bruto de cada
+            una. Las que cambiaban la estructura del establecimiento se evaluaron
+            además con flujo de fondos, VAN y TIR, porque ahí el capital queda
+            inmovilizado durante años antes de que la actividad entre en plena
+            producción.
+          </dd>
+          <dt>El resultado</dt>
+          <dd>
+            Se recomendó una reconversión parcial, que mejoraba el resultado del
+            establecimiento y dejaba intacto el flujo de caja de la actividad que ya
+            estaba funcionando. El margen bruto no decide inversiones: decide
+            comparaciones. Cuando el capital se inmoviliza y el flujo de caja es
+            una restricción real, la respuesta cambia.
+          </dd>
+        </dl>
+        <p class="chico" style="margin-top:1.4rem">
+          Caso representativo. La metodología es la que se aplica; la situación se
+          publica sin nombres, sin superficies y sin resultados, con el criterio de
+          confidencialidad que aplicamos a todos los proyectos.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · ETAPAS ════════════════════════════════════════════════ -->
+<section class="banda" id="etapas">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Cómo trabajamos</p>
+      <h2>Tres etapas, y podés bajarte en cualquiera</h2>
+      <p class="bajada">
+        No hace falta contratar todo de entrada. Cada etapa cierra en sí misma y
+        la siguiente sólo se justifica si la anterior dio que sí.
+      </p>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">1</span>
+      <div>
+        <h3>Análisis de factibilidad</h3>
+        <p>
+          Responde si el proyecto conviene y bajo qué condiciones. Es la puerta de
+          entrada y, muchas veces, donde termina el trabajo: si la respuesta es que
+          no, te ahorraste la inversión y el resto del estudio.
+        </p>
+        <p class="etapa__meta">
+          <span>Entrega: <span class="falta">[X semanas]</span></span>
+          <span>Desde <span class="falta">[USD X]</span></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">2</span>
+      <div>
+        <h3>Proyecto llave en mano</h3>
+        <p>
+          El estudio completo: flujo de fondos, evaluación financiera y la
+          documentación lista para presentar ante un banco, un socio o un
+          directorio. Es lo que se firma y se defiende.
+        </p>
+        <p class="etapa__meta">
+          <span>Entrega: <span class="falta">[X semanas]</span></span>
+          <span>Desde <span class="falta">[USD X]</span></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">3</span>
+      <div>
+        <h3>Acompañamiento durante la ejecución</h3>
+        <p>
+          Con el proyecto en marcha, comparamos lo planificado contra lo que
+          efectivamente pasó, con datos reales y no estimados. Muestra dónde se
+          desvió el resultado y por qué. Se contrata aparte y sólo si el proyecto
+          lo justifica.
+        </p>
+        <p class="etapa__meta">
+          <span>Modalidad: <span class="falta">[mensual / por campaña]</span></span>
+          <span>Desde <span class="falta">[USD X]</span></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="rejilla r2" style="margin-top:clamp(32px,4vw,48px)">
+      <article class="tarjeta">
+        <h3>Valuación de campos</h3>
+        <p style="color:var(--hueso-2);font-size:.97rem">
+          Cuánto vale un campo, por los dos caminos que usa la tasación rural:
+          capitalizando la renta que la tierra es capaz de generar, y comparándolo
+          con operaciones reales de la zona. El cruce da un valor defendible con
+          números, para comprar, vender o respaldar una operación.
+        </p>
+        <p class="chico" style="margin-bottom:0">Criterio de valuación: <span class="falta">[norma o criterio profesional aplicado]</span></p>
+      </article>
+      <article class="tarjeta">
+        <h3>Impacto climático y de riesgo</h3>
+        <p style="color:var(--hueso-2);font-size:.97rem;margin-bottom:0">
+          Dos zonas con el mismo rinde promedio pueden tener riesgos muy distintos:
+          lo que las diferencia es la variabilidad. Trabajamos sobre series
+          históricas de rindes y precios para saber en qué escenarios el proyecto
+          sigue cerrando, y desde dónde empieza a ser una apuesta.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 · RUBROS ════════════════════════════════════════════════ -->
+<section id="rubros">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Rubros</p>
+      <h2>Dónde tenemos criterio propio</h2>
+      <p class="bajada">
+        No evaluamos cualquier cosa. Estos son los sistemas productivos que
+        conocemos por dentro, con la variable que define el resultado en cada uno.
+      </p>
+    </div>
+    <div class="rubros">
+      <p class="rubro__g">Frutales extensivos</p>
+      <div class="rubro"><span class="rubro__n">Nogal</span><span class="rubro__d">Los años improductivos iniciales definen el repago.</span></div>
+      <div class="rubro"><span class="rubro__n">Avellano</span><span class="rubro__d">Aptitud de zona en cultivo en expansión.</span></div>
+      <div class="rubro"><span class="rubro__n">Cerezo</span><span class="rubro__d">La ventana comercial manda sobre el retorno.</span></div>
+      <p class="rubro__g">Frutales intensivos</p>
+      <div class="rubro"><span class="rubro__n">Arándano</span><span class="rubro__d">Costo de mano de obra sobre el margen.</span></div>
+      <div class="rubro"><span class="rubro__n">Vid</span><span class="rubro__d">Variedad y destino comercial como variable central.</span></div>
+      <p class="rubro__g">Producción intensiva</p>
+      <div class="rubro"><span class="rubro__n">Avícola tradicional</span><span class="rubro__d">Capacidad instalada, ciclos y contrato de integración.</span></div>
+      <div class="rubro"><span class="rubro__n">Avícola black-out</span><span class="rubro__d">Conversión y consumo energético.</span></div>
+      <div class="rubro"><span class="rubro__n">Feedlot</span><span class="rubro__d">Costo de la ración y relación compra-venta.</span></div>
+      <p class="rubro__g">Ganadería y leche</p>
+      <div class="rubro"><span class="rubro__n">Tambo</span><span class="rubro__d">Dinámica del rodeo y costo del litro producido.</span></div>
+      <div class="rubro"><span class="rubro__n">Cría e invernada</span><span class="rubro__d">Carga animal, índices reproductivos, margen por hectárea.</span></div>
+    </div>
+    <p class="chico" style="margin-top:26px">
+      Escala de proyectos con la que trabajamos: <span class="falta">[rango de superficie o de inversión]</span>.
+      Si tu proyecto no entra en el rango, te lo decimos en la primera conversación.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 8 · PRECIOS ═══════════════════════════════════════════════ -->
+<section class="banda" id="precios">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Condiciones</p>
+      <h2>Cuánto cuesta y cuánto tarda</h2>
+      <p class="bajada">
+        Lo publicamos para que no tengas que escribir sólo para averiguarlo. El
+        número final depende de la escala y del rubro, pero el orden de magnitud es
+        éste.
+      </p>
+    </div>
+    <div class="tabla-envoltura">
+      <table>
+        <caption>Valores de referencia. La primera conversación, donde definimos qué evaluación necesita tu proyecto, es sin cargo.</caption>
+        <thead>
+          <tr><th scope="col">Etapa</th><th scope="col">Qué incluye</th><th scope="col">Plazo</th><th scope="col">Desde</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Factibilidad</th>
+            <td>Relevamiento a campo, modelo productivo y evaluación financiera preliminar. Responde si conviene.</td>
+            <td class="num"><span class="falta">[X sem]</span></td>
+            <td class="num"><span class="falta">[USD X]</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Llave en mano</th>
+            <td>El informe completo de los siete capítulos, con planillas abiertas y documentación presentable.</td>
+            <td class="num"><span class="falta">[X sem]</span></td>
+            <td class="num"><span class="falta">[USD X]</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Acompañamiento</th>
+            <td>Control de gestión sobre el proyecto en marcha: planificado contra ejecutado.</td>
+            <td class="num"><span class="falta">[mensual]</span></td>
+            <td class="num"><span class="falta">[USD X]</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Valuación de campo</th>
+            <td>Renta capitalizada y comparables de zona, con valor defendible.</td>
+            <td class="num"><span class="falta">[X sem]</span></td>
+            <td class="num"><span class="falta">[USD X]</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 9 · CARRIL PRODUCTOR ══════════════════════════════════════ -->
+<section id="productores">
+  <div class="contenedor">
+    <div class="carril">
+      <p class="eyebrow" style="color:var(--verde-vivo)">Si ya tenés el campo</p>
+      <h2>¿Sos productor y querés saber si tu campo puede rendir más?</h2>
+      <p class="bajada" style="margin-bottom:1.2rem">
+        No hace falta que vengas con un proyecto armado. La mayoría llega con una
+        sospecha: que hay un sector que no está dando lo que podría, que la
+        actividad de siempre ya no cierra como antes, o que el banco pide números
+        que nadie preparó.
+      </p>
+      <p class="medida">
+        Empezamos por el mapa de ambientes de tu establecimiento y las alternativas
+        posibles para cada sector. De ahí sale, con margen bruto y con flujo de
+        fondos, qué conviene hacer y qué conviene dejar como está.
+      </p>
+      <a class="boton boton--wa" href="https://wa.me/5491158735770?text=Hola%2C%20tengo%20un%20campo%20en%20producci%C3%B3n%20y%20quiero%20saber%20si%20puede%20rendir%20m%C3%A1s." target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+        Contame qué campo tenés
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 · CONTACTO ═════════════════════════════════════════════ -->
+<section class="banda" id="contacto">
+  <div class="contenedor">
+    <div class="sec-cab">
+      <p class="eyebrow">Contacto</p>
+      <h2>Escribinos y lo conversamos</h2>
+    </div>
+    <div class="contacto">
+      <div>
+        <p class="bajada" style="margin-bottom:1.4rem">
+          La primera conversación es sin cargo y sirve para entender el proyecto
+          antes de hablar de números. Si no es para nosotros, te lo decimos ahí
+          mismo.
+        </p>
+        <p style="font-weight:600;margin-bottom:.5rem">Para que la primera respuesta sirva, contanos:</p>
+        <ul class="qué-mandar">
+          <li>Superficie aproximada y zona.</li>
+          <li>Qué querés producir, o qué estás produciendo hoy.</li>
+          <li>En qué etapa está: idea, decisión tomada, o proyecto en marcha.</li>
+          <li>Qué necesitás resolver: decidir, conseguir financiamiento, o corregir el rumbo.</li>
+        </ul>
+        <a class="boton boton--wa" style="margin-top:1.6rem" href="https://wa.me/5491158735770?text=Hola.%20Superficie%20y%20zona%3A%20...%20%7C%20Rubro%3A%20...%20%7C%20Etapa%3A%20...%20%7C%20Qu%C3%A9%20necesito%20resolver%3A%20..." target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <p class="chico" style="margin-top:1rem">
+          El botón abre WhatsApp con el mensaje ya empezado. No pasa por ningún
+          servidor nuestro ni de terceros.
+        </p>
+      </div>
+
+      <aside class="contacto__datos">
+        <h4>Correo</h4>
+        <p><span class="falta">[correo con dominio propio]</span><br>
+          <span class="chico">Hoy figura un Gmail personal. Conviene cambiarlo antes de publicar.</span>
+        </p>
+        <h4 style="margin-top:1.4rem">Dónde trabajamos</h4>
+        <p>Argentina · Chile · Uruguay · Paraguay<br>
+          <span class="chico"><span class="falta">[provincias y regiones concretas]</span></span>
+        </p>
+        <h4 style="margin-top:1.4rem">Respondemos personalmente</h4>
+        <p>Leemos todas las consultas. No hay formulario que se pierda en una bandeja compartida.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__grilla">
+      <div>
+        <a class="logo" href="#inicio" style="font-size:1.2rem">
+          <svg width="24" height="24" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 6 L38 42 H31 L24 22 L17 42 H10 Z" fill="none" stroke="#E5C158" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M17.5 32 H30.5" fill="none" stroke="#E5C158" stroke-width="2.4"/>
+          </svg>
+          <span>Agro<em>Titan</em></span>
+        </a>
+        <p class="pie__eslogan">La fuerza de la tierra. La precisión del capital.</p>
+        <p style="color:var(--hueso-3);margin:0">Evaluación de proyectos agropecuarios. Ingeniería agronómica y análisis financiero en el mismo equipo.</p>
+      </div>
+      <nav aria-label="Secciones del pie">
+        <h4>Secciones</h4>
+        <a href="#quienes">Quiénes somos</a>
+        <a href="#metodo">Método</a>
+        <a href="#informe">El informe</a>
+        <a href="#etapas">Cómo trabajamos</a>
+        <a href="#precios">Precios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div>
+        <h4>Seguinos</h4>
+        <a href="https://www.linkedin.com/in/agro-titan-251367428" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/augustoniente/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="pie__legal">
+      <p style="margin-bottom:.5rem">
+        Los análisis publicados en este sitio son de carácter orientativo y no constituyen
+        recomendación de inversión. Cada proyecto requiere un estudio particular. AgroTitan
+        no garantiza resultados productivos ni financieros.
+      </p>
+      <p style="margin:0">© 2026 AgroTitan · Sitio sin cookies, sin rastreadores y sin guardar información de quien lo visita.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   Gráfico de sensibilidad — capítulo 06 del informe, en vivo.
+   Modelo ILUSTRATIVO de una inversión frutal, en índice: la inversión
+   inicial vale 100. No representa ningún proyecto real.
+   ═══════════════════════════════════════════════════════════════════ */
+(function () {
+  "use strict";
+
+  var HORIZONTE = 20, TASA = 0.09;
+  var INVERSION = 100, MANTENIMIENTO = 12;
+  var INGRESO_PLENO = 62, COSTO_FIJO = 10, COSTO_VARIABLE = 14;
+  var NIVEL = { 4: 0.30, 5: 0.60, 6: 0.85 };   // entrada en producción
+
+  var svg = document.getElementById("svg");
+  var tip = document.getElementById("tip");
+  var NS = "http://www.w3.org/2000/svg";
+  var capa = document.createElementNS(NS, "g");   // todo lo que se redibuja vive acá
+  svg.appendChild(capa);
+
+  var W = 520, H = 300, ML = 46, MR = 18, MT = 16, MB = 34;
+  var IW = W - ML - MR, IH = H - MT - MB;
+  var Y_MIN = -180, Y_MAX = 250;
+
+  var px = function (a) { return ML + (a / HORIZONTE) * IW; };
+  var py = function (v) { return MT + (Y_MAX - v) / (Y_MAX - Y_MIN) * IH; };
+
+  function nivel(a) { return a < 4 ? 0 : (NIVEL[a] !== undefined ? NIVEL[a] : 1); }
+
+  function modelo(fPrecio, fRinde) {
+    var flujos = [], acum = [], suma = 0;
+    for (var a = 0; a <= HORIZONTE; a++) {
+      var f;
+      if (a === 0) f = -INVERSION;
+      else if (a < 4) f = -MANTENIMIENTO;
+      else {
+        var n = nivel(a) * (1 + fRinde);
+        f = INGRESO_PLENO * n * (1 + fPrecio) - (COSTO_FIJO + COSTO_VARIABLE * nivel(a));
+      }
+      flujos.push(f);
+      suma += f / Math.pow(1 + TASA, a);
+      acum.push(suma);
+    }
+    return { flujos: flujos, acum: acum, van: suma };
+  }
+
+  function tir(flujos) {
+    var f = function (r) {
+      var s = 0;
+      for (var i = 0; i < flujos.length; i++) s += flujos[i] / Math.pow(1 + r, i);
+      return s;
+    };
+    if (f(0) <= 0) return null;             // ni sin descontar recupera
+    var lo = 0, hi = 1.5;
+    if (f(hi) > 0) return hi;
+    for (var k = 0; k < 60; k++) {
+      var m = (lo + hi) / 2;
+      if (f(m) > 0) lo = m; else hi = m;
+    }
+    return (lo + hi) / 2;
+  }
+
+  function repago(acum) {
+    for (var a = 0; a < acum.length; a++) if (acum[a] >= 0) return a;
+    return null;
+  }
+
+  function el(nombre, attrs, texto) {
+    var n = document.createElementNS(NS, nombre);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (texto !== undefined) n.textContent = texto;
+    return n;
+  }
+
+  function ruta(acum, hasta) {
+    var d = "";
+    for (var a = 0; a <= hasta; a++) d += (a ? "L" : "M") + px(a).toFixed(1) + " " + py(acum[a]).toFixed(1);
+    return d;
+  }
+
+  /* Área partida en cero: el signo lleva color, y además va rotulada. */
+  function areas(acum) {
+    var neg = "", pos = "", y0 = py(0);
+    var cruce = null;
+    for (var a = 1; a <= HORIZONTE; a++) {
+      if (acum[a - 1] < 0 && acum[a] >= 0) { cruce = a - 1 + (0 - acum[a - 1]) / (acum[a] - acum[a - 1]); break; }
+    }
+    // negativa: desde 0 hasta el cruce (o hasta el final si nunca cruza)
+    var finNeg = cruce === null ? HORIZONTE : cruce;
+    neg = "M" + px(0) + " " + y0;
+    for (var b = 0; b <= Math.floor(finNeg); b++) neg += "L" + px(b).toFixed(1) + " " + py(acum[b]).toFixed(1);
+    neg += "L" + px(finNeg).toFixed(1) + " " + (cruce === null ? py(acum[HORIZONTE]).toFixed(1) : y0) + "L" + px(finNeg).toFixed(1) + " " + y0 + "Z";
+    if (cruce !== null) {
+      pos = "M" + px(cruce).toFixed(1) + " " + y0;
+      for (var c = Math.ceil(cruce); c <= HORIZONTE; c++) pos += "L" + px(c).toFixed(1) + " " + py(acum[c]).toFixed(1);
+      pos += "L" + px(HORIZONTE) + " " + y0 + "Z";
+    }
+    return { neg: neg, pos: pos, cruce: cruce };
+  }
+
+  var datos = null;
+
+  function dibujar(fPrecio, fRinde) {
+    var m = modelo(fPrecio, fRinde);
+    datos = m;
+    while (capa.firstChild) capa.removeChild(capa.firstChild);
+
+    // grilla y eje Y
+    [-100, 0, 100, 200].forEach(function (v) {
+      var esCero = v === 0;
+      capa.appendChild(el("line", {
+        x1: ML, x2: W - MR, y1: py(v), y2: py(v),
+        stroke: esCero ? "rgba(242,240,233,.42)" : "rgba(242,240,233,.09)",
+        "stroke-width": esCero ? 1.4 : 1
+      }));
+      capa.appendChild(el("text", {
+        x: ML - 9, y: py(v) + 4, "text-anchor": "end", fill: "rgba(242,240,233,.50)",
+        "font-size": 11, "font-family": "IBM Plex Mono, monospace"
+      }, v));
+    });
+
+    // eje X
+    [0, 5, 10, 15, 20].forEach(function (a) {
+      capa.appendChild(el("text", {
+        x: px(a), y: H - MB + 19, "text-anchor": "middle", fill: "rgba(242,240,233,.50)",
+        "font-size": 11, "font-family": "IBM Plex Mono, monospace"
+      }, a));
+    });
+    capa.appendChild(el("text", {
+      x: ML + IW / 2, y: H - 2, "text-anchor": "middle", fill: "rgba(242,240,233,.40)", "font-size": 10.5
+    }, "años desde la inversión"));
+    capa.appendChild(el("text", {
+      x: ML - 34, y: MT - 4, fill: "rgba(242,240,233,.40)", "font-size": 10.5
+    }, "índice · inversión inicial = 100"));
+
+    var A = areas(m.acum);
+    if (A.neg) capa.appendChild(el("path", { d: A.neg, fill: "rgba(196,103,74,.22)", stroke: "none" }));
+    if (A.pos) capa.appendChild(el("path", { d: A.pos, fill: "rgba(229,193,88,.26)", stroke: "none" }));
+
+    capa.appendChild(el("path", {
+      d: ruta(m.acum, HORIZONTE), fill: "none", stroke: "#F2F0E9",
+      "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: .92
+    }));
+
+    // rótulo del pozo — el color no viaja solo
+    var minA = 0, minV = 0;
+    for (var a = 0; a <= HORIZONTE; a++) if (m.acum[a] < minV) { minV = m.acum[a]; minA = a; }
+    if (minV < -20) {
+      capa.appendChild(el("text", {
+        x: px(minA) + 8, y: py(minV) + 16, fill: "#D98A6E", "font-size": 10.5, "font-family": "IBM Plex Mono, monospace"
+      }, "capital inmovilizado"));
+    }
+
+    // cruce de repago
+    var r = repago(m.acum);
+    if (r !== null && A.cruce !== null) {
+      capa.appendChild(el("line", {
+        x1: px(A.cruce), x2: px(A.cruce), y1: MT, y2: H - MB,
+        stroke: "#E5C158", "stroke-width": 1.2, "stroke-dasharray": "3 3", opacity: .75
+      }));
+      var etiqX = Math.min(px(A.cruce) + 7, W - MR - 88);
+      capa.appendChild(el("text", {
+        x: etiqX, y: MT + 13, fill: "#F1D98C", "font-size": 11, "font-family": "IBM Plex Mono, monospace"
+      }, "repago · año " + r));
+    }
+
+    // extremo final, enfatizado
+    var vf = m.acum[HORIZONTE];
+    capa.appendChild(el("circle", {
+      cx: px(HORIZONTE), cy: py(vf), r: 4.5,
+      fill: vf >= 0 ? "#E5C158" : "#C4674A", stroke: "#1B1E19", "stroke-width": 2
+    }));
+
+    actualizarLectura(m);
+  }
+
+  function fmt(n) { return (n >= 0 ? "+" : "−") + Math.abs(n).toFixed(0); }
+
+  function actualizarLectura(m) {
+    var r = repago(m.acum), t = tir(m.flujos);
+    document.getElementById("van").textContent = fmt(m.van);
+    document.getElementById("tir").textContent = t === null ? "sin retorno" : (t * 100).toFixed(1) + " %";
+    document.getElementById("repago").textContent = r === null ? "no repaga" : "año " + r;
+
+    var v = document.getElementById("veredicto");
+    var cierra = m.van > 0 && t !== null && t > TASA;
+    v.setAttribute("data-estado", cierra ? "cierra" : "no");
+    v.innerHTML = cierra
+      ? "<b>Sigue cerrando.</b>&nbsp;El retorno queda por encima del costo de oportunidad del capital, fijado acá en " + (TASA * 100).toFixed(0) + " %."
+      : "<b>Deja de cerrar.</b>&nbsp;El retorno cae por debajo del costo de oportunidad (" + (TASA * 100).toFixed(0) + " %): ese mismo dinero rendiría más en otro lado.";
+  }
+
+  /* ── hover ─────────────────────────────────────────────────────── */
+  var cursor = null;
+  svg.addEventListener("pointermove", function (e) {
+    if (!datos) return;
+    var caja = svg.getBoundingClientRect();
+    var x = (e.clientX - caja.left) / caja.width * W;
+    var a = Math.round((x - ML) / IW * HORIZONTE);
+    if (a < 0 || a > HORIZONTE) { ocultar(); return; }
+
+    if (!cursor) {
+      cursor = el("g", {});
+      cursor.appendChild(el("line", { stroke: "rgba(242,240,233,.35)", "stroke-width": 1 }));
+      cursor.appendChild(el("circle", { r: 4, fill: "#E5C158", stroke: "#1B1E19", "stroke-width": 2 }));
+    }
+    if (cursor.parentNode !== svg) svg.appendChild(cursor);
+    var vx = px(a), vy = py(datos.acum[a]);
+    cursor.firstChild.setAttribute("x1", vx); cursor.firstChild.setAttribute("x2", vx);
+    cursor.firstChild.setAttribute("y1", MT); cursor.firstChild.setAttribute("y2", H - MB);
+    cursor.lastChild.setAttribute("cx", vx); cursor.lastChild.setAttribute("cy", vy);
+
+    tip.textContent = "Año " + a + " · acumulado " + fmt(datos.acum[a]);
+    tip.classList.add("on");
+    var izq = vx / W * caja.width;
+    tip.style.left = Math.max(0, Math.min(izq - tip.offsetWidth / 2, caja.width - tip.offsetWidth)) + "px";
+    tip.style.top = Math.max(0, vy / H * caja.height - tip.offsetHeight - 12) + "px";
+  });
+  function ocultar() {
+    tip.classList.remove("on");
+    if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor);
+  }
+  svg.addEventListener("pointerleave", ocultar);
+
+  /* ── mandos ────────────────────────────────────────────────────── */
+  var iPrecio = document.getElementById("precio"), iRinde = document.getElementById("rinde");
+  function refrescar() {
+    var p = +iPrecio.value, r = +iRinde.value;
+    document.getElementById("precio-val").textContent = (p > 0 ? "+" : "") + p + " %";
+    document.getElementById("rinde-val").textContent = (r > 0 ? "+" : "") + r + " %";
+    dibujar(p / 100, r / 100);
+  }
+  iPrecio.addEventListener("input", refrescar);
+  iRinde.addEventListener("input", refrescar);
+  refrescar();
+})();
+</script>
