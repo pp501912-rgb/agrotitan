@@ -1,0 +1,56 @@
+{
+  "_leeme": "Sets curados por capa. HERALDO arma cada publicación combinando una capa de rubro, una de disciplina y una de territorio, entre 8 y 15 en total. Los prohibidos nunca se usan: son los genéricos vacíos que atraen cuentas falsas y no clientes.",
+  "actualizado": "2026-09-03",
+
+  "rubro": {
+    "nogal":               ["nogal", "nuezdenogal", "frutalesecos", "fruticultura"],
+    "avellano":            ["avellano", "frutosecos", "fruticultura"],
+    "cerezo":              ["cerezo", "cereza", "fruticultura"],
+    "arandano":            ["arandano", "blueberry", "fruticultura"],
+    "vid":                 ["vid", "viticultura", "vitivinicultura"],
+    "avicola-tradicional": ["avicultura", "produccionavicola", "granja"],
+    "avicola-blackout":    ["avicultura", "blackout", "produccionavicola"],
+    "feedlot":             ["feedlot", "engordeacorral", "ganaderia"],
+    "tambo":               ["tambo", "lecheria", "produccionlechera"],
+    "cria-invernada":      ["ganaderia", "criabovina", "invernada"],
+    "metodo":              ["evaluaciondeproyectos", "factibilidad"],
+    "riesgo":              ["gestionderiesgo", "analisisdesensibilidad"],
+    "servicios":           ["evaluaciondeproyectos", "consultoriaagropecuaria"],
+    "marca":               ["agronegocios"]
+  },
+
+  "disciplina": [
+    "evaluaciondeproyectos",
+    "factibilidad",
+    "margenbruto",
+    "flujodefondos",
+    "inversionagropecuaria",
+    "agronegocios",
+    "rentabilidadagropecuaria",
+    "proyectosdeinversion",
+    "ingenieriaagronomica",
+    "valuaciondecampos"
+  ],
+
+  "territorio": [
+    "agroargentina",
+    "agrochile",
+    "agrouruguay",
+    "agroparaguay",
+    "camposenventa",
+    "inversionenelcampo"
+  ],
+
+  "prohibidos": [
+    "agro", "campo", "inversion", "exito", "emprendedor", "mindset",
+    "motivacion", "dinero", "riqueza", "libertadfinanciera", "negocios",
+    "instagood", "follow", "like4like"
+  ],
+
+  "reglas": {
+    "minimo": 8,
+    "maximo": 15,
+    "orden": ["rubro", "disciplina", "territorio"],
+    "nota": "El territorio se elige según a quién apunta la pieza, no se ponen los cuatro países siempre."
+  }
+}

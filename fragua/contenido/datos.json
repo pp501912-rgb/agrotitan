@@ -1,0 +1,223 @@
+{
+  "_leeme": "Los datos que la página necesita y todavía no tenemos. Mientras 'valor' esté vacío, la página los muestra entre corchetes y el constructor se niega a publicar. Completalos desde el panel o acá a mano.",
+  "actualizado": "2026-09-03",
+  "campos": [
+    {
+      "clave": "aniosTrayectoria",
+      "seccion": "Trayectoria",
+      "pregunta": "¿Cuántos años lleva el equipo evaluando proyectos agropecuarios?",
+      "ayuda": "Sólo el número. La palabra «años» ya está en la página.",
+      "valor": ""
+    },
+    {
+      "clave": "proyectosEvaluados",
+      "seccion": "Trayectoria",
+      "pregunta": "¿Cuántos proyectos evaluaron, técnica y financieramente?",
+      "ayuda": "Un número redondo está bien. Es prueba de volumen de trabajo real.",
+      "valor": ""
+    },
+    {
+      "clave": "hectareasAnalizadas",
+      "seccion": "Trayectoria",
+      "pregunta": "¿Cuántas hectáreas analizaron a campo?",
+      "ayuda": "Prueba de escala: le dice al visitante si su proyecto entra.",
+      "valor": ""
+    },
+    {
+      "clave": "inversionEvaluadaUSD",
+      "seccion": "Trayectoria",
+      "pregunta": "¿Cuánta inversión evaluaron, en millones de dólares?",
+      "ayuda": "Es la cifra que más le habla al inversor. Puede ir por rangos.",
+      "valor": ""
+    },
+    {
+      "clave": "equipoComposicion",
+      "seccion": "El equipo",
+      "pregunta": "¿Cuántos son y de qué se recibieron?",
+      "ayuda": "Sin nombres propios. Por ejemplo: «3 ingenieros agrónomos y 2 zootecnistas».",
+      "valor": ""
+    },
+    {
+      "clave": "equipoFormacion",
+      "seccion": "El equipo",
+      "pregunta": "¿En qué universidades se recibieron?",
+      "ayuda": "Las instituciones, sin decir quién se recibió dónde.",
+      "valor": ""
+    },
+    {
+      "clave": "equipoMatriculas",
+      "seccion": "El equipo",
+      "pregunta": "¿En qué colegio profesional están matriculados y en qué estado?",
+      "ayuda": "Por ejemplo: «Colegio de Ingenieros Agrónomos de …, matrículas activas».",
+      "valor": ""
+    },
+    {
+      "clave": "equipoEjercicio",
+      "seccion": "El equipo",
+      "pregunta": "¿Cuántos años de ejercicio profesional suman entre todos?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "equipoTerritorio",
+      "seccion": "El equipo",
+      "pregunta": "¿En qué provincias y regiones trabajaron?",
+      "ayuda": "Nombrar provincias concretas es más creíble que decir «cuatro países».",
+      "valor": ""
+    },
+    {
+      "clave": "monedaEvaluacion",
+      "seccion": "Método",
+      "pregunta": "¿En qué moneda evalúan los proyectos?",
+      "ayuda": "Dólares constantes, pesos corrientes, o ambos. En Argentina esto define el resultado.",
+      "valor": ""
+    },
+    {
+      "clave": "tasaDescuento",
+      "seccion": "Método",
+      "pregunta": "¿Cómo determinan la tasa de descuento y contra qué alternativa la comparan?",
+      "ayuda": "Es la variable que más mueve el VAN. Conviene que sea explícita.",
+      "valor": ""
+    },
+    {
+      "clave": "horizonteValorTerminal",
+      "seccion": "Método",
+      "pregunta": "¿Qué horizonte de evaluación usan en cada rubro?",
+      "ayuda": "Por ejemplo: «20 años en frutales de vida larga, 10 en ganadería».",
+      "valor": ""
+    },
+    {
+      "clave": "tratamientoImpositivo",
+      "seccion": "Método",
+      "pregunta": "¿Qué impuestos y regímenes contemplan en el flujo?",
+      "ayuda": "Un flujo antes y uno después de impuestos son dos proyectos distintos.",
+      "valor": ""
+    },
+    {
+      "clave": "flujoEvaluado",
+      "seccion": "Método",
+      "pregunta": "¿Evalúan el flujo del proyecto, el del inversionista, o los dos?",
+      "ayuda": "Con y sin financiamiento son dos TIR y responden dos preguntas distintas.",
+      "valor": ""
+    },
+    {
+      "clave": "fuentesDeDatos",
+      "seccion": "Método",
+      "pregunta": "¿De dónde salen los precios y rindes de referencia?",
+      "ayuda": "Declarar las fuentes es la diferencia entre un modelo y una opinión.",
+      "valor": ""
+    },
+    {
+      "clave": "tratamientoRiesgo",
+      "seccion": "Método",
+      "pregunta": "¿Cómo tratan el riesgo?",
+      "ayuda": "Las dos formas son válidas. Decir cuál usan es lo que da confianza.",
+      "valor": ""
+    },
+    {
+      "clave": "informeAnexos",
+      "seccion": "El informe",
+      "pregunta": "¿Qué otros anexos entregan con el informe?",
+      "ayuda": "Además de análisis de laboratorio y documentación de respaldo.",
+      "valor": ""
+    },
+    {
+      "clave": "informePaginas",
+      "seccion": "El informe",
+      "pregunta": "¿Cuántas páginas tiene el informe, aproximadamente?",
+      "ayuda": "Sólo el número. Es de los datos que más convence al que duda.",
+      "valor": ""
+    },
+    {
+      "clave": "informeReunion",
+      "seccion": "El informe",
+      "pregunta": "¿La reunión de presentación incluye acompañar al banco?",
+      "ayuda": "Por ejemplo: «Sí, incluye presentación ante la entidad que financia».",
+      "valor": ""
+    },
+    {
+      "clave": "plazoFactibilidad",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿En cuántas semanas entregan el análisis de factibilidad?",
+      "ayuda": "Sólo el número. Filtra al que tiene un apuro imposible.",
+      "valor": ""
+    },
+    {
+      "clave": "precioFactibilidad",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿Desde cuántos dólares arranca el análisis de factibilidad?",
+      "ayuda": "Sólo el número. Podés publicar un «desde» en vez del rango completo.",
+      "valor": ""
+    },
+    {
+      "clave": "plazoLlaveEnMano",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿En cuántas semanas entregan el proyecto llave en mano?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "precioLlaveEnMano",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿Desde cuántos dólares arranca el proyecto llave en mano?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "modalidadAcompanamiento",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿El acompañamiento se contrata por mes o por campaña?",
+      "ayuda": "Puede ser una de las dos, o las dos.",
+      "valor": ""
+    },
+    {
+      "clave": "precioAcompanamiento",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿Desde cuántos dólares arranca el acompañamiento?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "criterioValuacion",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿Bajo qué norma o criterio profesional emiten una valuación de campo?",
+      "ayuda": "Es lo que decide si el informe sirve como respaldo formal ante un tercero.",
+      "valor": ""
+    },
+    {
+      "clave": "escalaProyectos",
+      "seccion": "Rubros",
+      "pregunta": "¿Con qué escala de proyectos trabajan?",
+      "ayuda": "Por ejemplo: «desde 20 hasta 2.000 hectáreas». Ubica al visitante.",
+      "valor": ""
+    },
+    {
+      "clave": "plazoValuacion",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿En cuántas semanas entregan una valuación de campo?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "precioValuacion",
+      "seccion": "Etapas y precios",
+      "pregunta": "¿Desde cuántos dólares arranca una valuación de campo?",
+      "ayuda": "Sólo el número.",
+      "valor": ""
+    },
+    {
+      "clave": "correo",
+      "seccion": "Contacto",
+      "pregunta": "¿Cuál es el correo con dominio propio?",
+      "ayuda": "El Gmail personal es fricción de confianza pura. Si la casilla todavía no existe, conviene crearla antes de publicar.",
+      "valor": ""
+    },
+    {
+      "clave": "territorioConcreto",
+      "seccion": "Contacto",
+      "pregunta": "¿En qué provincias y regiones concretas trabajan?",
+      "ayuda": "Más creíble que nombrar cuatro países enteros.",
+      "valor": ""
+    }
+  ]
+}

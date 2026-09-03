@@ -1,0 +1,200 @@
+{
+  "_leeme": "Banco de temas de HERALDO. Cada uno recorre los estados idea → borrador → aprobado → publicado. Ninguno de estos temas requiere un dato que todavía no tengamos: se pueden producir hoy. Los que sí lo requieren llevan la lista en 'necesita'. Podés editar este archivo a mano; la app lo relee sola.",
+  "actualizado": "2026-09-03",
+  "estados": ["idea", "borrador", "aprobado", "publicado", "descartado"],
+
+  "temas": [
+    {
+      "id": "nogal-anos-improductivos",
+      "titulo": "En nogal, los años improductivos definen el repago",
+      "rubro": "nogal",
+      "audiencia": "inversor",
+      "formato": "dato",
+      "angulo": "El rinde de régimen pleno es el número que todos miran. El que decide es el tramo anterior, cuando hay que sostener implantación y mantenimiento sin ingreso.",
+      "fuente": "PROMPT-MAESTRO.txt §6 · sitio, sección rubros",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "avellano-aptitud-zona",
+      "titulo": "Avellano: la aptitud de zona en un cultivo en expansión",
+      "rubro": "avellano",
+      "audiencia": "productor",
+      "formato": "carrusel",
+      "angulo": "Cuando un cultivo se expande, se planta en zonas que todavía no lo probaron. La aptitud no se hereda del vecino: se mide.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "cerezo-ventana-comercial",
+      "titulo": "En cerezo, la ventana comercial manda sobre el retorno",
+      "rubro": "cerezo",
+      "audiencia": "inversor",
+      "formato": "cita",
+      "angulo": "El mismo kilo de fruta vale cosas muy distintas según cuándo entra al mercado. La fecha de cosecha es una variable financiera, no sólo agronómica.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "arandano-mano-de-obra",
+      "titulo": "Arándano: el costo de la mano de obra sobre el margen",
+      "rubro": "arandano",
+      "audiencia": "productor",
+      "formato": "dato",
+      "angulo": "Es el rubro donde la cosecha manual pesa más en la estructura de costos. Un cambio en el costo laboral mueve el margen más que un cambio en el precio.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "vid-variedad-destino",
+      "titulo": "Vid: la variedad y el destino comercial como variable central",
+      "rubro": "vid",
+      "audiencia": "inversor",
+      "formato": "carrusel",
+      "angulo": "Vino, mosto o uva de mesa son tres proyectos financieros distintos plantados en el mismo suelo.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "avicola-contrato-integracion",
+      "titulo": "Avícola tradicional: el contrato de integración es parte del modelo",
+      "rubro": "avicola-tradicional",
+      "audiencia": "productor",
+      "formato": "carrusel",
+      "angulo": "Capacidad instalada y ciclos por año definen el ingreso, pero quien fija el precio es el contrato. Evaluar el galpón sin leer el contrato es evaluar la mitad.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "avicola-blackout-energia",
+      "titulo": "Black-out: conversión y consumo energético en la misma cuenta",
+      "rubro": "avicola-blackout",
+      "audiencia": "inversor",
+      "formato": "dato",
+      "angulo": "El ambiente controlado mejora la conversión y a la vez agrega una factura de energía. La pregunta es cuál de las dos curvas gana.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "feedlot-relacion-compra-venta",
+      "titulo": "Feedlot: la relación compra-venta antes que el costo de la ración",
+      "rubro": "feedlot",
+      "audiencia": "productor",
+      "formato": "cita",
+      "angulo": "Se puede comprar bien el maíz y perder plata igual. La relación entre lo que pagás por el ternero y lo que cobrás por el gordo define el resultado.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "tambo-costo-del-litro",
+      "titulo": "Tambo: la dinámica del rodeo detrás del costo del litro",
+      "rubro": "tambo",
+      "audiencia": "productor",
+      "formato": "carrusel",
+      "angulo": "El costo del litro no es un número de planilla: es la consecuencia de cómo se mueve el rodeo a lo largo del año.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "cria-invernada-margen-por-hectarea",
+      "titulo": "Cría e invernada: carga, índices reproductivos y margen por hectárea",
+      "rubro": "cria-invernada",
+      "audiencia": "productor",
+      "formato": "carrusel",
+      "angulo": "Tres variables que se miran por separado y que en realidad son una sola cuenta.",
+      "fuente": "PROMPT-MAESTRO.txt §6",
+      "estado": "idea",
+      "necesita": []
+    },
+
+    {
+      "id": "tres-estudios-encadenados",
+      "titulo": "Tres estudios encadenados, y por qué el orden importa",
+      "rubro": "metodo",
+      "audiencia": "inversor",
+      "formato": "carrusel",
+      "angulo": "Técnico, después económico, después financiero. El rendimiento que estima el agrónomo es el número que entra en el flujo de fondos: no hay traducción en el medio.",
+      "fuente": "PROMPT-MAESTRO.txt §1 · sitio, sección método",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "mayor-margen-peor-opcion",
+      "titulo": "El caso donde el mayor margen bruto era la peor opción",
+      "rubro": "metodo",
+      "audiencia": "inversor",
+      "formato": "carrusel",
+      "angulo": "La mejor pieza de contenido del proyecto: muestra que el margen bruto no decide inversiones y que la restricción financiera del cliente es parte del problema. Ilustrativo, sin cliente detrás.",
+      "fuente": "Documento de alineación §5.1 · sitio, sección caso",
+      "estado": "idea",
+      "necesita": [],
+      "prioridad": "alta"
+    },
+    {
+      "id": "mismo-rinde-distinta-variabilidad",
+      "titulo": "Dos zonas con el mismo rinde promedio no son el mismo proyecto",
+      "rubro": "riesgo",
+      "audiencia": "inversor",
+      "formato": "carrusel",
+      "angulo": "La distinción que casi nadie hace: el promedio es igual, la variabilidad no, y el riesgo vive en la variabilidad.",
+      "fuente": "Documento de alineación §5.1",
+      "estado": "idea",
+      "necesita": [],
+      "prioridad": "alta"
+    },
+    {
+      "id": "por-que-no-publicamos-clientes",
+      "titulo": "Por qué no publicamos nombres de clientes",
+      "rubro": "marca",
+      "audiencia": "productor",
+      "formato": "cita",
+      "angulo": "La información de un proyecto le pertenece al productor. Publicamos el método, no el cliente. Convierte una aparente debilidad en una señal de seriedad.",
+      "fuente": "PROMPT-MAESTRO.txt §5 · sitio, sección quiénes somos",
+      "estado": "idea",
+      "necesita": []
+    },
+    {
+      "id": "preguntas-antes-de-encargar",
+      "titulo": "Qué preguntarle a un estudio de factibilidad antes de encargarlo",
+      "rubro": "metodo",
+      "audiencia": "inversor",
+      "formato": "carrusel",
+      "angulo": "Moneda de evaluación, tasa de descuento, valor terminal, tratamiento impositivo, flujo del proyecto o del inversionista. Quien no las contesta, no las tiene resueltas.",
+      "fuente": "Documento de alineación §5.2",
+      "estado": "idea",
+      "necesita": ["definiciones metodológicas propias, para poder contestarlas nosotros primero"],
+      "prioridad": "alta"
+    },
+    {
+      "id": "escalera-tres-peldanos",
+      "titulo": "Tres etapas, y podés bajarte en cualquiera",
+      "rubro": "servicios",
+      "audiencia": "inversor",
+      "formato": "servicio",
+      "angulo": "Cada etapa cierra en sí misma. Si la factibilidad da que no, el trabajo termina ahí y el cliente se ahorró la inversión.",
+      "fuente": "PROMPT-MAESTRO.txt §1 · sitio, sección etapas",
+      "estado": "idea",
+      "necesita": ["rango de precio por etapa", "plazos de entrega por etapa"]
+    },
+    {
+      "id": "que-recibis-informe",
+      "titulo": "Qué recibís exactamente: el índice del informe",
+      "rubro": "servicios",
+      "audiencia": "inversor",
+      "formato": "servicio",
+      "angulo": "Responde la pregunta que más frena una contratación: qué me llevo. Capítulos, anexos, cantidad de páginas y formato de entrega.",
+      "fuente": "Documento de alineación §2.2",
+      "estado": "idea",
+      "necesita": ["índice real del Informe Titánico"],
+      "prioridad": "alta"
+    }
+  ]
+}
