@@ -21,6 +21,7 @@ import { ejecutar } from "./herramientas.mjs";
 import { turno, guardarConversacion, leerConversacion, listarConversaciones } from "./agente.mjs";
 import { leerDatos, pendientes, verificar } from "../sitio/construir.mjs";
 import { leerTemas } from "../nucleo/conocimiento.mjs";
+import * as bandeja from "../nucleo/bandeja.mjs";
 
 const PUERTO = Number(process.env.FRAGUA_PUERTO) || 4321;
 
@@ -240,4 +241,9 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
 
   Para cortar: Ctrl+C
 `);
+
+  // Si configuraste la bandeja del celular, se vacía sola al arrancar.
+  const b = await bandeja.bajar();
+  if (b.bajadas) console.log(`  Bajé ${b.bajadas} captura(s) del celular a conocimiento/notas/.\n`);
+  if (b.error)   console.log(`  La bandeja del celular no respondió: ${b.error}\n`);
 });

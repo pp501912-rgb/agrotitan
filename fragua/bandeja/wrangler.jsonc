@@ -1,0 +1,17 @@
+{
+  // Bandeja de captura de FRAGUA.
+  //
+  // Antes del primer despliegue, desde fragua/bandeja/:
+  //   npx wrangler kv namespace create BANDEJA
+  //   → pegá el id que te devuelve, abajo, en lugar de PEGAR_EL_ID_ACA
+  //   npx wrangler secret put BANDEJA_TOKEN
+  //   → inventá una contraseña larga; es la que vas a poner en el celular
+  //   npx wrangler deploy
+  "name": "agrotitan-bandeja",
+  "main": "worker.js",
+  "compatibility_date": "2026-06-20",
+  "kv_namespaces": [
+    { "binding": "BANDEJA", "id": "PEGAR_EL_ID_ACA" }
+  ],
+  "observability": { "enabled": true }
+}
