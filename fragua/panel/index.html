@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRAGUA · HERALDO</title>
+<link rel="stylesheet" href="panel.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="marca">
+    <span class="marca__n">FRAGUA</span>
+    <span class="marca__s">HERALDO · el CM de AgroTitan</span>
+  </div>
+  <nav class="pestanas" role="tablist">
+    <button class="pestana pestana--activa" data-vista="chat"   role="tab">Conversar</button>
+    <button class="pestana"                 data-vista="datos"  role="tab">Datos de la página</button>
+    <button class="pestana"                 data-vista="temas"  role="tab">Temas</button>
+    <button class="pestana"                 data-vista="estado" role="tab">Estado</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ═══ CONVERSAR ═══════════════════════════════════════════════ -->
+  <section class="vista vista--activa" id="vista-chat">
+    <div class="chat" id="chat">
+      <div class="bienvenida">
+        <h1>Contame qué necesitás.</h1>
+        <p>
+          Puedo buscar en lo que sabemos de AgroTitan, escribir el copy, armar las
+          placas, completar los datos que faltan en la página y publicarla.
+        </p>
+        <div class="sugerencias">
+          <button class="sug">Proponeme tres piezas para esta semana</button>
+          <button class="sug">Armá un carrusel sobre por qué el mayor margen bruto puede ser la peor opción</button>
+          <button class="sug">¿Qué datos faltan para poder publicar la página?</button>
+          <button class="sug">Guardá esta idea: …</button>
+        </div>
+      </div>
+    </div>
+
+    <form class="redactor" id="redactor">
+      <textarea id="mensaje" rows="1" placeholder="Escribile a HERALDO…" autocomplete="off"></textarea>
+      <button type="submit" id="enviar">Enviar</button>
+    </form>
+  </section>
+
+  <!-- ═══ DATOS DE LA PÁGINA ══════════════════════════════════════ -->
+  <section class="vista" id="vista-datos">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Datos de la página</h1>
+        <p class="sub" id="datos-resumen">Cargando…</p>
+      </div>
+      <div class="acciones">
+        <button class="boton boton--linea" id="btn-verificar">Verificar</button>
+        <button class="boton boton--linea" id="btn-simulacro">Simulacro</button>
+        <button class="boton boton--lleno" id="btn-publicar">Publicar</button>
+      </div>
+    </div>
+    <p class="aviso" id="datos-aviso" hidden></p>
+    <div id="datos-lista"></div>
+  </section>
+
+  <!-- ═══ TEMAS ═══════════════════════════════════════════════════ -->
+  <section class="vista" id="vista-temas">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Banco de temas</h1>
+        <p class="sub" id="temas-resumen">Cargando…</p>
+      </div>
+    </div>
+    <div id="temas-lista"></div>
+  </section>
+
+  <!-- ═══ ESTADO ══════════════════════════════════════════════════ -->
+  <section class="vista" id="vista-estado">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Estado</h1>
+        <p class="sub">Qué está andando y qué no, y por qué.</p>
+      </div>
+      <div class="acciones">
+        <button class="boton boton--linea" id="btn-refrescar">Refrescar</button>
+      </div>
+    </div>
+    <div id="estado-lista"></div>
+  </section>
+
+</main>
+
+<script src="panel.js" type="module"></script>
+</body>
+</html>
