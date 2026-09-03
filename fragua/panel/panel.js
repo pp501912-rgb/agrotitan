@@ -20,7 +20,11 @@ const herramienta = (nombre, entrada = {}) => api("/api/herramienta", { nombre, 
 
 /* ── Pestañas ──────────────────────────────────────────────────── */
 
-function irA(vista) {
+function irA(destino) {
+  // La dirección puede traer una pieza puntual: #piezas/2026-09-03-nogal
+  const [vista, ...resto] = String(destino).split("/");
+  const carpeta = resto.join("/");
+
   const boton = $(`.pestana[data-vista="${vista}"]`);
   if (!boton) return;
 
@@ -28,10 +32,12 @@ function irA(vista) {
   $$(".vista").forEach((x) => x.classList.remove("vista--activa"));
   boton.classList.add("pestana--activa");
   $(`#vista-${vista}`).classList.add("vista--activa");
-  location.hash = vista;
+  if (location.hash.slice(1) !== destino) location.hash = destino;
 
   if (vista === "datos")  cargarDatos();
+  if (vista === "piezas") carpeta ? abrirPieza(decodeURIComponent(carpeta)) : cargarPiezas();
   if (vista === "temas")  cargarTemas();
+  if (vista === "plan")   cargarPlan();
   if (vista === "estado") cargarEstado();
 }
 
@@ -77,6 +83,13 @@ function resumirPaso(paso) {
     case "estado_sitio":        return `<b>revisó la página</b> — faltan ${s.faltan?.length ?? 0} de ${s.total}`;
     case "cargar_dato":         return s.cargado ? `<b>cargó</b> ${s.clave} = ${s.valor}` : `<b>no pudo cargar</b> — ${s.error}`;
     case "publicar_sitio":      return s.publicado ? `<b>publicó</b> en ${s.rama}` : `<b>no publicó</b> — ${s.motivo || s.nota}`;
+    case "escribir_en_cascada":  return s.cascada
+                                  ? `<b>cascada</b> — ${s.borradoresLocales} borradores de Ollama, gratis, y Claude eligió en una llamada`
+                                  : `<b>escribió sin cascada</b> — ${s.nota}`;
+    case "listar_piezas":        return `<b>miró las piezas</b> — ${s.total}`;
+    case "planificar_mes":       return `<b>armó un plan</b> — ${s.propuestas} para ${s.diasDisponibles} días${s.alcanza ? "" : ", no alcanzan los temas"}`;
+    case "agendar_plan":         return `<b>agendó</b> ${s.agendadas} publicaciones`;
+    case "ver_calendario":       return `<b>miró el calendario</b> — ${s.total} por delante`;
     default:                    return `<b>${paso.herramienta}</b>`;
   }
 }
@@ -229,6 +242,238 @@ $("#btn-publicar").addEventListener("click", async () => {
     ? `✓ Publicado en la rama ${r.rama}. ${r.nota}`
     : `No se publicó: ${r.motivo || r.nota || r.error}`);
 });
+
+/* ═══ PIEZAS ═════════════════════════════════════════════════════
+   Acá se cierra el circuito: generás, mirás, aprobás y subís. Antes
+   había que ir a buscar los archivos a mano dentro de salida/.
+   ════════════════════════════════════════════════════════════════ */
+
+const ESTADOS = {
+  borrador:  { texto: "sin revisar", clase: "" },
+  aprobada:  { texto: "aprobada",    clase: "etiqueta--oro" },
+  publicada: { texto: "publicada",   clase: "etiqueta--si" },
+};
+
+async function cargarPiezas() {
+  mostrarLista();
+  const { total, piezas } = await herramienta("listar_piezas");
+
+  const sinRevisar = piezas.filter((p) => p.estado === "borrador").length;
+  $("#piezas-resumen").textContent = total === 0
+    ? "Todavía no generaste ninguna. Pedile una a HERALDO desde Conversar."
+    : `${total} en total${sinRevisar ? `, ${sinRevisar} sin revisar` : ""}.`;
+
+  $("#piezas-lista").innerHTML = piezas.map((p) => {
+    const e = ESTADOS[p.estado] || ESTADOS.borrador;
+    return `
+      <div class="tarjeta tarjeta--clic" data-carpeta="${escapar(p.carpeta)}">
+        <h3 class="tarjeta__t">${escapar(p.titular)}</h3>
+        <div class="tarjeta__m">${escapar(p.carpeta)}</div>
+        <div>
+          <span class="etiqueta ${e.clase}">${e.texto}</span>
+          <span class="etiqueta">${p.formato}</span>
+          <span class="etiqueta">${p.audiencia}</span>
+          <span class="etiqueta">${p.imagenes.length} ${p.imagenes.length === 1 ? "imagen" : "imágenes"}</span>
+          ${p.faltantes.length ? `<span class="etiqueta etiqueta--no">${p.faltantes.length} dato(s) sin completar</span>` : ""}
+        </div>
+      </div>`;
+  }).join("");
+
+  $$("#piezas-lista .tarjeta--clic").forEach((t) =>
+    t.addEventListener("click", () => abrirPieza(t.dataset.carpeta)));
+}
+
+function mostrarLista() {
+  if (location.hash.startsWith("#piezas/")) location.hash = "piezas";
+  $("#piezas-lista").hidden = false;
+  $("#pieza-detalle").hidden = true;
+  $("#btn-volver-piezas").hidden = true;
+  avisarPiezas("");
+}
+
+async function abrirPieza(carpeta) {
+  const p = await herramienta("abrir_pieza", { carpeta });
+  if (p.error) return avisarPiezas(p.error);
+
+  const marcador = `piezas/${encodeURIComponent(carpeta)}`;
+  if (location.hash.slice(1) !== marcador) location.hash = marcador;
+
+  $("#piezas-lista").hidden = true;
+  $("#pieza-detalle").hidden = false;
+  $("#btn-volver-piezas").hidden = false;
+
+  // Entrando por la dirección directa nunca pasamos por la lista, así que
+  // el resumen se quedaba en "Cargando…" para siempre.
+  $("#piezas-resumen").textContent = `Carpeta salida/${p.carpeta}`;
+
+  const e = ESTADOS[p.estado] || ESTADOS.borrador;
+
+  $("#pieza-detalle").innerHTML = `
+    <div class="grupo">
+      <h2 class="grupo__t">${escapar(p.titular)}</h2>
+      <div style="margin-bottom:16px">
+        <span class="etiqueta ${e.clase}">${e.texto}</span>
+        <span class="etiqueta">${p.formato} · ${p.plantilla}</span>
+        <span class="etiqueta">${p.audiencia}</span>
+        <span class="etiqueta">${escapar(p.tema)}</span>
+      </div>
+
+      ${p.faltantes?.length ? `
+        <p class="aviso aviso--no">Esta pieza tiene ${p.faltantes.length} dato(s) sin completar
+        y salen entre corchetes en la imagen:\n· ${p.faltantes.map(escapar).join("\n· ")}</p>` : ""}
+
+      <div class="galeria">
+        ${(p.imagenes || []).map((img, i) => `
+          <figure class="galeria__i">
+            <img src="/salida/${encodeURIComponent(p.carpeta)}/${encodeURIComponent(img)}"
+                 alt="Placa ${i + 1}" loading="lazy">
+            <figcaption>${i + 1} / ${p.imagenes.length}</figcaption>
+          </figure>`).join("")}
+      </div>
+
+      <div class="copy">
+        <div class="copy__barra">
+          <span class="grupo__t" style="border:0;margin:0;padding:0">Copy</span>
+          <button class="boton boton--linea" id="btn-copiar">Copiar</button>
+        </div>
+        <pre class="copy__texto" id="copy-texto">${escapar(p.copy)}</pre>
+      </div>
+
+      <div class="acciones" style="margin-top:20px">
+        <button class="boton boton--lleno" id="btn-aprobar"
+                ${p.estado !== "borrador" ? "disabled" : ""}>Aprobar</button>
+        <button class="boton boton--linea" id="btn-publicada"
+                ${p.estado === "borrador" || p.estado === "publicada" ? "disabled" : ""}>Marcar como publicada</button>
+        <button class="boton boton--linea" id="btn-descartar">Descartar</button>
+      </div>
+
+      <p class="sub" style="margin-top:14px">
+        Fuentes: ${(p.fuentes || []).map(escapar).join(" · ") || "—"}
+      </p>
+    </div>`;
+
+  $("#btn-copiar").addEventListener("click", async () => {
+    const texto = $("#copy-texto").textContent;
+    try {
+      await navigator.clipboard.writeText(texto);
+      $("#btn-copiar").textContent = "Copiado";
+      setTimeout(() => ($("#btn-copiar").textContent = "Copiar"), 1600);
+    } catch {
+      // Sin permiso de portapapeles: lo seleccionamos para que copie a mano.
+      const r = document.createRange();
+      r.selectNodeContents($("#copy-texto"));
+      getSelection().removeAllRanges();
+      getSelection().addRange(r);
+      avisarPiezas("El navegador no me deja copiar solo. Te lo dejé seleccionado: Ctrl+C.");
+    }
+  });
+
+  $("#btn-aprobar").addEventListener("click", async () => {
+    const r = await herramienta("aprobar_pieza", { carpeta });
+    if (r.aprobada) { avisarPiezas("✓ Aprobada. Ya la podés subir."); abrirPieza(carpeta); }
+    else avisarPiezas(r.motivo || r.error);
+  });
+
+  $("#btn-publicada").addEventListener("click", async () => {
+    const r = await herramienta("marcar_publicada", { carpeta });
+    if (r.publicada) {
+      avisarPiezas(`✓ Anotada en el historial. HERALDO no va a volver a proponer este tema.`);
+      abrirPieza(carpeta);
+    } else avisarPiezas(r.motivo || r.error);
+  });
+
+  $("#btn-descartar").addEventListener("click", async () => {
+    if (!confirm("¿Borro esta pieza y sus imágenes? No se puede deshacer.")) return;
+    const r = await herramienta("descartar_pieza", { carpeta });
+    if (r.borrada) cargarPiezas(); else avisarPiezas(r.motivo || r.error);
+  });
+}
+
+function avisarPiezas(texto) {
+  const el = $("#piezas-aviso");
+  el.textContent = texto;
+  el.hidden = !texto;
+}
+
+$("#btn-volver-piezas").addEventListener("click", cargarPiezas);
+
+/* ═══ CALENDARIO ═════════════════════════════════════════════════ */
+
+let planPropuesto = null;
+
+async function cargarPlan() {
+  if (!$("#plan-mes").value) {
+    // Por defecto, el mes que viene: planificar el actual a mitad de camino
+    // no sirve de mucho.
+    const d = new Date();
+    d.setUTCMonth(d.getUTCMonth() + 1);
+    $("#plan-mes").value = d.toISOString().slice(0, 7);
+  }
+
+  const { total, proximas } = await herramienta("ver_calendario", { cuantas: 40 });
+
+  $("#plan-lista").innerHTML = total === 0
+    ? `<p class="sub">No hay nada agendado. Elegí un mes y pedí una propuesta.</p>`
+    : `<div class="grupo">
+         <h2 class="grupo__t">Agendado</h2>
+         ${filasDePlan(proximas)}
+       </div>`;
+}
+
+function filasDePlan(entradas) {
+  return entradas.map((e) => `
+    <div class="campo campo--plan">
+      <div>
+        <div class="campo__pregunta">${escapar(e.titulo || e.tema)}</div>
+        <div class="campo__ayuda">
+          <span class="etiqueta">${escapar(e.audiencia || "—")}</span>
+          <span class="etiqueta">${escapar(e.rubro || "—")}</span>
+          <span class="etiqueta">${escapar(e.formato || "—")}</span>
+          ${(e.necesita || []).length ? `<span class="etiqueta etiqueta--no">faltan datos</span>` : ""}
+        </div>
+      </div>
+      <div class="fecha">${escapar(e.fecha)}</div>
+    </div>`).join("");
+}
+
+$("#btn-proponer").addEventListener("click", async () => {
+  const [anio, mes] = ($("#plan-mes").value || "").split("-").map(Number);
+  if (!anio || !mes) return avisarPlan("Elegí un mes primero.");
+
+  avisarPlan("Armando la propuesta…");
+  const r = await herramienta("planificar_mes", { anio, mes });
+  if (r.error) return avisarPlan(r.error);
+
+  planPropuesto = r.plan;
+  $("#btn-agendar").disabled = r.plan.length === 0;
+
+  avisarPlan(r.nota
+    ? r.nota
+    : `${r.propuestas} publicaciones para los ${r.diasDisponibles} días del mes. ` +
+      `Alterna audiencia y rubro entre piezas seguidas.`);
+
+  $("#plan-lista").innerHTML = `
+    <div class="grupo">
+      <h2 class="grupo__t">Propuesta · todavía no está agendada</h2>
+      ${filasDePlan(r.plan)}
+    </div>`;
+});
+
+$("#btn-agendar").addEventListener("click", async () => {
+  if (!planPropuesto?.length) return;
+  const r = await herramienta("agendar_plan", { plan: planPropuesto });
+  if (r.error) return avisarPlan(r.error);
+  planPropuesto = null;
+  $("#btn-agendar").disabled = true;
+  avisarPlan(`✓ Agendadas ${r.agendadas}. En total hay ${r.total} en el calendario.`);
+  cargarPlan();
+});
+
+function avisarPlan(texto) {
+  const el = $("#plan-aviso");
+  el.textContent = texto;
+  el.hidden = !texto;
+}
 
 /* ═══ TEMAS ══════════════════════════════════════════════════════ */
 

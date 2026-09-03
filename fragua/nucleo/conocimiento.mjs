@@ -179,19 +179,68 @@ export async function yaPublicamos(tema, { dias = 90, umbral = 0.82 } = {}) {
 
   const consulta = typeof tema === "string" ? tema : `${tema.titulo}. ${tema.angulo || ""}`;
   const { activo } = await ollama.estado();
-  if (!activo) return [];
 
-  try {
-    const v = await ollama.embedding(consulta);
-    const parecidas = [];
-    for (const p of recientes) {
-      const vp = await ollama.embedding(`${p.titular}. ${p.angulo || ""}`);
-      const puntaje = ollama.coseno(v, vp);
-      if (puntaje >= umbral) parecidas.push({ ...p, puntaje, motivo: "se parece bastante" });
+  if (activo) {
+    try {
+      const v = await ollama.embedding(consulta);
+      const parecidas = [];
+      for (const p of recientes) {
+        const vp = await ollama.embedding(`${p.titular}. ${p.angulo || ""}`);
+        const puntaje = ollama.coseno(v, vp);
+        if (puntaje >= umbral) parecidas.push({ ...p, puntaje, motivo: "se parece bastante" });
+      }
+      return parecidas.sort((a, b) => b.puntaje - a.puntaje);
+    } catch {
+      // Si Ollama se cae en la mitad, seguimos con el respaldo de abajo.
     }
-    return parecidas.sort((a, b) => b.puntaje - a.puntaje);
-  } catch { return []; }
+  }
+
+  return porPalabrasCompartidas(consulta, recientes);
 }
+
+/**
+ * Respaldo de la anti-repetición cuando no hay Ollama.
+ *
+ * Cuenta qué proporción de las palabras con peso comparten los dos
+ * títulos. Es más tosco que los embeddings —no ve que "repago" y
+ * "recupero del capital" hablan de lo mismo— pero atrapa el caso
+ * frecuente: volver a escribir sobre nogal con las mismas palabras.
+ *
+ * Sin esto, la memoria del CM no funcionaba recién instalado, que es
+ * justo lo que lo separa de un generador de texto.
+ */
+function porPalabrasCompartidas(consulta, recientes, umbral = 0.5) {
+  const conjunto = (s) => new Set(
+    normalizar(s).split(/[^a-z0-9]+/).filter((p) => p.length > 4 && !VACIAS.has(p))
+  );
+
+  const a = conjunto(consulta);
+  if (a.size === 0) return [];
+
+  const parecidas = [];
+  for (const p of recientes) {
+    const b = conjunto(`${p.titular} ${p.tema || ""}`);
+    if (b.size === 0) continue;
+
+    let compartidas = 0;
+    for (const palabra of a) if (b.has(palabra)) compartidas++;
+
+    // Sobre el conjunto más chico: un título corto que está entero
+    // contenido en uno largo sigue siendo una repetición.
+    const puntaje = compartidas / Math.min(a.size, b.size);
+    if (puntaje >= umbral) {
+      parecidas.push({ ...p, puntaje, motivo: "comparte casi todas las palabras" });
+    }
+  }
+  return parecidas.sort((a2, b2) => b2.puntaje - a2.puntaje);
+}
+
+/** Palabras largas que no distinguen nada en este dominio. */
+const VACIAS = new Set([
+  "agropecuario", "agropecuarios", "proyecto", "proyectos", "agrotitan",
+  "cuando", "porque", "sobre", "desde", "hasta", "entre", "entonces",
+  "entrega", "puede", "puedan", "entrar", "estar", "tiene", "tienen",
+]);
 
 /* ── Hashtags ──────────────────────────────────────────────────── */
 

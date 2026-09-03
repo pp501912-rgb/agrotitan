@@ -16,7 +16,9 @@
   <nav class="pestanas" role="tablist">
     <button class="pestana pestana--activa" data-vista="chat"   role="tab">Conversar</button>
     <button class="pestana"                 data-vista="datos"  role="tab">Datos de la página</button>
+    <button class="pestana"                 data-vista="piezas" role="tab">Piezas</button>
     <button class="pestana"                 data-vista="temas"  role="tab">Temas</button>
+    <button class="pestana"                 data-vista="plan"   role="tab">Calendario</button>
     <button class="pestana"                 data-vista="estado" role="tab">Estado</button>
   </nav>
 </header>
@@ -64,6 +66,22 @@
     <div id="datos-lista"></div>
   </section>
 
+  <!-- ═══ PIEZAS ══════════════════════════════════════════════════ -->
+  <section class="vista" id="vista-piezas">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Piezas</h1>
+        <p class="sub" id="piezas-resumen">Cargando…</p>
+      </div>
+      <div class="acciones">
+        <button class="boton boton--linea" id="btn-volver-piezas" hidden>Volver a la lista</button>
+      </div>
+    </div>
+    <p class="aviso" id="piezas-aviso" hidden></p>
+    <div id="piezas-lista"></div>
+    <div id="pieza-detalle" hidden></div>
+  </section>
+
   <!-- ═══ TEMAS ═══════════════════════════════════════════════════ -->
   <section class="vista" id="vista-temas">
     <div class="cabecera-vista">
@@ -73,6 +91,23 @@
       </div>
     </div>
     <div id="temas-lista"></div>
+  </section>
+
+  <!-- ═══ CALENDARIO ══════════════════════════════════════════════ -->
+  <section class="vista" id="vista-plan">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Calendario</h1>
+        <p class="sub" id="plan-resumen">Dos publicaciones por semana, martes y jueves.</p>
+      </div>
+      <div class="acciones">
+        <input type="month" id="plan-mes" class="mes">
+        <button class="boton boton--linea" id="btn-proponer">Proponer plan</button>
+        <button class="boton boton--lleno" id="btn-agendar" disabled>Agendar</button>
+      </div>
+    </div>
+    <p class="aviso" id="plan-aviso" hidden></p>
+    <div id="plan-lista"></div>
   </section>
 
   <!-- ═══ ESTADO ══════════════════════════════════════════════════ -->

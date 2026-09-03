@@ -1,8 +1,13 @@
 {
   "_leeme": "Banco de temas de HERALDO. Cada uno recorre los estados idea → borrador → aprobado → publicado. Ninguno de estos temas requiere un dato que todavía no tengamos: se pueden producir hoy. Los que sí lo requieren llevan la lista en 'necesita'. Podés editar este archivo a mano; la app lo relee sola.",
   "actualizado": "2026-09-03",
-  "estados": ["idea", "borrador", "aprobado", "publicado", "descartado"],
-
+  "estados": [
+    "idea",
+    "borrador",
+    "aprobado",
+    "publicado",
+    "descartado"
+  ],
   "temas": [
     {
       "id": "nogal-anos-improductivos",
@@ -114,7 +119,6 @@
       "estado": "idea",
       "necesita": []
     },
-
     {
       "id": "tres-estudios-encadenados",
       "titulo": "Tres estudios encadenados, y por qué el orden importa",
@@ -170,7 +174,9 @@
       "angulo": "Moneda de evaluación, tasa de descuento, valor terminal, tratamiento impositivo, flujo del proyecto o del inversionista. Quien no las contesta, no las tiene resueltas.",
       "fuente": "Documento de alineación §5.2",
       "estado": "idea",
-      "necesita": ["definiciones metodológicas propias, para poder contestarlas nosotros primero"],
+      "necesita": [
+        "definiciones metodológicas propias, para poder contestarlas nosotros primero"
+      ],
       "prioridad": "alta"
     },
     {
@@ -182,7 +188,10 @@
       "angulo": "Cada etapa cierra en sí misma. Si la factibilidad da que no, el trabajo termina ahí y el cliente se ahorró la inversión.",
       "fuente": "PROMPT-MAESTRO.txt §1 · sitio, sección etapas",
       "estado": "idea",
-      "necesita": ["rango de precio por etapa", "plazos de entrega por etapa"]
+      "necesita": [
+        "rango de precio por etapa",
+        "plazos de entrega por etapa"
+      ]
     },
     {
       "id": "que-recibis-informe",
@@ -193,7 +202,9 @@
       "angulo": "Responde la pregunta que más frena una contratación: qué me llevo. Capítulos, anexos, cantidad de páginas y formato de entrega.",
       "fuente": "Documento de alineación §2.2",
       "estado": "idea",
-      "necesita": ["índice real del Informe Titánico"],
+      "necesita": [
+        "índice real del Informe Titánico"
+      ],
       "prioridad": "alta"
     }
   ]

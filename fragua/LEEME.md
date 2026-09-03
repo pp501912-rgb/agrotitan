@@ -79,7 +79,7 @@ Sólo si te pasa seguido estar más de un día lejos de la PC. Ver
 
 ---
 
-## Las cuatro pantallas
+## Las seis pantallas
 
 **Conversar.** Le pedís lo que necesites. Puede buscar en lo que sabemos de
 AgroTitan, escribir el copy, armar las placas, completar datos y publicar la
@@ -90,11 +90,45 @@ tenemos, como formulario. Se guarda solo al salir de cada campo. Mientras
 falten, la página los muestra entre corchetes y el publicador se niega a
 subirla salvo que se lo pidas.
 
+**Piezas.** Todo lo que generaste, lo más nuevo arriba. Al abrir una ves las
+imágenes, el copy con un botón para copiarlo entero, y tres acciones: aprobar,
+marcar como publicada y descartar. **Una pieza con datos entre corchetes no se
+puede aprobar**, y te dice cuáles faltan.
+
+Marcar una pieza como publicada la anota en el historial y pasa el tema a
+«publicado», así HERALDO no vuelve a proponerlo.
+
 **Temas.** El banco de ideas. Arranca con 17 temas que se pueden producir hoy,
 sin ningún dato nuevo: las diez variables que definen el resultado en cada
 sistema productivo, más siete temas del documento de alineación.
 
+**Calendario.** Elegís un mes y pedís una propuesta. El planificador reparte los
+temas sin usar alternando audiencia y rubro entre publicaciones seguidas —
+promediar los dos mensajes produce un texto tibio, así que cada pieza elige un
+carril. Si el banco no alcanza para el mes, te dice con cuántos días se queda
+corto. *Agendar* es un paso aparte: la propuesta no se guarda sola.
+
 **Estado.** Qué está andando y qué no, y por qué.
+
+---
+
+## El modo cascada
+
+Es donde el híbrido ahorra de verdad. Para un texto trabajado, Ollama produce
+ocho borradores en tu PC —gratis— y Claude los recibe **todos en una sola
+llamada corta**, elige el mejor y lo pule. Se paga una llamada en lugar de ocho
+y la calidad final la pone Claude igual.
+
+La regla detrás es la misma de todo el proyecto: **Claude donde el error se ve,
+Ollama donde el error se descarta.**
+
+Si Ollama no está instalado no falla: escribe directo con Claude y te avisa que
+no hubo cascada.
+
+Hay además un **modo espejo** que produce lo mismo con los dos motores, lado a
+lado. No es un capricho: es cómo vas a descubrir en qué tipos de pieza Ollama ya
+te alcanza, para moverlas al motor gratis con criterio en lugar de por
+corazonada.
 
 ---
 
@@ -139,8 +173,8 @@ conocimiento/     lo que HERALDO sabe. Texto plano, editable a mano.
 contenido/        los datos de la página
 plantillas/       la página con marcadores
 piezas/           las cuatro plantillas de Instagram
-nucleo/           render, plantillas, contrato, conocimiento
-motores/          claude, ollama, plantillas
+nucleo/           render, plantillas, contrato, conocimiento, piezas, calendario
+motores/          claude, ollama, plantillas, cascada
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
 sitio/            extraer, construir, publicar
@@ -180,6 +214,5 @@ otra ventana. Entrá a `http://127.0.0.1:4321`. Si querés otro puerto, poné
   a mano. El código está preparado para enchufar la API de Meta más adelante.
 - **Transcribir audios.** Las notas de voz de Telegram se archivan pero no se
   transcriben todavía; hace falta instalar Whisper.
-- **Calendario editorial.** Está en el plan, no está construido.
 - **Fotos propias.** Las piezas usan composiciones tipográficas hasta que
   existan fotos reales de campo.

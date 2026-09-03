@@ -104,7 +104,7 @@ main { flex: 1; min-height: 0; display: flex; }
 .vista { display: none; flex: 1; min-height: 0; flex-direction: column; }
 .vista--activa { display: flex; }
 
-#vista-datos, #vista-temas, #vista-estado {
+#vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-estado {
   overflow-y: auto;
   padding: 28px 32px 60px;
 }
@@ -372,6 +372,100 @@ h1 {
 @media (max-width: 760px) {
   .barra { flex-wrap: wrap; gap: 0 20px; }
   .campo { grid-template-columns: 1fr; gap: 8px; }
-  .chat, #vista-datos, #vista-temas, #vista-estado { padding-left: 18px; padding-right: 18px; }
+  .chat, #vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-estado {
+    padding-left: 18px; padding-right: 18px;
+  }
   .redactor { padding-left: 18px; padding-right: 18px; }
 }
+
+/* ── Piezas ───────────────────────────────────────────────────── */
+
+.tarjeta--clic { cursor: pointer; }
+.tarjeta--clic:hover { border-color: var(--oro); }
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 18px 0 24px;
+}
+
+.galeria__i { margin: 0; }
+
+.galeria__i img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: var(--obsidiana);
+}
+
+.galeria__i figcaption {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--hueso-debil);
+  padding-top: 5px;
+}
+
+.copy {
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: var(--acero);
+}
+
+.copy__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--linea);
+}
+
+/* El copy se lee y se copia: monoespaciado para que se vea dónde
+   cortan los renglones y dónde arrancan los hashtags. */
+.copy__texto {
+  margin: 0;
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.62;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--hueso-tenue);
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.aviso--no {
+  border-left-color: var(--rojo);
+  background: rgba(196, 85, 61, 0.09);
+}
+
+/* ── Calendario ───────────────────────────────────────────────── */
+
+.mes {
+  background: var(--acero);
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  color: var(--hueso);
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 9px 12px;
+  color-scheme: dark;
+}
+
+.mes:focus { outline: none; border-color: var(--oro); }
+
+.campo--plan { grid-template-columns: minmax(0, 1fr) 130px; align-items: center; }
+
+.fecha {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--oro);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.campo__ayuda .etiqueta { margin-top: 4px; }

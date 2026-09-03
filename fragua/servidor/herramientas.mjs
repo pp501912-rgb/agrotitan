@@ -17,7 +17,10 @@ import { RUTAS, PLANTILLAS, AUDIENCIAS, CONTACTO } from "../nucleo/marca.mjs";
 import { renderizar } from "../nucleo/render.mjs";
 import { revisar } from "../nucleo/contrato.mjs";
 import * as saber from "../nucleo/conocimiento.mjs";
+import * as piezas from "../nucleo/piezas.mjs";
+import * as calendario from "../nucleo/calendario.mjs";
 import * as ollama from "../motores/ollama.mjs";
+import * as cascada from "../motores/cascada.mjs";
 import { leerDatos, pendientes, construir } from "../sitio/construir.mjs";
 import { actualizarSitio, empujar, ramaActual } from "../sitio/publicar.mjs";
 
@@ -142,6 +145,95 @@ export const DEFINICIONES = [
         fuentes:   { type: "array", items: { type: "string" }, description: "De dónde salió cada afirmación. No puede ir vacío." },
       },
       required: ["formato", "plantilla", "audiencia", "tema", "titular", "placas", "caption", "hashtags", "cta", "fuentes"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "escribir_en_cascada",
+    description:
+      "Escribe un texto usando los dos motores: Ollama produce varios borradores " +
+      "gratis en la PC y Claude elige el mejor y lo pule en una sola llamada. " +
+      "Usalo para textos largos —un caption trabajado, el desarrollo de un " +
+      "carrusel— donde explorar opciones vale la pena. Si Ollama no está " +
+      "instalado, escribe igual y avisa que no hubo cascada.",
+    input_schema: {
+      type: "object",
+      properties: {
+        pedido:   { type: "string", description: "Qué escribir, en una o dos líneas." },
+        criterio: { type: "string", description: "Con qué vara elegir el mejor borrador." },
+        contexto: { type: "string", description: "Material del conocimiento que hay que usar." },
+        cuantas:  { type: "integer", description: "Borradores locales. Por defecto 8." },
+      },
+      required: ["pedido"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "listar_piezas",
+    description:
+      "Las piezas ya generadas, con su estado: borrador, aprobada o publicada. " +
+      "Sirve para saber qué hay pendiente de revisar y qué ya salió.",
+    input_schema: {
+      type: "object",
+      properties: { estado: { type: "string", enum: ["borrador", "aprobada", "publicada"] } },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "planificar_mes",
+    description:
+      "Propone un plan editorial repartiendo los temas sin usar: alterna " +
+      "audiencia y rubro entre publicaciones seguidas. NO agenda nada: devuelve " +
+      "la propuesta para que la persona la mire. Agendar es un paso aparte.",
+    input_schema: {
+      type: "object",
+      properties: {
+        anio: { type: "integer" },
+        mes:  { type: "integer", description: "1 a 12." },
+        diasSemana: {
+          type: "array", items: { type: "integer" },
+          description: "Días de publicación: 0 domingo, 1 lunes… Por defecto [2,4], martes y jueves.",
+        },
+      },
+      required: ["anio", "mes"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "agendar_plan",
+    description:
+      "Guarda un plan en el calendario. Llamalo sólo después de que la persona " +
+      "lo haya visto y aprobado.",
+    input_schema: {
+      type: "object",
+      properties: {
+        plan: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              fecha:     { type: "string", description: "AAAA-MM-DD" },
+              tema:      { type: "string" },
+              titulo:    { type: "string" },
+              formato:   { type: "string" },
+              audiencia: { type: "string" },
+              rubro:     { type: "string" },
+            },
+            required: ["fecha", "tema"],
+            additionalProperties: true,
+          },
+        },
+      },
+      required: ["plan"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "ver_calendario",
+    description: "Lo que viene agendado de acá en adelante.",
+    input_schema: {
+      type: "object",
+      properties: { cuantas: { type: "integer" } },
       additionalProperties: false,
     },
   },
@@ -292,7 +384,8 @@ export const IMPLEMENTACIONES = {
 
     await fs.writeFile(
       path.join(carpeta, "ficha.json"),
-      JSON.stringify({ ...pieza, fecha, estado: "borrador", imagenes }, null, 2) + "\n",
+      JSON.stringify({ ...pieza, fecha, creada: new Date().toISOString(),
+                       estado: "borrador", imagenes }, null, 2) + "\n",
       "utf8"
     );
 
@@ -305,6 +398,34 @@ export const IMPLEMENTACIONES = {
         ? "Ojo: la pieza tiene datos entre corchetes. No la publiques así."
         : "Lista para revisar y subir a mano.",
     };
+  },
+
+  async escribir_en_cascada({ pedido, criterio = "", contexto = "", cuantas = 8 }) {
+    const r = await cascada.generar(pedido, { criterio, contexto, cuantas });
+    return r.cascada
+      ? { texto: r.texto, cascada: true, borradoresLocales: r.borradores,
+          nota: `Ollama produjo ${r.borradores} borradores gratis y Claude eligió en una sola llamada.` }
+      : { texto: r.texto, cascada: false, nota: `Sin cascada: ${r.motivo}` };
+  },
+
+  async listar_piezas({ estado } = {}) {
+    const todas = await piezas.listar();
+    const filtradas = estado ? todas.filter((p) => p.estado === estado) : todas;
+    return { total: filtradas.length, piezas: filtradas };
+  },
+
+  async planificar_mes({ anio, mes, diasSemana }) {
+    return calendario.proponer(anio, mes, diasSemana ? { diasSemana } : {});
+  },
+
+  async agendar_plan({ plan }) {
+    if (!Array.isArray(plan) || !plan.length) return { error: "El plan vino vacío." };
+    return calendario.agendar(plan);
+  },
+
+  async ver_calendario({ cuantas = 10 } = {}) {
+    const proximas = await calendario.proximas(cuantas);
+    return { total: proximas.length, proximas };
   },
 
   async guardar_nota({ titulo, texto }) {
@@ -365,6 +486,21 @@ export const IMPLEMENTACIONES = {
     };
   },
 };
+
+/* ── Sólo para el panel ───────────────────────────────────────────
+   Estas cuatro NO están en DEFINICIONES a propósito: el modelo no
+   puede llamarlas. Aprobar una pieza y darla por publicada son
+   decisiones de una persona, y con contenido que menciona cifras ese
+   paso vale más que cualquier automatización.
+   ────────────────────────────────────────────────────────────────── */
+
+Object.assign(IMPLEMENTACIONES, {
+  abrir_pieza:      ({ carpeta }) => piezas.abrir(carpeta),
+  aprobar_pieza:    ({ carpeta }) => piezas.aprobar(carpeta),
+  marcar_publicada: ({ carpeta }) => piezas.marcarPublicada(carpeta),
+  descartar_pieza:  ({ carpeta }) => piezas.descartar(carpeta),
+  ver_calendario_completo: () => calendario.leer(),
+});
 
 /** Ejecuta una herramienta por nombre, sin dejar que una excepción tumbe el chat. */
 export async function ejecutar(nombre, entrada) {
