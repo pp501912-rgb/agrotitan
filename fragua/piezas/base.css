@@ -1,0 +1,334 @@
+/* ═══════════════════════════════════════════════════════════════════
+   PIEZAS · el marco común de las cuatro plantillas de Instagram.
+
+   Lienzo fijo de 1080 × 1350 px. No hay diseño adaptable acá: la
+   pieza siempre se ve en ese tamaño exacto, así que todas las
+   medidas van en píxeles y se calculan sobre esa base.
+
+   Las tipografías las incrusta render.mjs antes de este archivo.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --obsidiana:   #0A0A0A;
+  --acero:       #2B2B2B;
+  --oro:         #E5C158;
+  --verde:       #1B4332;
+  --hueso:       #F5F3EE;
+
+  --oro-claro:   #F0D687;
+  --verde-claro: #2D6A4F;
+  --acero-claro: #3A3A3A;
+
+  --hueso-tenue: rgba(245, 243, 238, 0.68);
+  --hueso-debil: rgba(245, 243, 238, 0.40);
+  --oro-tenue:   rgba(229, 193, 88, 0.18);
+  --linea:       rgba(245, 243, 238, 0.12);
+
+  --titulo: "Rajdhani", "Segoe UI Semibold", "Arial Narrow", system-ui, sans-serif;
+  --cuerpo: "EB Garamond", Georgia, "Times New Roman", serif;
+
+  --margen: 88px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  width: 1080px;
+  height: 1350px;
+  overflow: hidden;
+  background: var(--obsidiana);
+  color: var(--hueso);
+  font-family: var(--cuerpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── El lienzo ────────────────────────────────────────────────────
+   Un halo de oro muy tenue arriba a la izquierda da profundidad sin
+   ensuciar el negro. A ojo desnudo casi no se ve; lo que hace es que
+   el fondo no parezca plano.
+   ───────────────────────────────────────────────────────────────── */
+.pieza {
+  position: relative;
+  width: 1080px;
+  height: 1350px;
+  padding: var(--margen);
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(120% 80% at 12% 0%, rgba(229, 193, 88, 0.10), transparent 58%),
+    var(--obsidiana);
+}
+
+/* Filete superior: el acento de oro que abre toda pieza. */
+.pieza::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 260px;
+  height: 6px;
+  background: var(--oro);
+}
+
+/* ── Encabezado ───────────────────────────────────────────────── */
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.volanta {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 25px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin: 0;
+}
+
+.paginado {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 23px;
+  letter-spacing: 0.14em;
+  color: var(--hueso-debil);
+  white-space: nowrap;
+}
+
+/* ── Cuerpo ───────────────────────────────────────────────────── */
+.centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+.titular {
+  font-family: var(--titulo);
+  font-weight: 700;
+  font-size: 92px;
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.titular--largo  { font-size: 74px; }
+.titular--corto  { font-size: 112px; }
+.titular em      { font-style: normal; color: var(--oro); }
+
+.subtitulo {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 46px;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  margin: 0 0 26px;
+  color: var(--hueso);
+  text-wrap: balance;
+}
+
+.texto {
+  font-size: 35px;
+  line-height: 1.52;
+  color: var(--hueso-tenue);
+  margin: 0;
+  max-width: 22ch;
+}
+
+.texto--ancho { max-width: none; }
+.texto + .texto { margin-top: 22px; }
+
+/* Una sola frase puede ir en oro para marcar el remate. */
+.destacado {
+  color: var(--oro);
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.24;
+  margin: 30px 0 0;
+}
+
+/* Regla fina para separar sin peso. */
+.filete {
+  height: 1px;
+  background: var(--linea);
+  border: 0;
+  margin: 40px 0;
+}
+
+.filete--oro { background: var(--oro-tenue); }
+
+/* ── Pie ──────────────────────────────────────────────────────── */
+.pie {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 30px;
+  border-top: 1px solid var(--linea);
+}
+
+.pie__marca {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pie__marca svg { width: 46px; height: 46px; display: block; }
+
+.pie__nombre {
+  font-family: var(--titulo);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hueso);
+}
+
+.pie__nota {
+  margin-left: auto;
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 23px;
+  letter-spacing: 0.1em;
+  color: var(--hueso-debil);
+  text-align: right;
+}
+
+/* ── Dato ─────────────────────────────────────────────────────── */
+.cifra {
+  font-family: var(--titulo);
+  font-weight: 700;
+  font-size: 250px;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: var(--oro);
+  margin: 0;
+}
+
+.cifra--larga { font-size: 180px; }
+
+.cifra__unidad {
+  font-size: 0.42em;
+  letter-spacing: 0.02em;
+  color: var(--oro-claro);
+}
+
+.cifra__rotulo {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hueso-debil);
+  margin: 0 0 18px;
+}
+
+/* Un dato que todavía no tenemos se muestra como falta, nunca inventado.
+   Es la misma convención del sitio: class="falta". */
+.falta {
+  color: var(--oro);
+  background: var(--oro-tenue);
+  border-bottom: 2px dashed var(--oro);
+  padding: 0 0.14em;
+}
+
+/* ── Cita ─────────────────────────────────────────────────────── */
+.comilla {
+  font-family: var(--cuerpo);
+  font-size: 200px;
+  line-height: 0.6;
+  color: var(--oro-tenue);
+  height: 96px;
+  margin: 0 0 6px;
+  user-select: none;
+}
+
+.atribucion {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hueso-debil);
+  margin: 38px 0 0;
+}
+
+/* ── Servicio ─────────────────────────────────────────────────── */
+.etapa-n {
+  font-family: var(--titulo);
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 1;
+  color: var(--oro-tenue);
+  margin: 0 0 6px;
+}
+
+.lista { margin: 30px 0 0; padding: 0; list-style: none; }
+
+.lista li {
+  position: relative;
+  padding-left: 40px;
+  font-size: 33px;
+  line-height: 1.42;
+  color: var(--hueso-tenue);
+}
+
+.lista li + li { margin-top: 20px; }
+
+.lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 18px;
+  height: 2px;
+  background: var(--oro);
+}
+
+/* ── Ficha: pares rótulo/valor ────────────────────────────────── */
+.ficha { margin: 34px 0 0; }
+
+.ficha__fila {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+.ficha__fila:last-child { border-bottom: 0; }
+
+.ficha__rotulo {
+  font-family: var(--titulo);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hueso-debil);
+  width: 290px;
+  flex: none;
+}
+
+.ficha__valor { font-size: 32px; line-height: 1.36; color: var(--hueso); }
+
+/* ── Cierre de carrusel ───────────────────────────────────────── */
+.cierre { text-align: left; }
+
+.cierre__accion {
+  display: inline-block;
+  margin-top: 34px;
+  padding: 22px 40px;
+  background: var(--verde);
+  border: 1px solid var(--verde-claro);
+  color: var(--hueso);
+  font-family: var(--titulo);
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.06em;
+}

@@ -1,0 +1,47 @@
+<!-- ═══ PIEZA · SERVICIO ═══════════════════════════════════════════
+     Qué incluye una etapa de la escalera comercial y qué se lleva el
+     cliente. Responde la pregunta que el sitio no respondía: "¿qué me
+     llevo exactamente?".
+
+     Los plazos y los precios todavía faltan; van con class="falta"
+     hasta que el equipo los aporte.
+
+     Contexto que espera:
+       volanta    texto chico de arriba
+       numero     1, 2 o 3 · el peldaño de la escalera
+       titular    el nombre de la etapa
+       texto      qué responde esa etapa
+       lista      opcional, qué incluye
+       ficha      opcional, arreglo de {rotulo, valor}
+       nota       opcional
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="pieza">
+  <header class="cabecera">
+    <p class="volanta">{{volanta}}</p>
+    {{?n}}<span class="paginado">{{n}} / {{total}}</span>{{/}}
+  </header>
+
+  <div class="centro">
+    {{?numero}}<p class="etapa-n">{{numero}}</p>{{/}}
+    <h1 class="titular {{claseTitular}}">{{{titular}}}</h1>
+    {{?texto}}<p class="texto texto--ancho" style="margin-top:26px">{{{texto}}}</p>{{/}}
+
+    {{?lista}}<ul class="lista">{{#lista}}<li>{{{.}}}</li>{{/}}</ul>{{/}}
+
+    {{?ficha}}
+      <div class="ficha">
+        {{#ficha}}
+          <div class="ficha__fila">
+            <span class="ficha__rotulo">{{rotulo}}</span>
+            <span class="ficha__valor">{{{valor}}}</span>
+          </div>
+        {{/}}
+      </div>
+    {{/}}
+  </div>
+
+  <footer class="pie">
+    <div class="pie__marca">{{{isotipo}}}<span class="pie__nombre">AgroTitan</span></div>
+    {{?nota}}<span class="pie__nota">{{nota}}</span>{{/}}
+  </footer>
+</div>

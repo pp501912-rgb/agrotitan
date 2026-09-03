@@ -1,0 +1,32 @@
+<!-- ═══ PIEZA · DATO ═══════════════════════════════════════════════
+     Una cifra grande en oro con su contexto. El formato más directo
+     y el más peligroso: si el número no está en los archivos, va
+     entre corchetes con class="falta" y se reporta. Nunca inventado.
+
+     Contexto que espera:
+       volanta   texto chico de arriba
+       rotulo    qué mide la cifra
+       cifra     el número (puede traer <span class="falta">)
+       unidad    opcional, en oro claro y más chico
+       texto     el párrafo de contexto
+       destacado opcional, remate en oro
+       nota      opcional, esquina inferior derecha
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="pieza">
+  <header class="cabecera">
+    <p class="volanta">{{volanta}}</p>
+  </header>
+
+  <div class="centro">
+    <p class="cifra__rotulo">{{rotulo}}</p>
+    <p class="cifra {{claseCifra}}">{{{cifra}}}{{?unidad}} <span class="cifra__unidad">{{unidad}}</span>{{/}}</p>
+    <hr class="filete filete--oro">
+    <p class="texto texto--ancho">{{{texto}}}</p>
+    {{?destacado}}<p class="destacado">{{{destacado}}}</p>{{/}}
+  </div>
+
+  <footer class="pie">
+    <div class="pie__marca">{{{isotipo}}}<span class="pie__nombre">AgroTitan</span></div>
+    {{?nota}}<span class="pie__nota">{{nota}}</span>{{/}}
+  </footer>
+</div>

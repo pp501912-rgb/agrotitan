@@ -1,0 +1,28 @@
+<!-- ═══ PIEZA · CITA ═══════════════════════════════════════════════
+     Una frase fuerte sobre obsidiana. Es el formato donde vive la
+     épica de la marca: acá sí entra el registro titánico, porque es
+     una sola línea y el resto de la pieza es silencio.
+
+     Contexto que espera:
+       volanta      texto chico de arriba
+       titular      la frase (usá <em> para poner una parte en oro)
+       atribucion   opcional, debajo de la frase
+       nota         opcional, esquina inferior derecha
+       claseTitular opcional: titular--corto | titular--largo
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="pieza">
+  <header class="cabecera">
+    <p class="volanta">{{volanta}}</p>
+  </header>
+
+  <div class="centro">
+    <div class="comilla" aria-hidden="true">&ldquo;</div>
+    <h1 class="titular {{claseTitular}}">{{{titular}}}</h1>
+    {{?atribucion}}<p class="atribucion">{{atribucion}}</p>{{/}}
+  </div>
+
+  <footer class="pie">
+    <div class="pie__marca">{{{isotipo}}}<span class="pie__nombre">AgroTitan</span></div>
+    {{?nota}}<span class="pie__nota">{{nota}}</span>{{/}}
+  </footer>
+</div>

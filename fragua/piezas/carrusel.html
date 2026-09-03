@@ -1,0 +1,58 @@
+<!-- ═══ PIEZA · CARRUSEL ═══════════════════════════════════════════
+     El formato principal de AgroTitan. El contenido es didáctico y
+     encadenado —los tres estudios, por qué el mayor margen bruto
+     puede ser la peor opción, qué mueve el VAN—, y eso rinde mucho
+     más repartido en placas que apretado en una sola.
+
+     Una misma plantilla sirve para las tres clases de placa; la
+     elige el campo "tipo".
+
+     Contexto que espera:
+       tipo       portada | interior | cierre
+       volanta    texto chico de arriba
+       n / total  numeración, para el paginado
+       titular    portada y cierre
+       subtitulo  interior: el título de la placa
+       texto      el cuerpo
+       destacado  opcional, remate en oro
+       lista      opcional, arreglo de strings con viñeta de oro
+       accion     sólo en cierre: el botón verde
+       nota       opcional
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="pieza">
+  <header class="cabecera">
+    <p class="volanta">{{volanta}}</p>
+    {{?n}}<span class="paginado">{{n}} / {{total}}</span>{{/}}
+  </header>
+
+  <div class="centro">
+
+    {{#esPortada}}
+      <h1 class="titular {{claseTitular}}">{{{titular}}}</h1>
+      {{?texto}}<hr class="filete filete--oro"><p class="texto texto--ancho">{{{texto}}}</p>{{/}}
+    {{/}}
+
+    {{#esInterior}}
+      <h2 class="subtitulo">{{{subtitulo}}}</h2>
+      {{?texto}}<p class="texto texto--ancho">{{{texto}}}</p>{{/}}
+      {{?lista}}
+        <ul class="lista">{{#lista}}<li>{{{.}}}</li>{{/}}</ul>
+      {{/}}
+      {{?destacado}}<p class="destacado">{{{destacado}}}</p>{{/}}
+    {{/}}
+
+    {{#esCierre}}
+      <div class="cierre">
+        <h1 class="titular {{claseTitular}}">{{{titular}}}</h1>
+        {{?texto}}<hr class="filete filete--oro"><p class="texto texto--ancho">{{{texto}}}</p>{{/}}
+        {{?accion}}<span class="cierre__accion">{{accion}}</span>{{/}}
+      </div>
+    {{/}}
+
+  </div>
+
+  <footer class="pie">
+    <div class="pie__marca">{{{isotipo}}}<span class="pie__nombre">AgroTitan</span></div>
+    {{?nota}}<span class="pie__nota">{{nota}}</span>{{/}}
+  </footer>
+</div>

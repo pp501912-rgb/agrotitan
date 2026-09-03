@@ -1,0 +1,13 @@
+# Secretos — nunca al repositorio
+.env
+
+# Dependencias
+node_modules/
+
+# Lo que genera la app
+salida/
+*.log
+
+# Basura del sistema
+.DS_Store
+Thumbs.db

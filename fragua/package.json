@@ -1,0 +1,20 @@
+{
+  "name": "fragua",
+  "version": "1.0.0",
+  "description": "Community manager virtual y autogestión del sitio de AgroTitan",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node servidor/index.mjs",
+    "bot": "node telegram/bot.mjs",
+    "construir": "node sitio/construir.mjs",
+    "extraer": "node sitio/extraer.mjs",
+    "publicar": "node sitio/publicar.mjs",
+    "pieza": "node nucleo/render.mjs",
+    "probar": "node --test nucleo/*.test.mjs"
+  },
+  "optionalDependencies": {
+    "@anthropic-ai/sdk": "^0.71.0"
+  }
+}
