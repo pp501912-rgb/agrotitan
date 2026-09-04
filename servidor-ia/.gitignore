@@ -1,0 +1,3 @@
+# Configuración local con puertos, modelos y credenciales propias.
+.env
+respaldos/
