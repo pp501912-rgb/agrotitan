@@ -18,6 +18,8 @@ import path from "node:path";
 
 import { RUTAS } from "./marca.mjs";
 import { anotarPublicacion } from "./conocimiento.mjs";
+import * as vitrina from "./vitrina.mjs";
+import * as instagram from "../motores/instagram.mjs";
 
 /** Lee la ficha de una carpeta de salida. */
 async function leerFicha(carpeta) {
@@ -119,6 +121,60 @@ export async function marcarPublicada(carpeta) {
 
   const total = await anotarPublicacion(ficha, { carpeta });
   return { publicada: true, carpeta, enHistorial: total };
+}
+
+/* ── Publicar en Instagram ─────────────────────────────────────── */
+
+/**
+ * Sube una pieza aprobada a Instagram.
+ *
+ * Exige que esté aprobada, y como una pieza con datos entre corchetes
+ * no se puede aprobar, esa condición arrastra la regla de oro hasta el
+ * último paso: nada con un [X] adentro puede llegar a publicarse.
+ *
+ * Si Meta falla en la mitad, la pieza NO queda marcada como publicada:
+ * es mejor reintentar que creer que salió algo que no salió.
+ */
+export async function publicarEnInstagram(carpeta) {
+  const ficha = await leerFicha(carpeta);
+
+  if (ficha.estado === "publicada") {
+    return { publicada: false, motivo: "Esta pieza ya está publicada." };
+  }
+  if (ficha.estado !== "aprobada") {
+    return { publicada: false, motivo: "Primero hay que aprobarla. Miralá y dale el visto bueno." };
+  }
+
+  const ig = await instagram.estado();
+  if (!ig.activo) return { publicada: false, motivo: ig.motivo };
+
+  const v = vitrina.estado();
+  if (!v.activo) return { publicada: false, motivo: v.motivo };
+
+  const carpetaCompleta = path.join(RUTAS.salida, carpeta);
+  const archivos = (ficha.imagenes || []).map((n) => path.join(carpetaCompleta, n));
+  if (!archivos.length) return { publicada: false, motivo: "La pieza no tiene imágenes." };
+
+  const copy = await fs.readFile(path.join(carpetaCompleta, "copy.txt"), "utf8");
+
+  let subidas = [];
+  try {
+    subidas = await vitrina.subirVarias(archivos);
+    const r = await instagram.publicar({ caption: copy.trim() }, subidas.map((x) => x.url));
+
+    // Recién ahora, con la publicación confirmada, movemos el estado.
+    ficha.estado = "publicada";
+    ficha.publicada = new Date().toISOString();
+    ficha.instagram = { id: r.id, permalink: r.permalink };
+    await guardarFicha(carpeta, ficha);
+    await anotarPublicacion(ficha, { carpeta });
+
+    return { publicada: true, carpeta, id: r.id, permalink: r.permalink };
+  } finally {
+    // Pase lo que pase, las imágenes salen de la vitrina. Y si esto
+    // también falla, caducan solas en una hora.
+    await vitrina.borrar(subidas.map((x) => x.id));
+  }
 }
 
 /** Borra una pieza que no va. */

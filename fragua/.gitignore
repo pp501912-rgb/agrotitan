@@ -11,3 +11,6 @@ salida/
 # Basura del sistema
 .DS_Store
 Thumbs.db
+
+# El token vivo de Instagram, que se refresca solo
+.instagram.json

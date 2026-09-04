@@ -101,6 +101,37 @@ el piso razonable; `large-v3-turbo` es lo mejor si la máquina da.
 Sólo si te pasa seguido estar más de un día lejos de la PC. Ver
 `bandeja/LEEME.md`.
 
+### Publicar solo en Instagram
+
+Lo último y lo más opcional de todo. Subir una pieza a mano lleva treinta
+segundos, y es el momento en que la mirás por última vez. Esto ahorra eso.
+
+Necesita la bandeja desplegada —es la que le muestra las imágenes a Meta
+mientras publica— y una app de Meta, que se arma una sola vez:
+
+1. En `developers.facebook.com`, **crear una app**. Cuando pregunte el caso de
+   uso, elegí *Otro* y después el tipo **Empresa**.
+2. Agregarle el producto **Instagram**, en la variante con inicio de sesión de
+   Instagram. **No hace falta página de Facebook**: la vía nueva acepta cuentas
+   que sólo existen en Instagram, y la tuya ya es profesional.
+3. En *Roles*, agregar tu propia cuenta como **Instagram Tester**, y aceptar la
+   invitación desde Instagram (Configuración → Apps y sitios web → Invitaciones
+   de tester).
+4. Generar un **token de larga duración** y copiar el **ID de la cuenta**, que
+   sale en la misma pantalla.
+5. Pegar los dos en el `.env`, en `IG_TOKEN` e `IG_CUENTA`.
+
+**No hace falta la revisión de Meta**, que tarda de dos a cuatro semanas: sólo
+aplica si publicás en cuentas ajenas. Para la tuya, con la app en modo
+desarrollo alcanza.
+
+**El token dura 60 días y se renueva solo.** FRAGUA lo refresca en cada
+arranque, así que con abrir la app una vez cada dos meses no se vence nunca. La
+pantalla de *Estado* avisa cuando faltan menos de diez días. Si igual se vence,
+no hay refresco posible: hay que repetir el paso 4 y pegar el token nuevo.
+
+El token vivo se guarda en `fragua/.instagram.json`, que no va al repositorio.
+
 ---
 
 ## Las siete pantallas
@@ -115,12 +146,22 @@ falten, la página los muestra entre corchetes y el publicador se niega a
 subirla salvo que se lo pidas.
 
 **Piezas.** Todo lo que generaste, lo más nuevo arriba. Al abrir una ves las
-imágenes, el copy con un botón para copiarlo entero, y tres acciones: aprobar,
-marcar como publicada y descartar. **Una pieza con datos entre corchetes no se
-puede aprobar**, y te dice cuáles faltan.
+imágenes, el copy con un botón para copiarlo entero, y cuatro acciones: aprobar,
+publicar en Instagram, marcar como publicada y descartar. **Una pieza con datos
+entre corchetes no se puede aprobar**, y te dice cuáles faltan.
 
-Marcar una pieza como publicada la anota en el historial y pasa el tema a
-«publicado», así HERALDO no vuelve a proponerlo.
+*Publicar en Instagram* sube la pieza de verdad, y sólo funciona con una pieza
+ya aprobada: como una pieza con corchetes no se puede aprobar, la regla de oro
+llega intacta hasta el último paso. Pregunta qué va a subir antes de hacerlo. Si
+Meta corta a la mitad, la pieza queda aprobada y se puede reintentar: nunca
+queda marcada como publicada algo que no salió.
+
+*Marcar como publicada* es para cuando la subiste a mano: la anota en el
+historial y pasa el tema a «publicado», así HERALDO no vuelve a proponerlo.
+
+**Ninguno de estos botones está entre las herramientas de HERALDO**, a
+propósito. El modelo arma la pieza; aprobarla y mandarla al mundo son
+decisiones tuyas.
 
 **Temas.** El banco de ideas. Arranca con 17 temas que se pueden producir hoy,
 sin ningún dato nuevo: las diez variables que definen el resultado en cada
@@ -204,8 +245,8 @@ contenido/        los datos de la página
 plantillas/       la página con marcadores
 piezas/           las cuatro plantillas de Instagram
 nucleo/           render, plantillas, contrato, conocimiento, piezas,
-                  calendario, transcribir, audios
-motores/          claude, ollama, plantillas, cascada
+                  calendario, transcribir, audios, vitrina
+motores/          claude, ollama, plantillas, cascada, instagram
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
 sitio/            extraer, construir, publicar
@@ -238,6 +279,15 @@ otra ventana. Entrá a `http://127.0.0.1:4321`. Si querés otro puerto, poné
 vienen en un formato que whisper.cpp no abre. Instalá ffmpeg y poné su ruta en
 `FRAGUA_FFMPEG`, o pasate a whisper-ctranslate2, que no lo necesita.
 
+**«El token de Instagram se venció.»** Pasaron más de 60 días sin abrir FRAGUA
+y ya no se puede refrescar. Generá uno nuevo en `developers.facebook.com` y
+pegalo en el `.env`: el guardado se descarta solo cuando cambia el del `.env`.
+
+**«Para publicar en Instagram hace falta la bandeja desplegada.»** Meta va a
+buscar las imágenes a una dirección pública; la bandeja es la que se las
+muestra, y las borra apenas termina. Los tres comandos están en
+`bandeja/LEEME.md`.
+
 **El chat dice que el motor está apagado.** Falta la clave en el `.env` o falta
 `npm install`. La pantalla de *Estado* te dice cuál de las dos.
 
@@ -245,7 +295,11 @@ vienen en un formato que whisper.cpp no abre. Instalá ffmpeg y poné su ruta en
 
 ## Lo que todavía no hace
 
-- **Publicar solo en Instagram.** El paquete queda listo en `salida/` y se sube
-  a mano. El código está preparado para enchufar la API de Meta más adelante.
+- **Reels y videos.** Es otro flujo, con subida reanudable. Las piezas de
+  AgroTitan son placas y carruseles.
+- **Publicar a una hora programada.** El calendario dice qué día va cada pieza;
+  apretar el botón sigue siendo un acto tuyo.
+- **Publicar en cuentas que no sean la tuya.** Eso sí necesita la revisión de
+  Meta.
 - **Fotos propias.** Las piezas usan composiciones tipográficas hasta que
   existan fotos reales de campo.

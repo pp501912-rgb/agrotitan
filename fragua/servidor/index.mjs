@@ -23,6 +23,7 @@ import { leerDatos, pendientes, verificar } from "../sitio/construir.mjs";
 import { leerTemas } from "../nucleo/conocimiento.mjs";
 import * as bandeja from "../nucleo/bandeja.mjs";
 import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
+import * as instagram from "../motores/instagram.mjs";
 
 const PUERTO = Number(process.env.FRAGUA_PUERTO) || 4321;
 
@@ -94,11 +95,12 @@ async function servirArchivo(res, base, relativo) {
 
 /** El estado de los tres motores y del renderizador, en castellano. */
 async function estadoGeneral() {
-  const [c, o, nav, w, sitio, temas] = await Promise.all([
+  const [c, o, nav, w, ig, sitio, temas] = await Promise.all([
     claude.estado(),
     ollama.estado(),
     buscarNavegador(),
     estadoWhisper(),
+    instagram.estado(),
     leerDatos(),
     leerTemas(),
   ]);
@@ -115,6 +117,7 @@ async function estadoGeneral() {
       ? { activo: true, navegador: path.basename(nav) }
       : { activo: false, motivo: "No encontré Chrome, Edge ni Chromium. Poné la ruta en el .env con FRAGUA_NAVEGADOR." },
     audio: w,
+    instagram: ig,
     sitio: {
       total: sitio.ficha.campos?.length ?? 0,
       faltan: faltan.length,
@@ -239,12 +242,20 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
     Plantillas ............. sí
     Render de imágenes ..... ${marca(est.render)}${est.render.activo ? `  · ${est.render.navegador}` : `  · ${est.render.motivo}`}
     Transcripción de voz ... ${marca(est.audio)}${est.audio.activo ? `  · ${est.audio.motor} (${est.audio.modelo})` : ""}
+    Instagram .............. ${marca(est.instagram)}${est.instagram.activo && est.instagram.diasRestantes !== null ? `  · token por ${est.instagram.diasRestantes} días` : ""}
 
   Página: faltan ${est.sitio.faltan} de ${est.sitio.total} datos.
   Temas sin usar: ${est.temas.sinUsar} de ${est.temas.total}.
 
   Para cortar: Ctrl+C
 `);
+
+  // El token de Instagram se refresca en cada arranque: con abrir la app
+  // una vez cada dos meses, no se vence nunca.
+  if (process.env.IG_TOKEN) {
+    const t = await instagram.refrescarToken();
+    if (t.refrescado) console.log(`  Token de Instagram renovado hasta ${t.hasta.slice(0, 10)}.\n`);
+  }
 
   // Si configuraste la bandeja del celular, se vacía sola al arrancar.
   const b = await bandeja.bajar();

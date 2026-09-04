@@ -13,7 +13,7 @@
     "publicar": "node sitio/publicar.mjs",
     "pieza": "node nucleo/render.mjs",
     "transcribir": "node nucleo/audios.mjs",
-    "probar": "node --test nucleo/*.test.mjs"
+    "probar": "node --test nucleo/*.test.mjs motores/*.test.mjs"
   },
   "optionalDependencies": {
     "@anthropic-ai/sdk": "^0.71.0"

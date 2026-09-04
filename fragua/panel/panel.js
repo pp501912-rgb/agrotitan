@@ -344,9 +344,14 @@ async function abrirPieza(carpeta) {
         <pre class="copy__texto" id="copy-texto">${escapar(p.copy)}</pre>
       </div>
 
+      ${p.instagram?.permalink ? `
+        <p class="aviso aviso--si">Publicada en Instagram: ${escapar(p.instagram.permalink)}</p>` : ""}
+
       <div class="acciones" style="margin-top:20px">
         <button class="boton boton--lleno" id="btn-aprobar"
                 ${p.estado !== "borrador" ? "disabled" : ""}>Aprobar</button>
+        <button class="boton boton--lleno" id="btn-instagram"
+                ${p.estado !== "aprobada" ? "disabled" : ""}>Publicar en Instagram</button>
         <button class="boton boton--linea" id="btn-publicada"
                 ${p.estado === "borrador" || p.estado === "publicada" ? "disabled" : ""}>Marcar como publicada</button>
         <button class="boton boton--linea" id="btn-descartar">Descartar</button>
@@ -377,6 +382,37 @@ async function abrirPieza(carpeta) {
     const r = await herramienta("aprobar_pieza", { carpeta });
     if (r.aprobada) { avisarPiezas("✓ Aprobada. Ya la podés subir."); abrirPieza(carpeta); }
     else avisarPiezas(r.motivo || r.error);
+  });
+
+  /* Publicar de verdad. Es lo único de toda la app que manda algo al
+     mundo, así que pregunta qué se va a subir antes de hacerlo, y el
+     botón se apaga mientras tanto: dos clics serían dos publicaciones. */
+  $("#btn-instagram").addEventListener("click", async () => {
+    const cuantas = (p.imagenes || []).length;
+    const arranque = (p.copy || "").trim().split("\n")[0].slice(0, 70);
+
+    const pregunta =
+      `Se publica AHORA en tu cuenta de Instagram:\n\n` +
+      `· ${cuantas} ${cuantas === 1 ? "imagen" : "imágenes"}${cuantas > 1 ? " en carrusel" : ""}\n` +
+      `· Empieza con: «${arranque}…»\n\n` +
+      `Sale al mundo y desde acá no se puede borrar.\n\n¿Publico?`;
+    if (!confirm(pregunta)) return;
+
+    const b = $("#btn-instagram");
+    b.disabled = true;
+    b.textContent = "Publicando…";
+    avisarPiezas("Subiendo las imágenes y armando la publicación. Puede tardar medio minuto.");
+
+    const r = await herramienta("publicar_en_instagram", { carpeta });
+
+    if (r.publicada) {
+      avisarPiezas("✓ Publicada." + (r.permalink ? ` Está en ${r.permalink}` : ""));
+      abrirPieza(carpeta);
+    } else {
+      b.disabled = false;
+      b.textContent = "Publicar en Instagram";
+      avisarPiezas(r.motivo || r.error);
+    }
   });
 
   $("#btn-publicada").addEventListener("click", async () => {
@@ -618,6 +654,14 @@ async function cargarEstado() {
       <h2 class="grupo__t">Voz</h2>
       ${fila("Transcripción de audios", e.audio,
              e.audio.motor ? `<span class="etiqueta">${e.audio.motor}</span><span class="etiqueta">${e.audio.modelo}</span>` : "")}
+    </div>
+    <div class="grupo">
+      <h2 class="grupo__t">Publicación</h2>
+      ${fila("Instagram", e.instagram,
+             (e.instagram.diasRestantes ?? null) !== null
+               ? `<span class="etiqueta ${e.instagram.diasRestantes < 10 ? "etiqueta--no" : ""}">token por ${e.instagram.diasRestantes} días</span>`
+               : "")}
+      ${e.instagram.aviso ? `<p class="aviso aviso--no">${escapar(e.instagram.aviso)}</p>` : ""}
     </div>
     <div class="grupo">
       <h2 class="grupo__t">Contenido</h2>

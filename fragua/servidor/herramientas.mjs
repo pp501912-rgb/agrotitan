@@ -537,10 +537,10 @@ export const IMPLEMENTACIONES = {
 };
 
 /* ── Sólo para el panel ───────────────────────────────────────────
-   Estas cuatro NO están en DEFINICIONES a propósito: el modelo no
-   puede llamarlas. Aprobar una pieza y darla por publicada son
-   decisiones de una persona, y con contenido que menciona cifras ese
-   paso vale más que cualquier automatización.
+   Estas NO están en DEFINICIONES a propósito: el modelo no puede
+   llamarlas. Aprobar una pieza, darla por publicada y sobre todo
+   subirla a Instagram son decisiones de una persona. HERALDO puede
+   armar la pieza; apretar el botón, no.
    ────────────────────────────────────────────────────────────────── */
 
 Object.assign(IMPLEMENTACIONES, {
@@ -548,6 +548,7 @@ Object.assign(IMPLEMENTACIONES, {
   aprobar_pieza:    ({ carpeta }) => piezas.aprobar(carpeta),
   marcar_publicada: ({ carpeta }) => piezas.marcarPublicada(carpeta),
   descartar_pieza:  ({ carpeta }) => piezas.descartar(carpeta),
+  publicar_en_instagram: ({ carpeta }) => piezas.publicarEnInstagram(carpeta),
   ver_calendario_completo: () => calendario.leer(),
   listar_notas: async () => ({ notas: await saber.leerNotas() }),
 });

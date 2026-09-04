@@ -24,6 +24,11 @@
 const LIMITE_BYTES = 15 * 1024 * 1024;   // Telegram y las fotos entran holgados
 const MAX_EN_COLA  = 500;
 
+/* Las imágenes que se le muestran a Meta para publicar en Instagram
+   viven una hora. Alcanza de sobra —Meta las busca en el momento— y
+   así no queda nada dando vueltas aunque la publicación falle. */
+const VIDA_IMAGEN = 60 * 60;
+
 export default {
   async fetch(peticion, entorno) {
     const url = new URL(peticion.url);
@@ -33,6 +38,13 @@ export default {
       return new Response(PAGINA, {
         headers: { "content-type": "text/html; charset=utf-8" },
       });
+    }
+
+    // Y las imágenes también: Meta las viene a buscar sin credenciales.
+    // La dirección es aleatoria y dura una hora, que es toda la
+    // protección que necesita algo que está por publicarse igual.
+    if (peticion.method === "GET" && url.pathname.startsWith("/i/")) {
+      return servirImagen(url.pathname.slice(3), entorno);
     }
 
     if (!autorizado(peticion, entorno)) {
@@ -48,6 +60,12 @@ export default {
       }
       if (peticion.method === "POST" && url.pathname === "/api/vaciar") {
         return vaciar(peticion, entorno);
+      }
+      if (peticion.method === "POST" && url.pathname === "/i") {
+        return guardarImagen(peticion, entorno);
+      }
+      if (peticion.method === "POST" && url.pathname === "/i/borrar") {
+        return borrarImagenes(peticion, entorno);
       }
     } catch (e) {
       return json({ error: e.message }, 500);
@@ -127,6 +145,50 @@ async function vaciar(peticion, entorno) {
   const { claves = [] } = await peticion.json();
   await Promise.all(claves.map((c) => entorno.BANDEJA.delete(c)));
   return json({ borradas: claves.length });
+}
+
+/* ── Imágenes para publicar ────────────────────────────────────── */
+
+/** Guarda una imagen y devuelve su dirección pública. */
+async function guardarImagen(peticion, entorno) {
+  const datos = await peticion.arrayBuffer();
+  if (datos.byteLength === 0) return json({ error: "Vacía." }, 400);
+  if (datos.byteLength > LIMITE_BYTES) return json({ error: "Demasiado grande." }, 413);
+
+  const id = crypto.randomUUID().replace(/-/g, "");
+  const tipo = peticion.headers.get("content-type") || "image/png";
+
+  await entorno.BANDEJA.put(`imagen:${id}`, datos, {
+    expirationTtl: VIDA_IMAGEN,
+    metadata: { tipo, nombre: peticion.headers.get("x-bandeja-nombre") || "" },
+  });
+
+  const base = new URL(peticion.url).origin;
+  return json({ id, url: `${base}/i/${id}`, vidaSegundos: VIDA_IMAGEN });
+}
+
+/** Sirve una imagen. Sin token: Meta la busca sin credenciales. */
+async function servirImagen(id, entorno) {
+  if (!/^[0-9a-f]{32}$/.test(id)) return new Response("No existe.", { status: 404 });
+
+  const { value, metadata } = await entorno.BANDEJA.getWithMetadata(`imagen:${id}`, {
+    type: "arrayBuffer",
+  });
+  if (!value) return new Response("No existe o ya caducó.", { status: 404 });
+
+  return new Response(value, {
+    headers: {
+      "content-type": metadata?.tipo || "image/png",
+      "cache-control": `public, max-age=${VIDA_IMAGEN}`,
+    },
+  });
+}
+
+/** Borra las que ya se publicaron. Las demás caducan solas. */
+async function borrarImagenes(peticion, entorno) {
+  const { ids = [] } = await peticion.json();
+  await Promise.all(ids.map((id) => entorno.BANDEJA.delete(`imagen:${id}`)));
+  return json({ borradas: ids.length });
 }
 
 /* ── La página de captura ──────────────────────────────────────────
