@@ -1,0 +1,42 @@
+# ═══════════════════════════════════════════════════════════════════════
+# PLATAFORMA MULTIESPECTRAL · ENTORNO PYTHON
+#
+# Se usa conda-forge y no pip porque GDAL instalado con pip es una fuente
+# inagotable de problemas en Windows. Con conda-forge, GDAL viene compilado
+# y funcionando, y rasterio se enlaza contra esa versión sin pelear.
+#
+#     conda env create -f entorno.yml
+#     conda activate plataforma
+#
+# (Si no tenés conda: instalá Miniforge, que trae conda-forge por omisión.)
+# ═══════════════════════════════════════════════════════════════════════
+name: plataforma
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+
+  # Geoespacial. GDAL manda: todo lo demás se enlaza contra él.
+  - gdal=3.9
+  - rasterio=1.3
+  - shapely=2.0
+  - pyproj=3.6
+  - fiona=1.9          # lectura/escritura de vectores (GPKG, SHP)
+
+  # Cálculo
+  - numpy=1.26
+  - scikit-learn=1.5   # k-means de zonificación
+  - scipy=1.13         # filtro de mayoría sobre las zonas
+
+  # Base de datos
+  - psycopg=3.1        # sin ORM, a propósito
+
+  # Utilidades
+  - pyyaml=6.0         # perfiles de cámara
+  - click=8.1          # CLI
+  - rich=13.7          # salida legible en consola
+  - psutil=5.9         # medición del pico de memoria, que se audita
+
+  # Desarrollo
+  - pytest=8.2
+  - pytest-cov

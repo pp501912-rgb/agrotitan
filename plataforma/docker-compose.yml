@@ -1,0 +1,46 @@
+# ═══════════════════════════════════════════════════════════════════════
+# PLATAFORMA MULTIESPECTRAL · POSTGIS DE DESARROLLO
+#
+# Alternativa a instalar PostgreSQL a mano en la PC. Levanta PostGIS 16-3.4
+# ya configurado con los ajustes que este proyecto necesita.
+#
+#     docker compose up -d
+#     psql -h localhost -p 5432 -U plataforma -d plataforma -f base/001_esquema.sql
+#
+# El volumen 'datos_pg' persiste la base entre reinicios. La carpeta ./datos
+# se monta dentro del contenedor en la MISMA ruta que ve el motor, para que
+# los punteros out-db a los COG resuelvan igual desde adentro y desde afuera.
+# ═══════════════════════════════════════════════════════════════════════
+services:
+  base:
+    image: postgis/postgis:16-3.4
+    container_name: plataforma-postgis
+    environment:
+      POSTGRES_USER: plataforma
+      POSTGRES_PASSWORD: plataforma
+      POSTGRES_DB: plataforma
+    ports:
+      - "5432:5432"
+    volumes:
+      - datos_pg:/var/lib/postgresql/data
+      - ./datos:/datos:ro          # misma ruta adentro y afuera: out-db resuelve igual
+    command:
+      - postgres
+      # El default de 1000 rompe los rásters out-db de forma difícil de diagnosticar.
+      - -c
+      - max_files_per_process=65536
+      # 2 GB y no más: en una PC de 16 GB, la RAM la necesita el procesamiento.
+      - -c
+      - shared_buffers=2GB
+      - -c
+      - work_mem=64MB
+      - -c
+      - maintenance_work_mem=512MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U plataforma -d plataforma"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  datos_pg:
