@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    AGROTITAN · BASE
-   Variables, tipografía, reset y utilidades.
+   Variables, tipografía, reset y utilidades. Los estilos por sección
+   están en secciones.css
 
    Mobile-first: los estilos de base son los del teléfono. Las media
    queries agregan, nunca corrigen. Es deliberado — la mayoría de los
@@ -16,6 +17,10 @@
       en el campo, cada petición externa cuesta segundos.
 
    Licencia OFL: descargarlas y servirlas es legal.
+
+   Rajdhani      → titulares (identidad de marca)
+   IBM Plex Sans → cuerpo de texto, más robusto en bloques largos
+   IBM Plex Mono → cifras, unidades y etiquetas técnicas
 
    ⚠ Si la carpeta fuentes/ está vacía, el sitio usa las tipografías
      del sistema (ver la cascada de --tipo-*). Se ve distinto pero
@@ -36,316 +41,291 @@
   font-display: swap;
 }
 
+/* Fuente variable: un solo archivo cubre de 400 a 600.
+   Google entrega el mismo .woff2 para los tres pesos, así que servir
+   uno solo ahorra 91 KB sin perder nada. */
 @font-face {
-  font-family: "EB Garamond";
-  src: url("../fuentes/ebgaramond-400.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "IBM Plex Sans";
+  src: url("../fuentes/plexsans-var.woff2") format("woff2");
+  font-weight: 400 600;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "EB Garamond";
-  src: url("../fuentes/ebgaramond-500italic.woff2") format("woff2");
-  font-weight: 500;
+  font-family: "IBM Plex Sans";
+  src: url("../fuentes/plexsans-400italic.woff2") format("woff2");
+  font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
-/* ── Variables ────────────────────────────────────────────────── */
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fuentes/plexmono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fuentes/plexmono-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VARIABLES
+   El sitio está comprometido con el tema oscuro: no cambia según la
+   configuración del visitante. Por eso todo color se pinta explícito
+   y no hay bloque de tema claro.
+   ═══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Paleta · definida en el prompt de identidad */
-  --obsidiana:   #0A0A0A;   /* fondo principal */
-  --acero:       #2B2B2B;   /* tarjetas y separaciones */
-  --oro:         #E5C158;   /* acentos, títulos, CTA secundario */
-  --verde:       #1B4332;   /* CTA principal, indicadores positivos */
-  --hueso:       #F5F3EE;   /* texto — blanco puro es muy duro */
+  color-scheme: dark;
 
-  /* Derivados, calculados a partir de los anteriores */
-  --oro-claro:   #F0D687;
-  --oro-tenue:   rgba(229, 193, 88, 0.16);
-  --verde-claro: #2D6A4F;
-  --acero-claro: #3A3A3A;
-  --hueso-tenue: rgba(245, 243, 238, 0.66);
-  --hueso-débil: rgba(245, 243, 238, 0.42);
-  --linea:       rgba(245, 243, 238, 0.12);
+  /* Marca */
+  --obsidiana:       #0B0C0A;
+  --acero:           #141613;
+  --superficie:      #1B1E19;
+  --superficie-alta: #232720;
+
+  --oro:             #E5C158;
+  --oro-claro:       #F1D98C;
+  --oro-tenue:       rgba(229, 193, 88, .14);
+
+  --verde:           #1B4332;
+  --verde-claro:     #2D6A4F;
+  --verde-vivo:      #4EA37A;
+
+  /* Arcilla: solo para señalar lo negativo en el gráfico */
+  --arcilla:         #C4674A;
+
+  --hueso:           #F2F0E9;
+  --hueso-2:         rgba(242, 240, 233, .72);
+  --hueso-3:         rgba(242, 240, 233, .50);
+
+  --linea:           rgba(242, 240, 233, .11);
+  --linea-fuerte:    rgba(242, 240, 233, .20);
 
   /* Tipografía · con cascada al sistema si falta el archivo */
   --tipo-titulo: "Rajdhani", "Segoe UI Semibold", "Arial Narrow",
                  system-ui, sans-serif;
-  --tipo-cuerpo: "EB Garamond", Georgia, "Times New Roman", serif;
-  --tipo-ui:     "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --tipo-cuerpo: "IBM Plex Sans", "Segoe UI", system-ui,
+                 -apple-system, sans-serif;
+  --tipo-dato:   "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-  /* Escala tipográfica · fluida entre teléfono y monitor.
-     clamp(mínimo, preferido, máximo) evita las media queries para
-     tamaños de texto. */
-  --t-hero:   clamp(2.4rem, 7vw, 5rem);
-  --t-h2:     clamp(1.8rem, 4.5vw, 3rem);
-  --t-h3:     clamp(1.15rem, 2.4vw, 1.5rem);
-  --t-cuerpo: clamp(1rem, 1.6vw, 1.15rem);
-  --t-chico:  clamp(0.82rem, 1.2vw, 0.92rem);
+  /* Medidas */
+  --ancho:  1120px;
+  --medida: 66ch;      /* ancho de lectura cómoda */
+  --radio:  3px;
 
-  /* Espaciado */
-  --e-1: 0.5rem;
-  --e-2: 1rem;
-  --e-3: 1.75rem;
-  --e-4: 3rem;
-  --e-5: 5rem;
-  --e-6: 8rem;
-
-  /* Layout */
-  --ancho-max: 1200px;
-  --ancho-texto: 68ch;    /* medida de lectura cómoda */
-  --radio: 4px;           /* esquinas apenas suavizadas: es una marca
-                             de ingeniería, no de aplicación */
-
-  --transicion: 180ms ease;
+  --transicion: .18s ease;
 }
 
-/* ── Reset ─────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   RESET
+   ═══════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
-* { margin: 0; }
+html { scroll-behavior: smooth; }
 
-html {
-  scroll-behavior: smooth;
-  /* compensa la barra fija al saltar a un ancla */
-  scroll-padding-top: 5rem;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  background: var(--obsidiana);
-  color: var(--hueso);
-  font-family: var(--tipo-cuerpo);
-  font-size: var(--t-cuerpo);
-  line-height: 1.65;
-  min-height: 100vh;
-  overflow-x: hidden;   /* ninguna sección debe desbordar a lo ancho */
-  -webkit-font-smoothing: antialiased;
-}
-
-img, svg, picture { display: block; max-width: 100%; }
-
-input, select, textarea, button { font: inherit; color: inherit; }
-
-button { cursor: pointer; }
-
-/* Respeta a quien pidió menos movimiento en su sistema operativo */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
   }
 }
 
-/* ── Titulares ─────────────────────────────────────────────────── */
+body {
+  margin: 0;
+  background: var(--obsidiana);
+  color: var(--hueso);
+  font-family: var(--tipo-cuerpo);
+  font-size: 16.5px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+img, svg { max-width: 100%; }
+img { height: auto; display: block; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   TIPOGRAFÍA
+   ═══════════════════════════════════════════════════════════════════ */
 
 h1, h2, h3, h4 {
   font-family: var(--tipo-titulo);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  text-wrap: balance;   /* evita una palabra sola en la última línea */
+  line-height: 1.05;
+  letter-spacing: .005em;
+  margin: 0;
+  text-wrap: balance;
 }
 
-h1 { font-size: var(--t-hero); }
-h2 { font-size: var(--t-h2); }
-h3 { font-size: var(--t-h3); letter-spacing: 0; }
+h1 { font-size: clamp(2.5rem, 6.2vw, 4.35rem); }
+h2 { font-size: clamp(1.85rem, 3.9vw, 2.7rem); }
+h3 { font-size: 1.3rem; line-height: 1.2; }
+h4 { font-size: 1.02rem; font-weight: 600; }
 
-p { text-wrap: pretty; }
+p { margin: 0 0 1.05em; }
 
-a { color: var(--oro); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--oro-claro); }
+a { color: var(--oro); text-underline-offset: 3px; }
 
-strong { color: var(--oro); font-weight: 600; }
+strong { font-weight: 600; color: var(--hueso); }
 
-/* ── Foco visible ──────────────────────────────────────────────── */
-/* Quien navega con teclado tiene que ver dónde está parado. */
-
-:focus-visible {
-  outline: 2px solid var(--oro);
-  outline-offset: 3px;
-  border-radius: 2px;
+/* Etiqueta corta en mayúsculas, encima de cada título de sección */
+.antetitulo {
+  font-family: var(--tipo-dato);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin: 0 0 .7rem;
 }
 
-/* ── Utilidades de layout ──────────────────────────────────────── */
+.bajada {
+  font-size: 1.12rem;
+  color: var(--hueso-2);
+  max-width: var(--medida);
+}
+
+.chico { font-size: .9rem; color: var(--hueso-3); }
+
+.medida { max-width: var(--medida); }
+
+/* Cifras en columnas: que los dígitos ocupen todos lo mismo */
+.dato, .num {
+  font-family: var(--tipo-dato);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ESTRUCTURA
+   ═══════════════════════════════════════════════════════════════════ */
 
 .contenedor {
   width: 100%;
-  max-width: var(--ancho-max);
-  margin-inline: auto;
-  padding-inline: var(--e-3);
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.seccion {
-  padding-block: var(--e-5);
-  position: relative;
+section {
+  padding: clamp(56px, 7vw, 104px) 0;
+  border-top: 1px solid var(--linea);
 }
 
-@media (min-width: 768px) {
-  .seccion { padding-block: var(--e-6); }
+/* Alterna el fondo para separar secciones sin necesidad de más reglas */
+.banda { background: var(--acero); }
+
+.seccion__cabecera { margin-bottom: clamp(28px, 4vw, 48px); }
+.seccion__cabecera h2 { margin-bottom: .5rem; }
+
+/* minmax(0,1fr) y no 1fr: sin eso las columnas no bajan del ancho de
+   su contenido y la página desborda a lo ancho en pantallas chicas. */
+.rejilla { display: grid; gap: 20px; }
+.rejilla--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) {
+  .rejilla--2, .rejilla--3 { grid-template-columns: minmax(0, 1fr); }
 }
 
-.seccion--acero { background: #141414; }
+/* Lo ancho scrollea dentro de su caja, nunca la página entera */
+.desborde-x { overflow-x: auto; }
 
-/* Encabezado de sección */
-.seccion__titulo {
-  color: var(--hueso);
-  margin-bottom: var(--e-2);
+/* ═══════════════════════════════════════════════════════════════════
+   COMPONENTES COMPARTIDOS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 24px;
 }
-
-.seccion__bajada {
-  color: var(--hueso-tenue);
-  max-width: var(--ancho-texto);
-  margin-bottom: var(--e-4);
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-}
-
-/* Línea dorada corta sobre el título de cada sección.
-   Es el elemento que da unidad visual a todo el sitio. */
-.seccion__marca {
-  display: block;
-  width: 48px;
-  height: 3px;
-  background: var(--oro);
-  margin-bottom: var(--e-3);
-}
-
-/* Etiqueta pequeña en mayúsculas, encima de los títulos */
-.antetitulo {
-  font-family: var(--tipo-ui);
-  font-size: var(--t-chico);
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--oro);
-  margin-bottom: var(--e-1);
-}
-
-/* ── Botones ───────────────────────────────────────────────────── */
+.tarjeta h3 { margin-bottom: .5rem; }
+.tarjeta p:last-child { margin-bottom: 0; }
 
 .boton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6em;
-  font-family: var(--tipo-ui);
-  font-weight: 600;
+  gap: 9px;
+  font-family: var(--tipo-titulo);
+  font-weight: 700;
   font-size: 1.02rem;
-  letter-spacing: 0.05em;
-  padding: 0.85em 1.9em;
-  border: 1px solid transparent;
+  letter-spacing: .02em;
+  padding: 14px 26px;
   border-radius: var(--radio);
   text-decoration: none;
-  transition: background var(--transicion), border-color var(--transicion),
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--transicion),
+              border-color var(--transicion),
               transform var(--transicion);
-  /* área táctil mínima cómoda para un dedo en el campo */
-  min-height: 48px;
 }
 
-.boton:active { transform: translateY(1px); }
-
-.boton--principal {
-  background: var(--verde);
-  color: var(--hueso);
-  border-color: var(--verde-claro);
-}
-.boton--principal:hover {
+.boton--whatsapp {
   background: var(--verde-claro);
-  color: var(--hueso);
+  color: #fff;
+  border-color: #3E8A66;
 }
+.boton--whatsapp:hover { background: #37805E; transform: translateY(-1px); }
 
-.boton--secundario {
-  background: transparent;
+.boton--linea {
+  border-color: rgba(229, 193, 88, .5);
   color: var(--oro);
-  border-color: var(--oro);
+  background: transparent;
 }
-.boton--secundario:hover {
-  background: var(--oro-tenue);
+.boton--linea:hover { border-color: var(--oro); background: var(--oro-tenue); }
+
+.boton--chico { padding: 10px 18px; font-size: .94rem; }
+
+/* El foco de teclado tiene que verse siempre */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--oro);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ⚠ TEMPORAL · marcador de dato faltante.
+   Todo lo que lleve esta clase es un dato que el propietario todavía
+   no aportó. Tiene que saltar a la vista para que ninguno se publique
+   por error. Cuando no quede ninguno, borrar esta regla. */
+.falta {
+  font-family: var(--tipo-dato);
+  font-size: .86em;
+  font-weight: 600;
   color: var(--oro-claro);
-}
-
-.boton--bloque { width: 100%; }
-
-@media (min-width: 560px) {
-  .boton--bloque { width: auto; }
-}
-
-/* ── Tarjetas ──────────────────────────────────────────────────── */
-
-.tarjeta {
-  background: var(--acero);
-  border: 1px solid var(--linea);
+  background: var(--oro-tenue);
+  border: 1px dashed rgba(229, 193, 88, .55);
   border-radius: var(--radio);
-  padding: var(--e-3);
-  transition: border-color var(--transicion), transform var(--transicion);
-}
-
-.tarjeta:hover { transform: translateY(-3px); }
-
-.tarjeta--oro:hover  { border-color: var(--oro); }
-.tarjeta--verde:hover { border-color: var(--verde-claro); }
-
-/* Barra de acento arriba de la tarjeta */
-.tarjeta--oro   { border-top: 2px solid var(--oro); }
-.tarjeta--verde { border-top: 2px solid var(--verde-claro); }
-
-.tarjeta__titulo { margin-bottom: var(--e-1); color: var(--hueso); }
-.tarjeta__texto  { color: var(--hueso-tenue); font-size: 1.02rem; }
-
-/* ── Rejillas ──────────────────────────────────────────────────── */
-
-.rejilla {
-  display: grid;
-  gap: var(--e-2);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .rejilla--2 { grid-template-columns: repeat(2, 1fr); }
-  .rejilla    { gap: var(--e-3); }
-}
-
-@media (min-width: 900px) {
-  .rejilla--3 { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* ── Solo para lectores de pantalla ────────────────────────────── */
-
-.oculto-visual {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
+  padding: .05em .4em;
   white-space: nowrap;
 }
 
-/* ── Saltar al contenido ───────────────────────────────────────── */
-
+/* Salto al contenido, para quien navega con teclado */
 .saltar {
   position: absolute;
-  top: -100px; left: var(--e-2);
+  top: -100px;
+  left: 16px;
   z-index: 200;
   background: var(--oro);
   color: var(--obsidiana);
-  padding: 0.7em 1.2em;
+  padding: .7em 1.2em;
   border-radius: var(--radio);
-  font-family: var(--tipo-ui);
-  font-weight: 600;
+  font-family: var(--tipo-titulo);
+  font-weight: 700;
+  text-decoration: none;
   transition: top var(--transicion);
 }
-.saltar:focus { top: var(--e-2); color: var(--obsidiana); }
-
-/* ── Impresión ─────────────────────────────────────────────────── */
-/* Alguien puede querer imprimir la propuesta de servicios. */
-
-@media print {
-  body { background: #fff; color: #000; }
-  .barra, .whatsapp-flotante, .hero__fondo { display: none; }
-  .seccion { padding-block: 1.5rem; page-break-inside: avoid; }
-}
+.saltar:focus { top: 16px; }

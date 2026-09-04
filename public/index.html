@@ -12,94 +12,52 @@
      cambiar una palabra, cambiala TAMBIÉN allá: ese archivo lo lee
      TITANOMAQUIA para saber qué ofrecés públicamente.
 
-     Buscá "⚠ REEMPLAZAR" para encontrar lo que falta completar
-     antes de publicar.
+     ⚠ ANTES DE PUBLICAR — buscá la clase "falta". Cada aparición es
+       un dato que el propietario todavía no aportó. No tiene que
+       quedar ninguno cuando el sitio salga a la web.
      ═══════════════════════════════════════════════════════════════ -->
 
 <title>AgroTitan · Evaluación de proyectos agropecuarios</title>
-<meta name="description" content="Factibilidad técnica, económica y financiera de proyectos agropecuarios. Ingenieros agrónomos y zootecnistas. Argentina, Chile, Uruguay y Paraguay.">
+<meta name="description" content="Evaluamos si un proyecto agropecuario conviene antes de comprometer capital, y preparamos la documentación que respalda esa decisión. Ingenieros agrónomos y zootecnistas.">
 <meta name="keywords" content="factibilidad proyecto agropecuario, evaluación económica agro, análisis financiero agropecuario Argentina, valuación de campos, proyecto de inversión frutales, rentabilidad nogal avellano cerezo arándano, evaluación proyecto avícola">
 <meta name="author" content="AgroTitan">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#0B0C0A">
 
 <!-- Open Graph · así se ve cuando alguien comparte el link por WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta property="og:site_name" content="AgroTitan">
 <meta property="og:title" content="AgroTitan · Ningún imperio se levantó sobre tierra sin medir">
-<meta property="og:description" content="Evaluación técnica, económica y financiera de proyectos agropecuarios para inversores y productores.">
+<meta property="og:description" content="Evaluamos si un proyecto agropecuario conviene antes de comprometer capital, y preparamos la documentación que respalda esa decisión.">
 <meta property="og:url" content="https://agrotitan.inversionesdelagro.workers.dev">
 <meta property="og:image" content="https://agrotitan.inversionesdelagro.workers.dev/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="img/isotipo-a.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/secciones.css">
+
+<!-- El ?v= al final es la versión de los archivos. Cuando cambies el CSS
+     o el JS, subile el número: sin eso, quien ya visitó el sitio sigue
+     viendo la versión vieja que le quedó guardada en el navegador. -->
+<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/secciones.css?v=2">
 </head>
 <body>
 
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-<!-- ═══ ÍCONOS DE RUBRO ══════════════════════════════════════════
-     Se definen una sola vez acá y cada tarjeta los reusa con <use>.
-     Son ilustrativos: ocupan el lugar de las fotos reales hasta que
-     estén (ver img/LEEME-IMAGENES.md). Al poner las fotos, se sacan
-     estos <svg class="proyecto__icono"> de las tarjetas.
-     ═══════════════════════════════════════════════════════════════ -->
-<svg class="ico-defs" aria-hidden="true" focusable="false">
-  <symbol id="ico-frutal" viewBox="0 0 48 48">
-    <path d="M24 44V22M24 22c0-8 6-14 14-14 0 8-6 14-14 14zm0 6c0-6-5-11-11-11 0 6 5 11 11 11z"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-  <symbol id="ico-vid" viewBox="0 0 48 48">
-    <path d="M24 10v6M20 8c2 1 3 3 3 5M30 12c-2 0-4 1-5 3"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="24" cy="22" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-    <circle cx="18" cy="29" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-    <circle cx="30" cy="29" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-    <circle cx="24" cy="36" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-  </symbol>
-  <symbol id="ico-avicola" viewBox="0 0 48 48">
-    <path d="M14 30c0-8 6-16 12-16 5 0 8 3 8 3s-2 1-3 3c4 0 7 3 7 7 0 6-6 11-14 11-8 0-14-4-14-8z
-             M16 28v6M32 28v6M12 24l-4-2 2-4M28 16l2-4 4 1"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-  <symbol id="ico-bovino" viewBox="0 0 48 48">
-    <path d="M10 22c0-4 3-7 7-7h1c1-3 4-5 7-5 4 0 7 3 7 6h1c3 0 5 2 5 5 0 4-3 7-7 7H16c-3 0-6-3-6-6z
-             M16 28v6M32 28v6M20 15c-1-2-1-4 0-6M28 15c1-2 1-4 0-6"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-  <symbol id="ico-informe" viewBox="0 0 48 48">
-    <path d="M13 8h16l6 6v26H13zM29 8v6h6M18 24l4 4 5-6 5 5M18 34h12"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </symbol>
-</svg>
-
 <!-- ═══ BARRA SUPERIOR ═══════════════════════════════════════════ -->
 <header class="barra" id="barra">
-  <div class="contenedor barra__interior">
+  <div class="contenedor">
 
-    <a class="logo" href="#" aria-label="AgroTitan, inicio">
-      <!-- ⚠ ELEGIR ISOTIPO · cambiá el src por img/isotipo-columna.svg
-           si preferís la columna. Están los dos en img/ -->
-      <img class="logo__marca" src="img/isotipo-a.svg" alt="" width="40" height="40">
-      <span class="logo__texto">Agro<em>Titan</em></span>
+    <a class="logo" href="#inicio" aria-label="AgroTitan, inicio">
+      <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 6 L38 42 H31 L24 22 L17 42 H10 Z" fill="none"
+              stroke="#E5C158" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M17.5 32 H30.5" fill="none" stroke="#E5C158" stroke-width="2.4"/>
+      </svg>
+      <span>Agro<em>Titan</em></span>
     </a>
-
-    <nav class="nav" id="nav" aria-label="Navegación principal">
-      <a href="#enfoque">Enfoque</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#arsenal">Herramientas</a>
-      <a href="#blog">Análisis</a>
-      <a class="nav__cta" href="#contacto">Contacto</a>
-    </nav>
 
     <button class="menu-boton" id="menuBoton"
             aria-expanded="false" aria-controls="nav"
@@ -107,645 +65,715 @@
       <span></span><span></span><span></span>
     </button>
 
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#quienes">Quiénes somos</a>
+      <a href="#metodo">Método</a>
+      <a href="#informe">El informe</a>
+      <a href="#etapas">Cómo trabajamos</a>
+      <a href="#rubros">Rubros</a>
+      <a class="boton boton--linea boton--chico" href="#contacto">Escribinos</a>
+    </nav>
+
   </div>
 </header>
 
 <main id="contenido">
+<div id="inicio"></div>
 
 <!-- ═══ 1 · HERO ═════════════════════════════════════════════════ -->
 <section class="hero">
-
-  <!-- ⚠ REEMPLAZAR IMAGEN · ver img/LEEME-IMAGENES.md
-       Va una foto aérea de campo al amanecer, 1920×1080 mínimo.
-       Mientras no esté, se ve el degradado de abajo, que funciona bien.
-       Cuando la tengas:
-         background-image: url("../img/hero.jpg");
-       en .hero__fondo dentro de secciones.css -->
   <div class="hero__fondo" aria-hidden="true"></div>
-
-  <!-- Animación liviana: líneas de datos que recorren el fondo.
-       SVG + CSS, sin video ni librerías. Pesa menos de 1 KB. -->
-  <svg class="hero__lineas" viewBox="0 0 1200 600" preserveAspectRatio="none"
-       aria-hidden="true">
-    <path d="M0 480 L200 430 L380 455 L560 360 L760 395 L960 300 L1200 340"/>
-    <path d="M0 530 L220 500 L420 515 L620 450 L820 470 L1020 400 L1200 425"/>
-  </svg>
-
   <div class="contenedor hero__interior">
+
     <p class="antetitulo">Evaluación de proyectos agropecuarios</p>
-    <h1 class="hero__titulo">Ningún imperio se levantó<br>sobre tierra sin medir.</h1>
-    <p class="hero__subtitulo">
-      Estudiamos si un proyecto agropecuario conviene antes de que
-      comprometas capital. Y preparamos la documentación que respalda esa
-      decisión frente a un banco, un socio o un directorio.
+    <h1>Ningún imperio se levantó<br>sobre tierra sin medir.</h1>
+    <p class="hero__bajada">
+      Antes de que inmovilices capital en un campo, alguien tiene que decirte
+      con números si conviene, cuánto tarda en volver y en qué escenario deja
+      de cerrar. Eso es lo que hacemos, y te lo entregamos por escrito.
     </p>
+
     <div class="hero__acciones">
-      <a class="boton boton--principal boton--bloque" href="#proyectos">
-        Ver Informes Titánicos
+      <a class="boton boton--whatsapp" id="enlaceWhatsappHero" href="#contacto" target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+        Escribinos por WhatsApp
       </a>
-      <a class="boton boton--secundario boton--bloque" href="#contacto">
-        Solicitar Evaluación
-      </a>
+      <a class="boton boton--linea" href="#informe">Ver qué incluye el informe</a>
     </div>
-    <p class="hero__paises">
-      Argentina <span>·</span> Chile <span>·</span> Uruguay <span>·</span> Paraguay
-    </p>
+
+    <p class="hero__paises">Argentina · Chile · Uruguay · Paraguay</p>
+
+    <div class="cifras">
+      <div class="cifra">
+        <span class="cifra__n">10 años</span>
+        <span class="cifra__t">evaluando proyectos agropecuarios</span>
+      </div>
+      <div class="cifra">
+        <span class="cifra__n">10 rubros</span>
+        <span class="cifra__t">del frutal de vida larga a la producción intensiva</span>
+      </div>
+      <div class="cifra">
+        <span class="cifra__n">130 ha</span>
+        <span class="cifra__t">superficie promedio de los proyectos</span>
+      </div>
+      <div class="cifra">
+        <span class="cifra__n">En dólares</span>
+        <span class="cifra__t">moneda de evaluación de todos los proyectos</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ═══ 2 · NUESTRO ENFOQUE ══════════════════════════════════════ -->
-<section class="seccion" id="enfoque">
+<!-- ═══ 2 · QUIÉNES SOMOS ════════════════════════════════════════ -->
+<section class="banda" id="quienes">
   <div class="contenedor">
 
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Quiénes somos</p>
-    <h2 class="seccion__titulo">Nuestro Enfoque</h2>
-    <p class="seccion__bajada">
-      En un proyecto agropecuario conviven dos lógicas: la biológica, que
-      decide cuánto puede producir la tierra, y la económica, que decide si
-      eso justifica la inversión. Somos
-      <strong>ingenieros agrónomos y zootecnistas</strong>, y trabajamos las
-      dos dentro del mismo análisis.
-    </p>
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Quiénes somos</p>
+      <h2>Un agrónomo y un financista, sobre el mismo modelo</h2>
+      <p class="bajada">
+        En un proyecto agropecuario conviven dos lógicas: la biológica, que
+        decide cuánto puede producir la tierra, y la económica, que decide si
+        eso justifica la inversión. La mayoría de los estudios las trabaja por
+        separado y las pega al final.
+      </p>
+    </div>
 
-    <div class="enfoque__texto">
-      <p>
-        Cada proyecto pasa por dos manos: las que conocen la producción y
-        las que conocen el flujo de fondos. Ambas trabajan sobre el mismo
-        modelo desde el primer dato, así el rendimiento que estima el
-        agrónomo es exactamente el que entra en el cálculo financiero.
+    <div class="rejilla rejilla--2">
+      <div class="medida">
+        <p>
+          Somos <strong>ingenieros agrónomos y zootecnistas</strong>. El
+          rendimiento que estima el agrónomo es exactamente el número que entra
+          en el flujo de fondos: sin traducción en el medio, y sin supuestos
+          que aparecen después y que nadie recuerda de dónde salieron.
+        </p>
+        <p>
+          Eso importa cuando el resultado se discute. Si un banco, un socio o
+          el asesor del inversor pregunta de dónde sale un rinde, la respuesta
+          está en el mismo documento, con la fuente al lado.
+        </p>
+        <p class="chico" style="margin-bottom:0">
+          <strong style="color:var(--oro)">Por qué no publicamos nombres de clientes.</strong>
+          La información de un proyecto le pertenece al productor. Publicamos
+          el método, no el cliente: sin nombres, sin superficies y sin
+          resultados.
+        </p>
+      </div>
+
+      <div class="tarjeta">
+        <h3 style="color:var(--oro);font-size:1.05rem">El equipo, en números</h3>
+        <dl class="ficha">
+          <div class="ficha__fila">
+            <dt>Profesionales</dt>
+            <dd>3 ingenieros agrónomos y 2 zootecnistas</dd>
+          </div>
+          <div class="ficha__fila">
+            <dt>Formación</dt>
+            <dd>Universidad Nacional de Lomas de Zamora, Universidad de Buenos Aires y Universidad Católica Argentina</dd>
+          </div>
+          <div class="ficha__fila">
+            <dt>Ejercicio</dt>
+            <dd>Más de 30 años combinados en el sector agropecuario</dd>
+          </div>
+          <div class="ficha__fila">
+            <dt>Alcance</dt>
+            <dd>Todo el Cono Sur, con equipo propio en cada país donde trabajamos</dd>
+          </div>
+          <div class="ficha__fila">
+            <dt>Territorio</dt>
+            <dd>Río Negro, Buenos Aires, Mendoza, San Juan y Araucanía</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 3 · MÉTODO ═══════════════════════════════════════════════ -->
+<section id="metodo">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Método</p>
+      <h2>Tres estudios encadenados</h2>
+      <p class="bajada">
+        Cada uno responde una pregunta, y el resultado de cada uno alimenta al
+        siguiente. Si el primero se equivoca, los otros dos se equivocan con
+        él: por eso el primero se hace a campo.
+      </p>
+    </div>
+
+    <div class="rejilla rejilla--3">
+      <article class="pilar">
+        <span class="pilar__pregunta">¿Qué puede producir este campo?</span>
+        <h3>Análisis técnico</h3>
+        <p>
+          Aptitud del suelo, agua disponible y su calidad, clima de la zona y
+          tecnología aplicable. De acá sale el rendimiento esperado, el número
+          del que dependen todos los cálculos que vienen después.
+        </p>
+      </article>
+
+      <article class="pilar">
+        <span class="pilar__pregunta">¿Cuánto deja por año?</span>
+        <h3>Análisis económico</h3>
+        <p>
+          Al rendimiento esperado le aplicamos precios de referencia y le
+          restamos los costos directos de implantación y manejo. Sale el margen
+          bruto, en la unidad que manda en cada caso: por hectárea, por cabeza
+          o por litro.
+        </p>
+      </article>
+
+      <article class="pilar">
+        <span class="pilar__pregunta">¿Conviene inmovilizar el capital?</span>
+        <h3>Análisis financiero</h3>
+        <p>
+          Flujo de fondos a lo largo de toda la vida del proyecto, medido con
+          VAN, TIR y período de repago, y comparado contra el costo de
+          oportunidad: lo que ese mismo dinero rendiría en la mejor alternativa
+          disponible.
+        </p>
+      </article>
+    </div>
+
+    <div class="supuestos">
+      <h3>Los supuestos que declaramos</h3>
+      <p class="chico medida">
+        Un modelo sin supuestos declarados es una opinión con decimales. Esto
+        es lo que fijamos por escrito en cada informe, antes del primer número.
       </p>
 
-      <div class="destacado">
-        <h3 class="destacado__titulo">Proyecto llave en mano</h3>
-        <p>
-          El trabajo avanza en tres etapas. Primero el análisis de
-          factibilidad, que responde si el proyecto conviene y bajo qué
-          condiciones. Si la respuesta es que sí, sigue el proyecto llave en
-          mano: el estudio completo, con el flujo de fondos y la
-          documentación lista para presentar ante un banco, un socio o un
-          directorio. Y cuando el proyecto arranca, podés sumar el
-          acompañamiento durante la ejecución, que se contrata aparte y solo
-          si el proyecto lo justifica.
+      <dl class="ficha" style="margin-top:18px">
+        <div class="ficha__fila">
+          <dt>Moneda de evaluación</dt>
+          <dd>Dólares. Es la moneda en la que se sostiene el valor de la tierra, de la maquinaria y de buena parte de los insumos, y la única que permite comparar un proyecto con otro a diez o veinte años.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Tasa de descuento</dt>
+          <dd>El costo de oportunidad del capital, en términos reales: lo que ese mismo dinero rendiría en la mejor alternativa disponible. Es la variable que más mueve el resultado, así que va explícita en cada informe.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Horizonte</dt>
+          <dd>Veinte años en proyectos de vida larga, diez cuando la actividad lo justifica. El horizonte se fija según el bien más importante del proyecto, y el valor de la tierra y del monte al final del período entra en el cálculo.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Tratamiento impositivo</dt>
+          <dd>Se contemplan las exenciones, percepciones y regímenes aplicables a cada actividad y a cada jurisdicción. Un flujo antes y uno después de impuestos son dos proyectos distintos.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Flujo evaluado</dt>
+          <dd>Del proyecto o del inversionista, según lo que el proyecto necesite responder. Con y sin financiamiento son dos tasas de retorno distintas y contestan dos preguntas distintas.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Fuentes de datos</dt>
+          <dd>Valores de referencia de la zona, ensayos y series propias. Cada precio y cada rinde lleva su fuente al lado.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Tratamiento del riesgo</dt>
+          <dd>Análisis de sensibilidad sobre los factores críticos de cada proyecto, trabajados sobre series históricas de rindes y precios.</dd>
+        </div>
+        <div class="ficha__fila">
+          <dt>Relevamiento a campo</dt>
+          <dd>Análisis de suelo, balance hídrico, horas de frío, disponibilidad y calidad del agua de riego, y mapa de ambientes. El escritorio no alcanza.</dd>
+        </div>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 4 · EL INFORME ═══════════════════════════════════════════ -->
+<section class="banda" id="informe">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">El entregable</p>
+      <h2>Qué recibís exactamente</h2>
+      <p class="bajada">
+        Primero llega el análisis de factibilidad con el modelo de negocio: lo
+        suficiente para decidir si el proyecto sigue. Si seguís, el informe
+        completo desarrolla el planeamiento de la producción, capítulo por
+        capítulo. Tocá cualquiera para ver qué hay adentro.
+      </p>
+    </div>
+
+    <div class="informe">
+      <div>
+        <div class="indice">
+
+          <details class="capitulo" open>
+            <summary>
+              <span class="capitulo__n">01</span>
+              <span class="capitulo__t">Resumen ejecutivo y recomendación</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>La recomendación, en una página, con las condiciones bajo las que se sostiene.</li>
+                <li>Indicadores principales: VAN, TIR, período de repago.</li>
+                <li>Los escenarios donde el proyecto deja de cerrar.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">02</span>
+              <span class="capitulo__t">Relevamiento y aptitud productiva</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Análisis de suelo y clasificación por ambiente.</li>
+                <li>Agua: disponibilidad, calidad y balance hídrico.</li>
+                <li>Clima de la zona y su variabilidad. Riesgos agroclimáticos.</li>
+                <li>Mapa de ambientes del establecimiento.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">03</span>
+              <span class="capitulo__t">Modelo productivo</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Escala, tecnología aplicada y planteo de manejo.</li>
+                <li>Curva de producción hasta el régimen pleno.</li>
+                <li>Rendimiento esperado, con su fundamento y su fuente.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">04</span>
+              <span class="capitulo__t">Inversión y estructura de costos</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Inversión inicial discriminada por rubro.</li>
+                <li>Costos operativos anuales y su evolución.</li>
+                <li>Margen bruto por unidad: hectárea, cabeza o litro.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">05</span>
+              <span class="capitulo__t">Evaluación financiera</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Flujo de fondos a horizonte completo.</li>
+                <li>VAN, TIR y período de repago, contra el costo de oportunidad.</li>
+                <li>Escenario con y sin financiamiento.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">06</span>
+              <span class="capitulo__t">Riesgo y sensibilidad</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Sensibilidad sobre los factores críticos del proyecto.</li>
+                <li>Umbrales: desde dónde el proyecto deja de cerrar.</li>
+                <li>Riesgo climático sobre series históricas de la zona.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="capitulo">
+            <summary>
+              <span class="capitulo__n">07</span>
+              <span class="capitulo__t">Planeamiento de la producción</span>
+              <span class="capitulo__mas" aria-hidden="true">+</span>
+            </summary>
+            <div class="capitulo__cuerpo">
+              <ul>
+                <li>Plan de implantación y calendario de tareas.</li>
+                <li>Requerimientos de maquinaria, personal e insumos.</li>
+                <li>Documentación de respaldo y análisis de laboratorio.</li>
+              </ul>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <!-- Gráfico interactivo · el capítulo 06, en vivo -->
+      <figure class="grafico">
+        <figcaption class="grafico__titulo">El capítulo 06, en vivo</figcaption>
+        <p class="grafico__nota">
+          Flujo acumulado descontado de una inversión frutal. Movés el precio y
+          el rinde y ves dónde deja de cerrar.
+          <strong style="color:var(--oro-claro)">Ejemplo ilustrativo</strong>, no es tu proyecto.
+        </p>
+
+        <div class="lienzo">
+          <svg id="grafico" viewBox="0 0 520 300" role="img" aria-labelledby="g-titulo g-desc">
+            <title id="g-titulo">Flujo de fondos acumulado y descontado, año por año</title>
+            <desc id="g-desc">La curva arranca negativa por la inversión inicial y los años improductivos, y cruza el cero cuando el proyecto termina de repagarse.</desc>
+          </svg>
+          <div class="tip" id="tip" role="status"></div>
+        </div>
+
+        <div class="mandos">
+          <div class="mando">
+            <label for="precio">Precio del producto</label>
+            <output id="precio-val" for="precio">0 %</output>
+            <input type="range" id="precio" min="-40" max="30" value="0" step="1" aria-describedby="precio-val">
+          </div>
+          <div class="mando">
+            <label for="rinde">Rendimiento alcanzado</label>
+            <output id="rinde-val" for="rinde">0 %</output>
+            <input type="range" id="rinde" min="-40" max="20" value="0" step="1" aria-describedby="rinde-val">
+          </div>
+        </div>
+
+        <dl class="lectura">
+          <div><dt>VAN (índice)</dt><dd id="van">—</dd></div>
+          <div><dt>TIR</dt><dd id="tir">—</dd></div>
+          <div><dt>Repago</dt><dd id="repago">—</dd></div>
+        </dl>
+
+        <p class="veredicto" id="veredicto" data-estado="cierra"></p>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 5 · EL CASO ══════════════════════════════════════════════ -->
+<section id="caso">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Cómo decidimos</p>
+      <h2>Un caso donde el número más alto era la peor opción</h2>
+    </div>
+
+    <!-- Caso representativo. NO es un cliente real identificable: la
+         metodología es la que se aplica de verdad, la situación está
+         construida a modo de ejemplo. -->
+    <div class="caso">
+      <p class="caso__cita">
+        «La alternativa de mayor margen bruto exigía una inversión que el
+        productor sólo podía afrontar endeudándose. Le recomendamos la que
+        rendía menos.»
+      </p>
+      <div class="caso__cuerpo">
+        <dl>
+          <dt>La situación</dt>
+          <dd>
+            Un productor con un campo en producción tradicional llegó con una
+            sospecha antes que con un proyecto: intuía que su tierra podía
+            rendir más de lo que estaba rindiendo.
+          </dd>
+
+          <dt>Cómo lo abordamos</dt>
+          <dd>
+            Relevamos la aptitud productiva y armamos el mapa de ambientes,
+            para saber qué podía producir cada sector. Sobre esa base
+            modelizamos las alternativas (seguir igual, intensificar la
+            actividad actual, o reconvertir una parte del campo) y calculamos
+            el margen bruto de cada una. Las que cambiaban la estructura del
+            establecimiento se evaluaron además con flujo de fondos, VAN y TIR,
+            porque ahí el capital queda inmovilizado durante años antes de que
+            la actividad entre en plena producción.
+          </dd>
+
+          <dt>El resultado</dt>
+          <dd>
+            Se recomendó una reconversión parcial, que mejoraba el resultado
+            del establecimiento y dejaba intacto el flujo de caja de la
+            actividad que ya estaba funcionando. El margen bruto no decide
+            inversiones: decide comparaciones. Cuando el capital se inmoviliza
+            y el flujo de caja es una restricción real, la respuesta cambia.
+          </dd>
+        </dl>
+        <p class="chico" style="margin-top:1.4rem">
+          Caso representativo. La metodología es la que se aplica; la situación
+          se publica sin nombres, sin superficies y sin resultados, con el
+          criterio de confidencialidad que aplicamos a todos los proyectos.
         </p>
       </div>
     </div>
 
-    <p class="enfoque__pilares-intro">
-      El análisis de factibilidad se apoya en tres estudios encadenados.
-      Cada uno responde una pregunta, y el resultado de cada uno alimenta al
-      siguiente.
-    </p>
-
-    <!-- Los 3 pilares -->
-    <div class="rejilla rejilla--3 pilares">
-
-      <article class="pilar">
-        <span class="pilar__numero" aria-hidden="true">01</span>
-        <h3 class="pilar__titulo">Análisis Técnico</h3>
-        <p class="pilar__texto">
-          ¿Qué puede producir este campo? Analizamos la aptitud del suelo,
-          el agua disponible, el clima de la zona y la tecnología aplicable.
-          De ahí sale el rendimiento esperado, el número del que dependen
-          todos los cálculos que vienen después.
-        </p>
-      </article>
-
-      <article class="pilar">
-        <span class="pilar__numero" aria-hidden="true">02</span>
-        <h3 class="pilar__titulo">Análisis Económico</h3>
-        <p class="pilar__texto">
-          ¿Cuánto deja por año? Al rendimiento esperado le aplicamos precios
-          de referencia y le restamos los costos directos de implantación y
-          manejo. El resultado es el margen bruto, el indicador que permite
-          poner dos actividades lado a lado y ver cuál rinde más sobre el
-          mismo campo.
-        </p>
-      </article>
-
-      <article class="pilar">
-        <span class="pilar__numero" aria-hidden="true">03</span>
-        <h3 class="pilar__titulo">Análisis Financiero</h3>
-        <p class="pilar__texto">
-          ¿Conviene inmovilizar el capital, y por cuánto tiempo? Proyectamos
-          el flujo de fondos a lo largo de toda la vida del proyecto y lo
-          medimos con Valor Actual Neto, Tasa Interna de Retorno y período de
-          repago. Todo se compara contra el costo de oportunidad: lo que ese
-          mismo dinero rendiría en la mejor alternativa disponible.
-        </p>
-      </article>
-
-    </div>
   </div>
 </section>
 
-<!-- ═══ 3 · COLUMNAS DEL COLOSO ══════════════════════════════════ -->
-<section class="seccion seccion--acero" id="servicios">
+<!-- ═══ 6 · ETAPAS ═══════════════════════════════════════════════ -->
+<section class="banda" id="etapas">
   <div class="contenedor">
 
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Servicios</p>
-    <h2 class="seccion__titulo">Columnas del Coloso</h2>
-    <p class="seccion__bajada">
-      Cinco líneas de trabajo. Se contratan por separado o como parte de
-      una evaluación integral.
-    </p>
-
-    <div class="rejilla rejilla--2 servicios">
-
-      <article class="tarjeta tarjeta--oro servicio">
-        <h3 class="tarjeta__titulo">Factibilidad técnica, económica y financiera</h3>
-        <p class="tarjeta__texto">
-          El estudio completo, antes de comprometer capital. Define la
-          aptitud productiva del establecimiento, modeliza la actividad en
-          términos físicos y económicos, y evalúa el flujo de fondos que
-          resulta. Responde una sola pregunta con todo el rigor disponible:
-          ¿esto se puede hacer, y conviene hacerlo?
-        </p>
-      </article>
-
-      <article class="tarjeta tarjeta--verde servicio">
-        <h3 class="tarjeta__titulo">Márgenes brutos y rentabilidad proyectada</h3>
-        <p class="tarjeta__texto">
-          Ingreso bruto menos costos directos, calculado actividad por
-          actividad y expresado en la unidad que manda en cada caso: por
-          hectárea, por cabeza o por litro. Lo proyectamos sobre el horizonte
-          real de la inversión, para que el resultado refleje una serie
-          completa de años buenos y malos.
-        </p>
-      </article>
-
-      <article class="tarjeta tarjeta--oro servicio">
-        <h3 class="tarjeta__titulo">Impacto climático y de riesgo</h3>
-        <p class="tarjeta__texto">
-          Dos zonas con el mismo rinde promedio pueden tener riesgos muy
-          distintos: lo que las diferencia es la variabilidad. Trabajamos con
-          series históricas de rindes y precios, y sometemos el proyecto a
-          análisis de sensibilidad para ver qué pasa si el año viene seco, si
-          hay heladas tardías o si el precio cae. Con eso sabés en qué
-          escenarios el proyecto sigue cerrando, y desde dónde empieza a ser
-          una apuesta.
-        </p>
-      </article>
-
-      <article class="tarjeta tarjeta--verde servicio">
-        <h3 class="tarjeta__titulo">Valuación de campos y proyectos</h3>
-        <p class="tarjeta__texto">
-          Determinamos cuánto vale un campo por los dos caminos que usa la
-          tasación rural: capitalizando la renta que la tierra es capaz de
-          generar, y comparándolo con operaciones reales de la zona. El cruce
-          de ambos da un valor que se puede defender con números, y que sirve
-          para comprar, para vender o para respaldar una operación.
-        </p>
-      </article>
-
-      <article class="tarjeta tarjeta--oro servicio servicio--ancho">
-        <h3 class="tarjeta__titulo">Seguimiento y asesoramiento post-inversión</h3>
-        <p class="tarjeta__texto">
-          Con el proyecto en marcha, el control de gestión compara lo
-          planificado contra lo que efectivamente pasó, con datos reales y no
-          estimados. Ese diagnóstico muestra dónde se desvió el resultado y
-          por qué. Es la etapa que cierra el ciclo y la que hace que el
-          próximo proyecto se evalúe mejor.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 4 · PROYECTOS EJECUTADOS ═════════════════════════════════ -->
-<section class="seccion" id="proyectos">
-  <div class="contenedor">
-
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Trayectoria</p>
-    <h2 class="seccion__titulo">Proyectos Ejecutados</h2>
-    <p class="seccion__bajada">
-      Trabajamos en frutales extensivos e intensivos (nogal, avellano,
-      cerezo, arándano, vid), producción avícola en sistemas tradicionales y
-      black-out, feedlot, tambos, ganadería de cría e invernada, y
-      acompañamiento posterior al proyecto. Abajo publicamos dos casos
-      completos para mostrar cómo trabajamos. El resto se comparte en
-      reunión, con el consentimiento del productor involucrado.
-    </p>
-
-    <!-- ⚠ IMPORTANTE · NO agregar acá superficies, ubicaciones,
-         rentabilidades ni nombres. Un caso se puede identificar por
-         combinación de datos aunque no diga el nombre del cliente. -->
-
-    <!-- Casos representativos del tipo de trabajo. NO son clientes reales
-         identificables: la metodología es la que se aplica de verdad, la
-         situación está construida a modo de ejemplo.
-         Ver contenido.yaml → proyectos.casos -->
-    <div class="casos-completos">
-
-      <article class="proyecto-modelo">
-        <div class="proyecto-modelo__imagen proyecto__imagen--alternativas" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-frutal"/></svg>
-        </div>
-        <div class="proyecto-modelo__cuerpo">
-          <span class="proyecto-modelo__etiqueta">Caso representativo</span>
-          <span class="proyecto__tipo">Planificación global · Evaluación de alternativas</span>
-          <h3 class="proyecto-modelo__titulo">Un campo en producción que podía rendir más</h3>
-          <p class="proyecto-modelo__resumen">
-            Cuando la pregunta es qué conviene hacer con un campo que ya está
-            produciendo.
-          </p>
-          <dl class="proyecto-modelo__detalle">
-            <div>
-              <dt>Situación</dt>
-              <dd>
-                Un productor con un campo en producción tradicional llegó con
-                una sospecha antes que con un proyecto: intuía que su tierra
-                podía rendir más de lo que estaba rindiendo.
-              </dd>
-            </div>
-            <div>
-              <dt>Cómo lo abordamos</dt>
-              <dd>
-                Relevamos la aptitud productiva del establecimiento y armamos
-                el mapa de ambientes, para saber qué podía producir cada
-                sector. Sobre esa base modelizamos las alternativas posibles
-                (seguir igual, intensificar la actividad actual, o reconvertir
-                una parte del campo) y calculamos el margen bruto de cada una.
-                Las que implicaban cambiar la estructura del establecimiento
-                se evaluaron además con flujo de fondos, VAN y TIR, porque ahí
-                el capital queda inmovilizado durante años antes de que la
-                actividad entre en plena producción.
-              </dd>
-            </div>
-            <div>
-              <dt>Resultado</dt>
-              <dd>
-                La alternativa de mayor margen bruto resultó ser la menos
-                conveniente: exigía una inversión inicial que el productor
-                solo podía afrontar con financiamiento. Se recomendó una
-                reconversión parcial, que mejoraba el resultado del
-                establecimiento y dejaba intacto el flujo de caja de la
-                actividad que ya estaba funcionando.
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="proyecto-modelo">
-        <div class="proyecto-modelo__imagen proyecto__imagen--formulacion" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-informe"/></svg>
-        </div>
-        <div class="proyecto-modelo__cuerpo">
-          <span class="proyecto-modelo__etiqueta">Caso representativo</span>
-          <span class="proyecto__tipo">Formulación y evaluación de proyecto</span>
-          <h3 class="proyecto-modelo__titulo">Una idea que necesitaba números</h3>
-          <p class="proyecto-modelo__resumen">
-            Cuando el productor ya sabe qué quiere producir, y lo que falta es
-            el proyecto que lo respalde.
-          </p>
-          <dl class="proyecto-modelo__detalle">
-            <div>
-              <dt>Situación</dt>
-              <dd>
-                Un productor llegó con la decisión tomada: sabía qué quería
-                producir y dónde. Le faltaba el proyecto que la respaldara,
-                con la inversión calculada, el plazo de repago y la
-                documentación que le pedía el banco.
-              </dd>
-            </div>
-            <div>
-              <dt>Cómo lo abordamos</dt>
-              <dd>
-                Convertimos la idea en un modelo técnico-económico: escala
-                productiva, curva de producción hasta el régimen pleno,
-                inversión inicial discriminada por rubro y costos operativos
-                anuales. Con eso armamos el flujo de fondos a horizonte
-                completo y lo evaluamos con VAN, TIR y período de repago, en
-                dólares y en pesos, más un análisis de sensibilidad sobre las
-                dos variables que más pesan en el resultado: el precio del
-                producto y el nivel de producción efectivamente alcanzado.
-              </dd>
-            </div>
-            <div>
-              <dt>Resultado</dt>
-              <dd>
-                El proyecto resultó viable, con una rentabilidad por encima
-                del costo de oportunidad del capital y un repago dentro del
-                horizonte previsto. El productor recibió el informe técnico
-                completo junto con el modelo de cálculo, y lo presentó ante la
-                entidad que financió la inversión.
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Rubros en los que trabajamos. Ver contenido.yaml → proyectos.items
-         ⚠ REEMPLAZAR IMÁGENES · cada .proyecto__imagen espera una foto de
-           800×600. Ver img/LEEME-IMAGENES.md -->
-    <div class="rejilla rejilla--3 proyectos">
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--nogal" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-frutal"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Frutal extensivo</span>
-          <h3 class="proyecto__rubro">Nogal</h3>
-          <p class="proyecto__texto">
-            Evaluación de implantación con horizonte de largo plazo y análisis
-            de los años improductivos iniciales.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--avellano" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-frutal"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Frutal extensivo</span>
-          <h3 class="proyecto__rubro">Avellano</h3>
-          <p class="proyecto__texto">
-            Estudio de aptitud y proyección de rendimiento en zona de
-            expansión del cultivo.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--cerezo" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-frutal"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Frutal extensivo</span>
-          <h3 class="proyecto__rubro">Cerezo</h3>
-          <p class="proyecto__texto">
-            Análisis de ventana comercial y su impacto sobre el retorno del
-            proyecto.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--arandano" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-frutal"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Frutal intensivo</span>
-          <h3 class="proyecto__rubro">Arándano</h3>
-          <p class="proyecto__texto">
-            Evaluación de inversión con estructura de costos de alta
-            intensidad de mano de obra.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--vid" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-vid"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Frutal intensivo</span>
-          <h3 class="proyecto__rubro">Vid</h3>
-          <p class="proyecto__texto">
-            Análisis de implantación y conducción del viñedo, con la elección
-            de variedad y destino comercial como variable central del retorno.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--avicola-trad" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-avicola"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Producción intensiva</span>
-          <h3 class="proyecto__rubro">Avícola tradicional</h3>
-          <p class="proyecto__texto">
-            Evaluación de granjas en sistema convencional, con análisis de
-            capacidad instalada, ciclos anuales y contrato de integración.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--avicola" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-avicola"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Producción intensiva</span>
-          <h3 class="proyecto__rubro">Avícola black-out</h3>
-          <p class="proyecto__texto">
-            Proyecto de galpones en sistema de ambiente controlado, con
-            análisis de eficiencia de conversión y consumo energético.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--feedlot" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-bovino"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Producción intensiva</span>
-          <h3 class="proyecto__rubro">Feedlot</h3>
-          <p class="proyecto__texto">
-            Análisis de engorde a corral: costo de la ración, eficiencia de
-            conversión y relación de compra-venta como determinantes del
-            margen.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--tambo" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-bovino"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Producción lechera</span>
-          <h3 class="proyecto__rubro">Tambo</h3>
-          <p class="proyecto__texto">
-            Evaluación de tambos de escala comercial, con dinámica del rodeo,
-            producción individual y costo del litro producido.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--ganaderia" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-bovino"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Cría e invernada</span>
-          <h3 class="proyecto__rubro">Ganadería</h3>
-          <p class="proyecto__texto">
-            Modelización de rodeos de cría e invernada, con carga animal,
-            índices reproductivos y margen bruto por hectárea ganadera.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto">
-        <div class="proyecto__imagen proyecto__imagen--postproyecto" aria-hidden="true">
-          <svg class="proyecto__icono"><use href="#ico-informe"/></svg>
-        </div>
-        <div class="proyecto__cuerpo">
-          <span class="proyecto__tipo">Acompañamiento</span>
-          <h3 class="proyecto__rubro">Asesoramiento integral post proyecto</h3>
-          <p class="proyecto__texto">
-            Control de gestión sobre el proyecto en marcha: comparamos lo
-            planificado contra lo ejecutado y ajustamos el rumbo con datos
-            reales.
-          </p>
-          <a class="proyecto__cta" href="#contacto">Consultar caso completo</a>
-        </div>
-      </article>
-
-      <article class="proyecto proyecto--aviso">
-        <div class="proyecto__cuerpo">
-          <h3 class="proyecto__rubro">Confidencialidad</h3>
-          <p class="proyecto__texto">
-            La información de un proyecto le pertenece al productor. Por eso
-            los casos que publicamos van sin nombres, sin superficies y sin
-            resultados: lo que se muestra es el método, no el cliente.
-          </p>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 5 · EL ARSENAL ═══════════════════════════════════════════ -->
-<section class="seccion seccion--acero" id="arsenal">
-  <div class="contenedor">
-
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Herramientas</p>
-    <h2 class="seccion__titulo">
-      El Arsenal
-      <span class="etiqueta-proximo">Próximamente</span>
-    </h2>
-    <p class="seccion__bajada">
-      Herramientas de cálculo para que puedas hacer tus propias
-      estimaciones, cuando y donde las necesites.
-    </p>
-
-    <div class="rejilla rejilla--3 arsenal">
-
-      <article class="arsenal__item">
-        <h3 class="arsenal__titulo">Calculadora de retorno</h3>
-        <p class="arsenal__texto">
-          Retorno estimado de una inversión frutal según superficie y rubro.
-        </p>
-      </article>
-
-      <article class="arsenal__item">
-        <h3 class="arsenal__titulo">Simulador de costos de implantación</h3>
-        <p class="arsenal__texto">
-          Costo de puesta en marcha según insumos y densidad de plantación.
-        </p>
-      </article>
-
-      <article class="arsenal__item">
-        <h3 class="arsenal__titulo">Análisis de sensibilidad</h3>
-        <p class="arsenal__texto">
-          Cómo cambia el resultado si cambia el precio, el rinde o el clima.
-        </p>
-      </article>
-
-    </div>
-
-    <p class="arsenal__nota">
-      Son estimaciones rápidas, para un primer número. Cuando el proyecto
-      avanza, la evaluación completa suma el relevamiento a campo y el
-      criterio profesional que definen el resultado final.
-    </p>
-  </div>
-</section>
-
-<!-- ═══ 6 · BLOG ═════════════════════════════════════════════════ -->
-<section class="seccion" id="blog">
-  <div class="contenedor">
-
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Publicaciones</p>
-    <h2 class="seccion__titulo">Análisis y Recursos</h2>
-    <p class="seccion__bajada">
-      Publicamos análisis técnico y económico del sector: números, márgenes
-      y criterios concretos para decidir mejor. Escribimos sobre lo que se
-      puede calcular.
-    </p>
-
-    <div class="rejilla rejilla--2 categorias">
-      <article class="categoria">
-        <h3 class="categoria__nombre">Rentabilidad por rubro</h3>
-        <p class="categoria__texto">Números y márgenes por cultivo y por sistema productivo.</p>
-      </article>
-      <article class="categoria">
-        <h3 class="categoria__nombre">Contexto de mercado</h3>
-        <p class="categoria__texto">Hacia dónde se mueve la inversión en el sector, y por qué.</p>
-      </article>
-      <article class="categoria">
-        <h3 class="categoria__nombre">Casos de estudio</h3>
-        <p class="categoria__texto">Proyectos reales, publicados con autorización.</p>
-      </article>
-      <article class="categoria">
-        <h3 class="categoria__nombre">Guías técnicas</h3>
-        <p class="categoria__texto">Cómo se evalúa un proyecto, explicado en detalle.</p>
-      </article>
-    </div>
-
-    <!-- ⚠ Todavía sin artículos publicados.
-         Cuando escribas el primero: duplicá articulo.html, completalo,
-         y reemplazá este bloque por una rejilla de tarjetas. -->
-    <div class="blog__vacio">
-      <p>
-        Estamos preparando los primeros análisis. Si querés que te avisemos
-        cuando publiquemos, <a href="#contacto">contactanos</a>.
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Cómo trabajamos</p>
+      <h2>Tres etapas, y podés bajarte en cualquiera</h2>
+      <p class="bajada">
+        No hace falta contratar todo de entrada. Cada etapa cierra en sí misma
+        y la siguiente sólo se justifica si la anterior dio que sí.
       </p>
     </div>
 
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">1</span>
+      <div>
+        <h3>Factibilidad y modelo de negocio</h3>
+        <p>
+          Responde si el proyecto conviene y bajo qué condiciones, con el
+          modelo de negocio que lo sostiene. Es la puerta de entrada y, muchas
+          veces, donde termina el trabajo: si la respuesta es que no, te
+          ahorraste la inversión y el resto del estudio.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">2</span>
+      <div>
+        <h3>Proyecto llave en mano</h3>
+        <p>
+          Si la factibilidad dio que sí, acá se desarrolla el planeamiento
+          completo de la producción: el informe detallado, con el flujo de
+          fondos, la evaluación financiera y la documentación lista para
+          presentar ante un banco, un socio o un directorio. Es lo que se firma
+          y se defiende.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">3</span>
+      <div>
+        <h3>Acompañamiento durante la ejecución</h3>
+        <p>
+          Con el proyecto en marcha, comparamos lo planificado contra lo que
+          efectivamente pasó, con datos reales y no estimados. Muestra dónde se
+          desvió el resultado y por qué. Se contrata aparte y sólo si el
+          proyecto lo justifica.
+        </p>
+      </div>
+    </div>
+
+    <div class="rejilla rejilla--2" style="margin-top:clamp(32px,4vw,48px)">
+      <article class="tarjeta">
+        <h3>Valuación de campos</h3>
+        <p style="color:var(--hueso-2);font-size:.97rem;margin-bottom:0">
+          Cuánto vale un campo, por los dos caminos que usa la tasación rural:
+          capitalizando la renta que la tierra es capaz de generar, y
+          comparándolo con operaciones reales de la zona. El cruce da un valor
+          defendible con números, para comprar, vender o respaldar una
+          operación.
+        </p>
+      </article>
+
+      <article class="tarjeta">
+        <h3>Impacto climático y de riesgo</h3>
+        <p style="color:var(--hueso-2);font-size:.97rem;margin-bottom:0">
+          Dos zonas con el mismo rinde promedio pueden tener riesgos muy
+          distintos: lo que las diferencia es la variabilidad. Trabajamos sobre
+          series históricas de rindes y precios para saber en qué escenarios el
+          proyecto sigue cerrando, y desde dónde empieza a ser una apuesta.
+        </p>
+      </article>
+    </div>
+
   </div>
 </section>
 
-<!-- ═══ 7 · CONTACTO ═════════════════════════════════════════════ -->
-<section class="seccion seccion--acero" id="contacto">
+<!-- ═══ 7 · RUBROS ═══════════════════════════════════════════════ -->
+<section id="rubros">
   <div class="contenedor">
 
-    <span class="seccion__marca"></span>
-    <p class="antetitulo">Contacto</p>
-    <h2 class="seccion__titulo">Solicitar Evaluación</h2>
-    <p class="seccion__bajada">
-      Contanos qué proyecto tenés en mente. Te contactamos para conversar sin
-      cargo sobre qué tipo de evaluación se ajusta a lo que necesitás.
-    </p>
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Rubros</p>
+      <h2>Dónde tenemos criterio propio</h2>
+      <p class="bajada">
+        No evaluamos cualquier cosa. Estos son los sistemas productivos que
+        conocemos por dentro, con la variable que define el resultado en cada
+        uno.
+      </p>
+    </div>
+
+    <div class="rubros">
+      <p class="rubro__grupo">Frutales extensivos</p>
+      <div class="rubro"><span class="rubro__n">Nogal</span><span class="rubro__d">Los años improductivos iniciales definen el repago.</span></div>
+      <div class="rubro"><span class="rubro__n">Avellano</span><span class="rubro__d">Aptitud de zona en cultivo en expansión.</span></div>
+      <div class="rubro"><span class="rubro__n">Cerezo</span><span class="rubro__d">La ventana comercial manda sobre el retorno.</span></div>
+
+      <p class="rubro__grupo">Frutales intensivos</p>
+      <div class="rubro"><span class="rubro__n">Arándano</span><span class="rubro__d">Costo de mano de obra sobre el margen.</span></div>
+      <div class="rubro"><span class="rubro__n">Vid</span><span class="rubro__d">Variedad y destino comercial como variable central.</span></div>
+
+      <p class="rubro__grupo">Producción intensiva</p>
+      <div class="rubro"><span class="rubro__n">Avícola tradicional</span><span class="rubro__d">Capacidad instalada, ciclos y contrato de integración.</span></div>
+      <div class="rubro"><span class="rubro__n">Avícola black-out</span><span class="rubro__d">Conversión y consumo energético.</span></div>
+      <div class="rubro"><span class="rubro__n">Feedlot</span><span class="rubro__d">Costo de la ración y relación compra-venta.</span></div>
+
+      <p class="rubro__grupo">Ganadería y leche</p>
+      <div class="rubro"><span class="rubro__n">Tambo</span><span class="rubro__d">Dinámica del rodeo y costo del litro producido.</span></div>
+      <div class="rubro"><span class="rubro__n">Cría e invernada</span><span class="rubro__d">Carga animal, índices reproductivos, margen por hectárea.</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 8 · CÓMO EMPEZAMOS ═══════════════════════════════════════ -->
+<section class="banda" id="proceso">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Condiciones</p>
+      <h2>Cómo empezamos, y cómo se define el precio</h2>
+      <p class="bajada">
+        Cada proyecto tiene una escala, un rubro y una urgencia distintos, así
+        que el trabajo se arma a medida. El camino, en cambio, es siempre el
+        mismo.
+      </p>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">1</span>
+      <div>
+        <h3>Nos escribís</h3>
+        <p>
+          Por WhatsApp o por correo, contándonos qué proyecto tenés en mente.
+          Con eso alcanza para empezar.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">2</span>
+      <div>
+        <h3>Entrevista sin cargo</h3>
+        <p>
+          Conversamos para entender el proyecto y tomar el pedido. Acá se
+          define qué tipo de evaluación necesita, y si es un trabajo para
+          nosotros. No tiene costo y no compromete a nada.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa__n" aria-hidden="true">3</span>
+      <div>
+        <h3>Plan de acción y presupuesto</h3>
+        <p>
+          Armamos un plan personalizado según lo que el proyecto necesite, con
+          el alcance y el precio por escrito. Recién ahí decidís si seguimos.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 9 · SI YA TENÉS EL CAMPO ═════════════════════════════════ -->
+<section id="productores">
+  <div class="contenedor">
+    <div class="carril">
+      <p class="antetitulo">Si ya tenés el campo</p>
+      <h2>¿Sos productor y querés saber si tu campo puede rendir más?</h2>
+      <p class="bajada" style="margin-bottom:1.2rem">
+        No hace falta que vengas con un proyecto armado. La mayoría llega con
+        una sospecha: que hay un sector que no está dando lo que podría, que la
+        actividad de siempre ya no cierra como antes, o que el banco pide
+        números que nadie preparó.
+      </p>
+      <p class="medida">
+        Empezamos por el mapa de ambientes de tu establecimiento y las
+        alternativas posibles para cada sector. De ahí sale, con margen bruto y
+        con flujo de fondos, qué conviene hacer y qué conviene dejar como está.
+      </p>
+      <a class="boton boton--whatsapp" id="enlaceWhatsappCampo" href="#contacto" target="_blank" rel="noopener">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+        Contame qué campo tenés
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 · CONTACTO ════════════════════════════════════════════ -->
+<section class="banda" id="contacto">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Contacto</p>
+      <h2>Escribinos y lo conversamos</h2>
+    </div>
 
     <div class="contacto">
+      <div>
+        <p class="bajada" style="margin-bottom:1.4rem">
+          La primera conversación es sin cargo y sirve para entender el
+          proyecto antes de hablar de números. Si no es para nosotros, te lo
+          decimos ahí mismo.
+        </p>
 
-      <!-- ── El formulario ──────────────────────────────────────────
-           NO envía a ningún servidor. Arma el mensaje y lo abre en
-           WhatsApp o en tu correo.
+        <p style="font-weight:600;margin-bottom:.5rem">
+          Para que la primera respuesta sirva, contanos:
+        </p>
+        <ul class="que-mandar">
+          <li>Superficie aproximada y zona.</li>
+          <li>Qué querés producir, o qué estás produciendo hoy.</li>
+          <li>En qué etapa está: idea, decisión tomada, o proyecto en marcha.</li>
+          <li>Qué necesitás resolver: decidir, conseguir financiamiento, o corregir el rumbo.</li>
+        </ul>
 
-           Es deliberado: así el mensaje del cliente va DIRECTO a vos,
-           sin que ningún servicio intermediario lo lea. Además no hay
-           nada que configurar ni que pagar, y no puede dejar de
-           funcionar porque un tercero cierre.
-           ──────────────────────────────────────────────────────── -->
-      <form class="formulario" id="formularioContacto" novalidate>
+        <a class="boton boton--whatsapp" style="margin-top:1.6rem" id="enlaceWhatsapp" href="#" target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <p class="chico" style="margin-top:1rem">
+          El botón abre WhatsApp con el mensaje ya empezado. No pasa por ningún
+          servidor nuestro ni de terceros.
+        </p>
+      </div>
 
+      <aside class="contacto__datos">
+        <h4>WhatsApp</h4>
+        <p><a id="numeroWhatsapp" href="#">+54 9 11 5873-5770</a></p>
+
+        <h4 style="margin-top:1.4rem">Correo</h4>
+        <p><a id="enlaceEmail" href="#">correo</a></p>
+
+        <h4 style="margin-top:1.4rem">Dónde trabajamos</h4>
+        <p>
+          Argentina · Chile · Uruguay · Paraguay<br>
+          <span class="chico">
+            Río Negro, Buenos Aires, Mendoza, San Juan y Araucanía
+          </span>
+        </p>
+
+        <h4 style="margin-top:1.4rem">Respondemos personalmente</h4>
+        <p>Leemos todas las consultas. No hay formulario que se pierda en una bandeja compartida.</p>
+      </aside>
+    </div>
+
+    <!-- Formulario · no envía nada a ningún servidor: arma el mensaje y
+         abre WhatsApp o el correo del visitante. Ver js/contacto.js -->
+    <form class="formulario" id="formularioContacto" novalidate>
+      <h3 style="margin-bottom:.4rem">O completá los datos y te armamos el mensaje</h3>
+      <p class="chico" style="margin-bottom:1.4rem">
+        Al enviar se abre tu WhatsApp o tu correo con todo redactado. Vos
+        decidís si lo mandás.
+      </p>
+
+      <div class="campo-fila">
         <div class="campo">
           <label for="nombre">Nombre y apellido <span class="req">*</span></label>
           <input type="text" id="nombre" name="nombre" required
@@ -753,195 +781,149 @@
           <p class="campo__error" data-error="nombre"></p>
         </div>
 
-        <div class="campo-fila">
-          <div class="campo">
-            <label for="pais">País <span class="req">*</span></label>
-            <select id="pais" name="pais" required>
-              <option value="">Elegí…</option>
-              <option>Argentina</option>
-              <option>Chile</option>
-              <option>Uruguay</option>
-              <option>Paraguay</option>
-              <option>Otro</option>
-            </select>
-            <p class="campo__error" data-error="pais"></p>
-          </div>
+        <div class="campo">
+          <label for="pais">País <span class="req">*</span></label>
+          <select id="pais" name="pais" required>
+            <option value="">Elegí…</option>
+            <option>Argentina</option>
+            <option>Chile</option>
+            <option>Uruguay</option>
+            <option>Paraguay</option>
+            <option>Otro</option>
+          </select>
+          <p class="campo__error" data-error="pais"></p>
+        </div>
+      </div>
 
-          <div class="campo">
-            <label for="perfil">Sos <span class="req">*</span></label>
-            <select id="perfil" name="perfil" required>
-              <option value="">Elegí…</option>
-              <option>Productor</option>
-              <option>Inversor</option>
-              <option>Institución financiera</option>
-              <option>Otro</option>
-            </select>
-            <p class="campo__error" data-error="perfil"></p>
-          </div>
+      <div class="campo-fila">
+        <div class="campo">
+          <label for="perfil">Sos <span class="req">*</span></label>
+          <select id="perfil" name="perfil" required>
+            <option value="">Elegí…</option>
+            <option>Productor</option>
+            <option>Inversor</option>
+            <option>Institución financiera</option>
+            <option>Otro</option>
+          </select>
+          <p class="campo__error" data-error="perfil"></p>
         </div>
 
         <div class="campo">
           <label for="rubro">Rubro de interés</label>
-          <!-- input + datalist: se puede elegir de la lista tocando la
-               flechita, O escribir directamente lo que uno busca si no
-               está en las opciones. No hace falta tocar contacto.js:
-               .value funciona igual que en un <select>. -->
+          <!-- Texto libre con sugerencias: si el rubro del visitante no
+               está en la lista, igual lo puede escribir. -->
           <input type="text" id="rubro" name="rubro" list="listaRubros"
                  placeholder="Elegí una opción o escribí el tuyo"
                  autocomplete="off">
           <datalist id="listaRubros">
             <option value="Frutales extensivos (nogal, avellano, cerezo)">
-            <option value="Frutales intensivos (arándano y otros)">
+            <option value="Frutales intensivos (arándano, vid)">
             <option value="Producción avícola">
-            <option value="Ganadería">
-            <option value="Agricultura extensiva">
+            <option value="Feedlot">
+            <option value="Tambo">
+            <option value="Ganadería de cría e invernada">
+            <option value="Valuación de campo">
             <option value="Todavía no lo defino">
           </datalist>
+          <p class="campo__error" data-error="rubro"></p>
         </div>
+      </div>
 
-        <div class="campo">
-          <label for="mensaje">Contanos del proyecto <span class="req">*</span></label>
-          <textarea id="mensaje" name="mensaje" rows="5" required
-                    placeholder="Superficie aproximada, zona, en qué etapa está y qué necesitás resolver."></textarea>
-          <p class="campo__ayuda">
-            Cuanto más concreto seas, mejor podemos definir qué tipo de
-            evaluación necesita tu proyecto.
-          </p>
-          <p class="campo__error" data-error="mensaje"></p>
-        </div>
-
-        <div class="formulario__acciones">
-          <button type="submit" class="boton boton--principal boton--bloque"
-                  data-via="whatsapp">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/>
-            </svg>
-            Enviar por WhatsApp
-          </button>
-
-          <button type="submit" class="boton boton--secundario boton--bloque"
-                  data-via="email">
-            Enviar por correo
-          </button>
-        </div>
-
-        <p class="formulario__nota">
-          Tus datos viajan directo a nosotros por WhatsApp o correo.
-          <strong>Este sitio funciona sin cookies, sin rastreadores y sin
-          guardar información de quien lo visita.</strong>
+      <div class="campo">
+        <label for="mensaje">Contanos del proyecto <span class="req">*</span></label>
+        <textarea id="mensaje" name="mensaje" rows="5" required
+                  placeholder="Superficie aproximada, zona, en qué etapa está y qué necesitás resolver."></textarea>
+        <p class="campo__ayuda">
+          Cuanto más concreto seas, mejor podemos definir qué tipo de
+          evaluación necesita tu proyecto.
         </p>
+        <p class="campo__error" data-error="mensaje"></p>
+      </div>
 
-      </form>
+      <div class="formulario__acciones">
+        <button type="submit" class="boton boton--whatsapp" data-via="whatsapp">
+          Enviar por WhatsApp
+        </button>
+        <button type="submit" class="boton boton--linea" data-via="email">
+          Enviar por correo
+        </button>
+      </div>
 
-      <!-- ── Datos de contacto ─────────────────────────────────── -->
-      <aside class="contacto__datos">
+      <p class="formulario__nota">
+        Tus datos viajan directo a nosotros por WhatsApp o correo.
+        <strong>Este sitio funciona sin cookies, sin rastreadores y sin
+        guardar información de quien lo visita.</strong>
+      </p>
+    </form>
 
-        <div class="contacto__bloque">
-          <h3 class="contacto__titulo">Respondemos personalmente</h3>
-          <p class="contacto__texto">
-            Leemos todas las consultas y respondemos personalmente. La
-            primera conversación es sin cargo y sirve para entender el
-            proyecto antes de hablar de números.
-          </p>
-        </div>
-
-        <div class="contacto__bloque">
-          <h3 class="contacto__titulo">Directo</h3>
-          <!-- ⚠ REEMPLAZAR · el número real va en js/contacto.js,
-               en la constante WHATSAPP. Cambialo en un solo lugar. -->
-          <p class="contacto__dato">
-            <a href="#" id="enlaceWhatsapp">WhatsApp</a>
-          </p>
-          <!-- ⚠ REEMPLAZAR · el correo real va en js/contacto.js -->
-          <p class="contacto__dato">
-            <a href="#" id="enlaceEmail">contacto@agrotitan.com</a>
-          </p>
-        </div>
-
-        <div class="contacto__bloque">
-          <h3 class="contacto__titulo">Dónde trabajamos</h3>
-          <p class="contacto__texto">
-            Argentina · Chile · Uruguay · Paraguay
-          </p>
-        </div>
-
-      </aside>
-    </div>
   </div>
 </section>
 
 </main>
 
-<!-- ═══ 8 · FOOTER ═══════════════════════════════════════════════ -->
+<!-- ═══ PIE ══════════════════════════════════════════════════════ -->
 <footer class="pie">
   <div class="contenedor">
 
-    <div class="pie__superior">
-
-      <div class="pie__marca">
-        <a class="logo" href="#" aria-label="AgroTitan, inicio">
-          <img class="logo__marca" src="img/isotipo-a.svg" alt="" width="36" height="36">
-          <span class="logo__texto">Agro<em>Titan</em></span>
+    <div class="pie__grilla">
+      <div>
+        <a class="logo" href="#inicio" style="font-size:1.2rem">
+          <svg width="24" height="24" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 6 L38 42 H31 L24 22 L17 42 H10 Z" fill="none"
+                  stroke="#E5C158" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M17.5 32 H30.5" fill="none" stroke="#E5C158" stroke-width="2.4"/>
+          </svg>
+          <span>Agro<em>Titan</em></span>
         </a>
         <p class="pie__eslogan">La fuerza de la tierra. La precisión del capital.</p>
-        <p class="pie__descripcion">
+        <p style="color:var(--hueso-3);margin:0">
           Evaluación de proyectos agropecuarios. Ingeniería agronómica y
           análisis financiero en el mismo equipo.
         </p>
       </div>
 
-      <nav class="pie__nav" aria-label="Navegación del pie">
-        <h4 class="pie__titulo">Secciones</h4>
-        <a href="#enfoque">Enfoque</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#proyectos">Proyectos</a>
-        <a href="#blog">Análisis</a>
+      <nav class="pie__nav" aria-label="Secciones del pie">
+        <h4>Secciones</h4>
+        <a href="#quienes">Quiénes somos</a>
+        <a href="#metodo">Método</a>
+        <a href="#informe">El informe</a>
+        <a href="#etapas">Cómo trabajamos</a>
+        <a href="#rubros">Rubros</a>
         <a href="#contacto">Contacto</a>
       </nav>
 
       <div class="pie__nav">
-        <h4 class="pie__titulo">Operamos en</h4>
-        <span>Argentina</span>
-        <span>Chile</span>
-        <span>Uruguay</span>
-        <span>Paraguay</span>
+        <h4>Seguinos</h4>
+        <a href="https://www.linkedin.com/in/agro-titan-251367428" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/augustoniente/" target="_blank" rel="noopener">Instagram</a>
       </div>
-
-      <div class="pie__nav">
-        <h4 class="pie__titulo">Seguinos</h4>
-        <a href="https://www.linkedin.com/in/agro-titan-251367428"
-           target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.instagram.com/augustoniente/"
-           target="_blank" rel="noopener">Instagram</a>
-      </div>
-
     </div>
 
     <div class="pie__legal">
-      <p>
+      <p style="margin-bottom:.5rem">
         Los análisis publicados en este sitio son de carácter orientativo y no
         constituyen recomendación de inversión. Cada proyecto requiere un
         estudio particular. AgroTitan no garantiza resultados productivos ni
         financieros.
       </p>
-      <p class="pie__copy">
-        <span id="anio">2026</span> AgroTitan
+      <p style="margin:0">
+        © <span id="anio">2026</span> AgroTitan · Sitio sin cookies, sin
+        rastreadores y sin guardar información de quien lo visita.
       </p>
     </div>
 
   </div>
 </footer>
 
-<!-- ═══ WHATSAPP FLOTANTE ════════════════════════════════════════ -->
-<a class="whatsapp-flotante" id="whatsappFlotante" href="#"
-   aria-label="Escribinos por WhatsApp" rel="noopener">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/>
-  </svg>
-  <span class="whatsapp-flotante__texto">Consultar</span>
+<!-- Botón flotante de WhatsApp -->
+<a class="whatsapp-flotante" id="whatsappFlotante" href="#contacto"
+   aria-label="Escribinos por WhatsApp" target="_blank" rel="noopener">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
 </a>
 
-<script src="js/navegacion.js"></script>
-<script src="js/contacto.js"></script>
+<!-- Mismo criterio que en el CSS: si cambiás un .js, subí el ?v= -->
+<script src="js/navegacion.js?v=2"></script>
+<script src="js/contacto.js?v=2"></script>
+<script src="js/grafico.js?v=2"></script>
 </body>
 </html>

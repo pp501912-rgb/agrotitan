@@ -30,6 +30,16 @@ const EMAIL = "augustoniente@gmail.com";
 const MENSAJE_DIRECTO =
   "Hola, quiero consultar sobre evaluación de proyecto agropecuario.";
 
+/* Cada botón de WhatsApp abre con un mensaje distinto según desde dónde
+   se toca. El del carril de productores no pregunta lo mismo que el de
+   la portada, y esa diferencia le ahorra un ida y vuelta al visitante. */
+const MENSAJES_POR_BOTON = {
+  enlaceWhatsappHero:
+    "Hola, quiero evaluar un proyecto agropecuario.",
+  enlaceWhatsappCampo:
+    "Hola, tengo un campo en producción y quiero saber si puede rendir más.",
+};
+
 /* ── Enlaces directos ───────────────────────────────────────────── */
 
 function enlaceWhatsapp(texto) {
@@ -41,21 +51,38 @@ function enlaceCorreo(asunto, cuerpo) {
          `&body=${encodeURIComponent(cuerpo)}`;
 }
 
-/* Botón flotante y enlaces del bloque de contacto */
+/* Botones de WhatsApp y enlaces del bloque de contacto.
+   El número y el correo viven en un solo lugar (arriba de este archivo):
+   acá solamente se reparten. */
 function prepararEnlacesDirectos() {
-  const flotante = document.getElementById("whatsappFlotante");
-  const enlaceWa = document.getElementById("enlaceWhatsapp");
-  const enlaceEm = document.getElementById("enlaceEmail");
-
   const url = enlaceWhatsapp(MENSAJE_DIRECTO);
 
-  if (flotante) { flotante.href = url; flotante.target = "_blank"; }
-  if (enlaceWa) {
-    enlaceWa.href = url;
-    enlaceWa.target = "_blank";
-    // Se muestra el número con formato legible, pero el enlace usa el crudo
-    enlaceWa.textContent = formatearNumero(WHATSAPP);
+  // Botones que ya traen su ícono y su texto en el HTML: solo el destino.
+  ["whatsappFlotante", "enlaceWhatsapp"].forEach((id) => {
+    const boton = document.getElementById(id);
+    if (!boton) return;
+    boton.href = url;
+    boton.target = "_blank";
+  });
+
+  // Botones con mensaje propio según la sección
+  Object.entries(MENSAJES_POR_BOTON).forEach(([id, mensaje]) => {
+    const boton = document.getElementById(id);
+    if (!boton) return;
+    boton.href = enlaceWhatsapp(mensaje);
+    boton.target = "_blank";
+  });
+
+  // Acá sí se escribe el número, porque es un dato a la vista
+  const numero = document.getElementById("numeroWhatsapp");
+  if (numero) {
+    numero.href = url;
+    numero.target = "_blank";
+    // Se muestra con formato legible, pero el enlace usa el crudo
+    numero.textContent = formatearNumero(WHATSAPP);
   }
+
+  const enlaceEm = document.getElementById("enlaceEmail");
   if (enlaceEm) {
     enlaceEm.href = `mailto:${EMAIL}`;
     enlaceEm.textContent = EMAIL;
