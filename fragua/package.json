@@ -12,6 +12,7 @@
     "extraer": "node sitio/extraer.mjs",
     "publicar": "node sitio/publicar.mjs",
     "pieza": "node nucleo/render.mjs",
+    "transcribir": "node nucleo/audios.mjs",
     "probar": "node --test nucleo/*.test.mjs"
   },
   "optionalDependencies": {

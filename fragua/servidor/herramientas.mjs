@@ -21,6 +21,7 @@ import * as piezas from "../nucleo/piezas.mjs";
 import * as calendario from "../nucleo/calendario.mjs";
 import * as ollama from "../motores/ollama.mjs";
 import * as cascada from "../motores/cascada.mjs";
+import * as audios from "../nucleo/audios.mjs";
 import { leerDatos, pendientes, construir } from "../sitio/construir.mjs";
 import { actualizarSitio, empujar, ramaActual } from "../sitio/publicar.mjs";
 
@@ -238,6 +239,27 @@ export const DEFINICIONES = [
     },
   },
   {
+    name: "transcribir_audio",
+    description:
+      "Pasa a texto una nota de voz archivada y la guarda como nota. Sin " +
+      "argumentos transcribe todas las pendientes. El audio original nunca se " +
+      "borra y la nota conserva siempre la transcripción cruda.",
+    input_schema: {
+      type: "object",
+      properties: {
+        archivo: { type: "string", description: "Nombre del audio. Si no lo pasás, hace todos los pendientes." },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "listar_audios",
+    description:
+      "Las notas de voz archivadas, con su transcripción si ya la tienen. " +
+      "Sirve para saber qué quedó pendiente de pasar a texto.",
+    input_schema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
     name: "guardar_nota",
     description:
       "Archiva algo que la persona te contó y conviene recordar: una observación " +
@@ -428,6 +450,33 @@ export const IMPLEMENTACIONES = {
     return { total: proximas.length, proximas };
   },
 
+  async transcribir_audio({ archivo } = {}) {
+    if (archivo) {
+      const r = await audios.procesar(archivo);
+      return r.estado === "ya-estaba"
+        ? { transcrito: false, motivo: `Ese audio ya tenía nota: ${r.nota}.` }
+        : { transcrito: true, ...r };
+    }
+
+    const r = await audios.procesarPendientes();
+    if (!r.motor) return { transcrito: false, motivo: r.motivo };
+    return {
+      transcrito: r.hechos.length > 0,
+      pendientes: r.pendientes,
+      hechos: r.hechos.map((h) => ({ archivo: h.archivo, nota: h.nota, texto: h.texto })),
+      fallados: r.fallados,
+    };
+  },
+
+  async listar_audios() {
+    const lista = await audios.listar();
+    return {
+      total: lista.length,
+      pendientes: lista.filter((a) => !a.transcrito).length,
+      audios: lista,
+    };
+  },
+
   async guardar_nota({ titulo, texto }) {
     const archivo = await saber.guardarNota(titulo, texto, "chat");
     return { guardada: true, archivo: path.basename(archivo) };
@@ -500,6 +549,7 @@ Object.assign(IMPLEMENTACIONES, {
   marcar_publicada: ({ carpeta }) => piezas.marcarPublicada(carpeta),
   descartar_pieza:  ({ carpeta }) => piezas.descartar(carpeta),
   ver_calendario_completo: () => calendario.leer(),
+  listar_notas: async () => ({ notas: await saber.leerNotas() }),
 });
 
 /** Ejecuta una herramienta por nombre, sin dejar que una excepción tumbe el chat. */

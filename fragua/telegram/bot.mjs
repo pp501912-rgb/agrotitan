@@ -28,6 +28,8 @@ import { RUTAS, RAÍZ } from "../nucleo/marca.mjs";
 import * as claude from "../motores/claude.mjs";
 import { turno, guardarConversacion, leerConversacion } from "../servidor/agente.mjs";
 import { ejecutar } from "../servidor/herramientas.mjs";
+import * as audios from "../nucleo/audios.mjs";
+import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
 
 await cargarEnv();
 
@@ -141,16 +143,43 @@ async function atender(mensaje) {
     return;
   }
 
-  // Nota de voz: se archiva y se avisa. La transcripción con Whisper es
-  // el paso siguiente y necesita el binario instalado.
+  // Nota de voz: se archiva SIEMPRE y se transcribe si hay Whisper.
   if (mensaje.voice || mensaje.audio) {
-    const id = (mensaje.voice || mensaje.audio).file_id;
-    const destino = path.join(RUTAS.notas, "audios", `${Date.now()}.ogg`);
-    await bajarArchivo(id, destino);
-    await escribir(chat,
-      `Guardé el audio en <code>conocimiento/notas/audios/</code>.\n\n` +
-      `Para que lo transcriba solo hay que instalar Whisper en la PC. ` +
-      `Mientras tanto, contámelo por texto y lo archivo.`);
+    const pieza = mensaje.voice || mensaje.audio;
+    const extension = (pieza.mime_type || "").includes("mpeg") ? ".mp3" : ".ogg";
+    const sello = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+    const destino = path.join(audios.CARPETA, `${sello}${extension}`);
+
+    await bajarArchivo(pieza.file_id, destino);
+
+    const est = await estadoWhisper();
+    if (!est.activo) {
+      // El audio no se pierde: queda archivado y npm run transcribir lo
+      // levanta cuando instales Whisper.
+      await escribir(chat,
+        `Guardé el audio, pero todavía no lo puedo pasar a texto.\n\n` +
+        `<pre>${escaparHtml(est.motivo)}</pre>\n` +
+        `Cuando lo instales, <code>npm run transcribir</code> levanta todos ` +
+        `los que se hayan ido juntando.`);
+      return;
+    }
+
+    await escribir(chat, `Escuchando… (${est.motor}, modelo ${est.modelo})`);
+    await tecleando(chat);
+
+    try {
+      const r = await audios.procesar(path.basename(destino));
+      await escribir(chat,
+        `<b>Transcripto</b> en ${r.segundos}s` +
+        `${r.limpiado ? ", y limpiado con Ollama" : ""}.\n\n` +
+        `<pre>${escaparHtml(r.texto)}</pre>\n` +
+        `Quedó en <code>${r.nota}</code>. Si algo salió mal, escribime la ` +
+        `corrección y la archivo.`);
+    } catch (e) {
+      await escribir(chat,
+        `No pude transcribirlo: ${escaparHtml(e.message)}\n\n` +
+        `El audio quedó guardado igual, así que no se perdió nada.`);
+    }
     return;
   }
 

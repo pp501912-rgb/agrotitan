@@ -19,6 +19,7 @@
     <button class="pestana"                 data-vista="piezas" role="tab">Piezas</button>
     <button class="pestana"                 data-vista="temas"  role="tab">Temas</button>
     <button class="pestana"                 data-vista="plan"   role="tab">Calendario</button>
+    <button class="pestana"                 data-vista="notas"  role="tab">Notas</button>
     <button class="pestana"                 data-vista="estado" role="tab">Estado</button>
   </nav>
 </header>
@@ -108,6 +109,22 @@
     </div>
     <p class="aviso" id="plan-aviso" hidden></p>
     <div id="plan-lista"></div>
+  </section>
+
+  <!-- ═══ NOTAS ═══════════════════════════════════════════════════ -->
+  <section class="vista" id="vista-notas">
+    <div class="cabecera-vista">
+      <div>
+        <h1>Notas</h1>
+        <p class="sub" id="notas-resumen">Cargando…</p>
+      </div>
+      <div class="acciones">
+        <button class="boton boton--lleno" id="btn-transcribir" hidden>Transcribir pendientes</button>
+      </div>
+    </div>
+    <p class="aviso" id="notas-aviso" hidden></p>
+    <div id="audios-lista"></div>
+    <div id="notas-lista"></div>
   </section>
 
   <!-- ═══ ESTADO ══════════════════════════════════════════════════ -->

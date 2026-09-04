@@ -72,6 +72,30 @@ No hay que abrir ningún puerto ni exponer nada a internet. Y como Telegram
 guarda 24 horas los mensajes que no pudo entregar, si apagás la máquina a la
 noche el bot los levanta a la mañana sin perder nada.
 
+### Pasar las notas de voz a texto · Whisper
+
+Sin esto el bot guarda los audios igual y no se pierde nada; cuando
+instales Whisper, `npm run transcribir` levanta todos los que se hayan ido
+juntando.
+
+**La forma simple**, un solo comando:
+
+```
+pip install whisper-ctranslate2
+```
+
+Se baja el modelo solo la primera vez y entiende las notas de voz de Telegram
+sin nada más.
+
+**Si preferís no usar Python:** bajá `whisper-bin-x64.zip` de
+[las versiones de whisper.cpp](https://github.com/ggml-org/whisper.cpp/releases)
+y un modelo `.bin`. Ojo con un detalle: **whisper.cpp no lee el formato Opus en
+que Telegram manda las notas de voz**, así que también hace falta ffmpeg para
+convertirlas. Las tres rutas van en el `.env`.
+
+El modelo por defecto es `small`. Para español rioplatense grabado manejando es
+el piso razonable; `large-v3-turbo` es lo mejor si la máquina da.
+
 ### La bandeja de captura
 
 Sólo si te pasa seguido estar más de un día lejos de la PC. Ver
@@ -79,7 +103,7 @@ Sólo si te pasa seguido estar más de un día lejos de la PC. Ver
 
 ---
 
-## Las seis pantallas
+## Las siete pantallas
 
 **Conversar.** Le pedís lo que necesites. Puede buscar en lo que sabemos de
 AgroTitan, escribir el copy, armar las placas, completar datos y publicar la
@@ -107,6 +131,10 @@ temas sin usar alternando audiencia y rubro entre publicaciones seguidas —
 promediar los dos mensajes produce un texto tibio, así que cada pieza elige un
 carril. Si el banco no alcanza para el mes, te dice con cuántos días se queda
 corto. *Agendar* es un paso aparte: la propuesta no se guarda sola.
+
+**Notas.** Lo que HERALDO fue aprendiendo, y las notas de voz con su
+transcripción. Los audios sin pasar a texto se ven aparte, con un botón para
+hacerlos todos de una.
 
 **Estado.** Qué está andando y qué no, y por qué.
 
@@ -151,6 +179,7 @@ destruye exactamente lo que se está vendiendo.
 ```
 npm start                            el panel (lo mismo que iniciar.bat)
 npm run bot                          el bot de Telegram
+npm run transcribir                  pasa a texto los audios pendientes
 npm run probar                       las pruebas
 node sitio/construir.mjs --verificar compara la página con la maqueta
 node sitio/publicar.mjs --simulacro  muestra qué publicaría, sin tocar nada
@@ -169,11 +198,13 @@ conocimiento/     lo que HERALDO sabe. Texto plano, editable a mano.
   hashtags.json        los sets curados
   historial.json       qué se publicó, para no repetirse
   notas/               lo que le vas contando
+    audios/              las notas de voz, que nunca se borran
 
 contenido/        los datos de la página
 plantillas/       la página con marcadores
 piezas/           las cuatro plantillas de Instagram
-nucleo/           render, plantillas, contrato, conocimiento, piezas, calendario
+nucleo/           render, plantillas, contrato, conocimiento, piezas,
+                  calendario, transcribir, audios
 motores/          claude, ollama, plantillas, cascada
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
@@ -203,6 +234,10 @@ otra ventana. Entrá a `http://127.0.0.1:4321`. Si querés otro puerto, poné
 **Las piezas salen con otra tipografía.** Faltan los archivos de
 `public/fuentes/`. La pieza igual se genera, pero con la tipografía del sistema.
 
+**«Encontré whisper.cpp, pero no lee el Opus…»** Las notas de voz de Telegram
+vienen en un formato que whisper.cpp no abre. Instalá ffmpeg y poné su ruta en
+`FRAGUA_FFMPEG`, o pasate a whisper-ctranslate2, que no lo necesita.
+
 **El chat dice que el motor está apagado.** Falta la clave en el `.env` o falta
 `npm install`. La pantalla de *Estado* te dice cuál de las dos.
 
@@ -212,7 +247,5 @@ otra ventana. Entrá a `http://127.0.0.1:4321`. Si querés otro puerto, poné
 
 - **Publicar solo en Instagram.** El paquete queda listo en `salida/` y se sube
   a mano. El código está preparado para enchufar la API de Meta más adelante.
-- **Transcribir audios.** Las notas de voz de Telegram se archivan pero no se
-  transcriben todavía; hace falta instalar Whisper.
 - **Fotos propias.** Las piezas usan composiciones tipográficas hasta que
   existan fotos reales de campo.

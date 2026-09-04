@@ -104,7 +104,7 @@ main { flex: 1; min-height: 0; display: flex; }
 .vista { display: none; flex: 1; min-height: 0; flex-direction: column; }
 .vista--activa { display: flex; }
 
-#vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-estado {
+#vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-notas, #vista-estado {
   overflow-y: auto;
   padding: 28px 32px 60px;
 }
@@ -372,7 +372,7 @@ h1 {
 @media (max-width: 760px) {
   .barra { flex-wrap: wrap; gap: 0 20px; }
   .campo { grid-template-columns: 1fr; gap: 8px; }
-  .chat, #vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-estado {
+  .chat, #vista-datos, #vista-piezas, #vista-temas, #vista-plan, #vista-notas, #vista-estado {
     padding-left: 18px; padding-right: 18px;
   }
   .redactor { padding-left: 18px; padding-right: 18px; }
@@ -469,3 +469,12 @@ h1 {
 }
 
 .campo__ayuda .etiqueta { margin-top: 4px; }
+
+/* ── Notas de voz ─────────────────────────────────────────────── */
+
+.campo--audio { grid-template-columns: minmax(0, 1fr) 220px; align-items: center; }
+.campo--audio > div:last-child { text-align: right; }
+
+/* El aviso del motivo de Whisper viene con saltos de línea: son parte
+   de las instrucciones de instalación y hay que respetarlos. */
+#notas-aviso { white-space: pre-wrap; font-size: 14px; }

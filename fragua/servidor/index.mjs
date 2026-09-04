@@ -22,6 +22,7 @@ import { turno, guardarConversacion, leerConversacion, listarConversaciones } fr
 import { leerDatos, pendientes, verificar } from "../sitio/construir.mjs";
 import { leerTemas } from "../nucleo/conocimiento.mjs";
 import * as bandeja from "../nucleo/bandeja.mjs";
+import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
 
 const PUERTO = Number(process.env.FRAGUA_PUERTO) || 4321;
 
@@ -93,10 +94,11 @@ async function servirArchivo(res, base, relativo) {
 
 /** El estado de los tres motores y del renderizador, en castellano. */
 async function estadoGeneral() {
-  const [c, o, nav, sitio, temas] = await Promise.all([
+  const [c, o, nav, w, sitio, temas] = await Promise.all([
     claude.estado(),
     ollama.estado(),
     buscarNavegador(),
+    estadoWhisper(),
     leerDatos(),
     leerTemas(),
   ]);
@@ -112,6 +114,7 @@ async function estadoGeneral() {
     render: nav
       ? { activo: true, navegador: path.basename(nav) }
       : { activo: false, motivo: "No encontré Chrome, Edge ni Chromium. Poné la ruta en el .env con FRAGUA_NAVEGADOR." },
+    audio: w,
     sitio: {
       total: sitio.ficha.campos?.length ?? 0,
       faltan: faltan.length,
@@ -235,6 +238,7 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
     Ollama (local) ......... ${marca(est.motores.ollama)}${est.motores.ollama.activo ? "" : `  · ${est.motores.ollama.motivo}`}
     Plantillas ............. sí
     Render de imágenes ..... ${marca(est.render)}${est.render.activo ? `  · ${est.render.navegador}` : `  · ${est.render.motivo}`}
+    Transcripción de voz ... ${marca(est.audio)}${est.audio.activo ? `  · ${est.audio.motor} (${est.audio.modelo})` : ""}
 
   Página: faltan ${est.sitio.faltan} de ${est.sitio.total} datos.
   Temas sin usar: ${est.temas.sinUsar} de ${est.temas.total}.

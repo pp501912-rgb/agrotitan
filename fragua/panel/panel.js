@@ -38,6 +38,7 @@ function irA(destino) {
   if (vista === "piezas") carpeta ? abrirPieza(decodeURIComponent(carpeta)) : cargarPiezas();
   if (vista === "temas")  cargarTemas();
   if (vista === "plan")   cargarPlan();
+  if (vista === "notas")  cargarNotas();
   if (vista === "estado") cargarEstado();
 }
 
@@ -90,6 +91,10 @@ function resumirPaso(paso) {
     case "planificar_mes":       return `<b>armó un plan</b> — ${s.propuestas} para ${s.diasDisponibles} días${s.alcanza ? "" : ", no alcanzan los temas"}`;
     case "agendar_plan":         return `<b>agendó</b> ${s.agendadas} publicaciones`;
     case "ver_calendario":       return `<b>miró el calendario</b> — ${s.total} por delante`;
+    case "listar_audios":        return `<b>miró los audios</b> — ${s.total}, ${s.pendientes} sin transcribir`;
+    case "transcribir_audio":    return s.transcrito
+                                  ? `<b>transcribió</b> ${s.nota || (s.hechos || []).length + " audio(s)"}`
+                                  : `<b>no transcribió</b> — ${s.motivo || "nada pendiente"}`;
     default:                    return `<b>${paso.herramienta}</b>`;
   }
 }
@@ -499,6 +504,89 @@ async function cargarTemas() {
     </div>`).join("");
 }
 
+/* ═══ NOTAS ══════════════════════════════════════════════════════
+   Sin esta pantalla no había forma de comprobar que una transcripción
+   salió bien, ni de leer lo que se fue juntando.
+   ════════════════════════════════════════════════════════════════ */
+
+async function cargarNotas() {
+  const [a, n] = await Promise.all([
+    herramienta("listar_audios"),
+    herramienta("listar_notas"),
+  ]);
+
+  const pendientes = a.pendientes || 0;
+  $("#btn-transcribir").hidden = pendientes === 0;
+
+  $("#notas-resumen").textContent =
+    `${(n.notas || []).length} nota(s) · ${a.total} audio(s)` +
+    (pendientes ? `, ${pendientes} sin transcribir` : "");
+
+  $("#audios-lista").innerHTML = (a.audios || []).length === 0 ? "" : `
+    <div class="grupo">
+      <h2 class="grupo__t">Notas de voz</h2>
+      ${a.audios.map((x) => `
+        <div class="campo campo--audio">
+          <div>
+            <div class="campo__pregunta">${escapar(x.archivo)}</div>
+            ${x.texto
+              ? `<div class="campo__ayuda">${escapar(x.texto.slice(0, 220))}${x.texto.length > 220 ? "…" : ""}</div>`
+              : `<div class="campo__ayuda">Todavía sin pasar a texto.</div>`}
+          </div>
+          <div>
+            <span class="etiqueta ${x.transcrito ? "etiqueta--si" : "etiqueta--no"}">
+              ${x.transcrito ? "transcrito" : "pendiente"}
+            </span>
+            <span class="etiqueta">${x.kb} kB</span>
+          </div>
+        </div>`).join("")}
+    </div>`;
+
+  $("#notas-lista").innerHTML = (n.notas || []).length === 0
+    ? `<p class="sub">Todavía no hay notas. Mandale un audio o una idea al bot de Telegram, o pedile a HERALDO que guarde una.</p>`
+    : `<div class="grupo">
+         <h2 class="grupo__t">Lo que sabemos</h2>
+         ${n.notas.map((x) => `
+           <div class="tarjeta">
+             <h3 class="tarjeta__t">${escapar(x.titulo)}</h3>
+             <div class="tarjeta__m">${escapar(x.archivo)}</div>
+             <p class="tarjeta__a">${escapar(cuerpoDeNota(x.texto)).slice(0, 600)}</p>
+           </div>`).join("")}
+       </div>`;
+}
+
+/** Saca el encabezado y los comentarios para mostrar sólo lo que se lee. */
+function cuerpoDeNota(md) {
+  return String(md || "")
+    .replace(/^#.*$/m, "")
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<details>[\s\S]*?<\/details>/g, "")
+    .trim();
+}
+
+$("#btn-transcribir").addEventListener("click", async () => {
+  $("#btn-transcribir").disabled = true;
+  avisarNotas("Transcribiendo… puede tardar bastante según el modelo.");
+
+  const r = await herramienta("transcribir_audio");
+  $("#btn-transcribir").disabled = false;
+
+  if (!r.transcrito && r.motivo) return avisarNotas(r.motivo);
+
+  const hechos = (r.hechos || []).length;
+  const fallados = (r.fallados || []).length;
+  avisarNotas(
+    `✓ ${hechos} audio(s) pasados a texto.` +
+    (fallados ? ` ${fallados} fallaron y quedan para el próximo intento.` : ""));
+  cargarNotas();
+});
+
+function avisarNotas(texto) {
+  const el = $("#notas-aviso");
+  el.textContent = texto;
+  el.hidden = !texto;
+}
+
 /* ═══ ESTADO ═════════════════════════════════════════════════════ */
 
 async function cargarEstado() {
@@ -525,6 +613,11 @@ async function cargarEstado() {
       <h2 class="grupo__t">Imágenes</h2>
       ${fila("Renderizador", e.render,
              e.render.navegador ? `<span class="etiqueta">${e.render.navegador}</span>` : "")}
+    </div>
+    <div class="grupo">
+      <h2 class="grupo__t">Voz</h2>
+      ${fila("Transcripción de audios", e.audio,
+             e.audio.motor ? `<span class="etiqueta">${e.audio.motor}</span><span class="etiqueta">${e.audio.modelo}</span>` : "")}
     </div>
     <div class="grupo">
       <h2 class="grupo__t">Contenido</h2>
