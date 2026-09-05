@@ -334,7 +334,7 @@ test("sin bandeja desplegada, la vitrina dice qué falta hacer", async () => {
 const creadas = [];
 
 /** Una pieza en salida/, con imágenes de verdad para que la vitrina lea. */
-async function crearPieza(estado, cuantasImagenes = 1) {
+async function crearPieza(estado, cuantasImagenes = 1, extra = {}) {
   const carpeta = `2026-09-04-prueba-ig-${creadas.length}`;
   const destino = path.join(RUTAS.salida, carpeta);
   await fs.mkdir(destino, { recursive: true });
@@ -358,6 +358,7 @@ async function crearPieza(estado, cuantasImagenes = 1) {
     imagenes,
     faltantes: [],
     fuentes: ["prueba"],
+    ...extra,
   }, null, 2), "utf8");
   await fs.writeFile(path.join(destino, "copy.txt"), "El copy de la pieza.\n", "utf8");
   return carpeta;
@@ -377,12 +378,27 @@ test("una pieza en borrador no se publica: primero hay que aprobarla", async () 
   } finally { await limpiarPiezas(); }
 });
 
-test("una pieza ya publicada no se publica dos veces", async () => {
+test("una pieza que ya salió por Instagram no se publica dos veces", async () => {
+  const c = await crearPieza("publicada", 1, {
+    instagram: { id: "publicacion-vieja", permalink: "https://x" },
+  });
+  try {
+    const r = await publicarEnInstagram(c);
+    assert.equal(r.publicada, false);
+    assert.match(r.motivo, /ya salió en Instagram/);
+    assert.equal(r.id, "publicacion-vieja", "y dice cuál fue");
+    assert.equal(llamadas.length, 0);
+  } finally { await limpiarPiezas(); }
+});
+
+test("una pieza marcada como publicada a mano tampoco se publica sola", async () => {
+  // Sin registro de red no sabemos adónde la subiste, y repetirla en el
+  // mismo lugar es peor que negarse.
   const c = await crearPieza("publicada");
   try {
     const r = await publicarEnInstagram(c);
     assert.equal(r.publicada, false);
-    assert.match(r.motivo, /ya está publicada/);
+    assert.match(r.motivo, /publicada a mano/);
     assert.equal(llamadas.length, 0);
   } finally { await limpiarPiezas(); }
 });

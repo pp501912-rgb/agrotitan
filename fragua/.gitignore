@@ -17,5 +17,6 @@ salida/respaldos/
 .DS_Store
 Thumbs.db
 
-# El token vivo de Instagram, que se refresca solo
+# Los accesos vivos a las redes, que se refrescan solos
 .instagram.json
+.linkedin.json

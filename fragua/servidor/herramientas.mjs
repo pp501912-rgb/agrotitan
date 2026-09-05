@@ -18,6 +18,7 @@ import { renderizar } from "../nucleo/render.mjs";
 import { revisar } from "../nucleo/contrato.mjs";
 import * as saber from "../nucleo/conocimiento.mjs";
 import * as piezas from "../nucleo/piezas.mjs";
+import * as linkedin from "../motores/linkedin.mjs";
 import * as calendario from "../nucleo/calendario.mjs";
 import * as ollama from "../motores/ollama.mjs";
 import * as cascada from "../motores/cascada.mjs";
@@ -146,6 +147,25 @@ export const DEFINICIONES = [
         fuentes:   { type: "array", items: { type: "string" }, description: "De dónde salió cada afirmación. No puede ir vacío." },
       },
       required: ["formato", "plantilla", "audiencia", "tema", "titular", "placas", "caption", "hashtags", "cta", "fuentes"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "adaptar_copy_linkedin",
+    description:
+      "Guarda la versión para LinkedIn del copy de una pieza que ya existe. " +
+      "LinkedIn NO se escribe como Instagram: 3 a 5 hashtags en vez de 8 a 15, " +
+      "sin emojis, se puede desarrollar más y ser más técnico, y la primera " +
+      "línea conviene que sea una afirmación incómoda y no una pregunta. " +
+      "Está todo en la sección 8 bis del prompt maestro. Escribí el texto vos " +
+      "siguiéndola; esta herramienta sólo lo guarda.",
+    input_schema: {
+      type: "object",
+      properties: {
+        carpeta: { type: "string", description: "La carpeta de la pieza dentro de salida/." },
+        texto:   { type: "string", description: "El copy completo, con los hashtags al final." },
+      },
+      required: ["carpeta", "texto"],
       additionalProperties: false,
     },
   },
@@ -408,6 +428,10 @@ export const IMPLEMENTACIONES = {
     };
   },
 
+  async adaptar_copy_linkedin({ carpeta, texto }) {
+    return piezas.guardarCopyLinkedin(carpeta, texto);
+  },
+
   async escribir_en_cascada({ pedido, criterio = "", contexto = "", cuantas = 8 }) {
     const r = await cascada.generar(pedido, { criterio, contexto, cuantas });
     return r.cascada
@@ -534,7 +558,8 @@ export const IMPLEMENTACIONES = {
    Estas NO están en DEFINICIONES a propósito: el modelo no puede
    llamarlas. Aprobar una pieza, darla por publicada y sobre todo
    subirla a Instagram son decisiones de una persona. HERALDO puede
-   armar la pieza; apretar el botón, no.
+   armar la pieza; apretar el botón, no. Vale igual para LinkedIn:
+   mandar algo al mundo es una decisión de una persona.
    ────────────────────────────────────────────────────────────────── */
 
 Object.assign(IMPLEMENTACIONES, {
@@ -543,6 +568,8 @@ Object.assign(IMPLEMENTACIONES, {
   marcar_publicada: ({ carpeta }) => piezas.marcarPublicada(carpeta),
   descartar_pieza:  ({ carpeta }) => piezas.descartar(carpeta),
   publicar_en_instagram: ({ carpeta }) => piezas.publicarEnInstagram(carpeta),
+  publicar_en_linkedin:  ({ carpeta }) => piezas.publicarEnLinkedin(carpeta),
+  conectar_linkedin:     () => linkedin.conectar(),
   ver_calendario_completo: () => calendario.leer(),
   listar_notas: async () => ({ notas: await saber.leerNotas() }),
 });

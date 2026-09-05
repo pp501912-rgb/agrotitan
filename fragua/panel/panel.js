@@ -279,6 +279,8 @@ async function cargarPiezas() {
           <span class="etiqueta">${p.formato}</span>
           <span class="etiqueta">${p.audiencia}</span>
           <span class="etiqueta">${p.imagenes.length} ${p.imagenes.length === 1 ? "imagen" : "imágenes"}</span>
+          ${p.instagram ? `<span class="etiqueta etiqueta--si">Instagram</span>` : ""}
+          ${p.linkedin ? `<span class="etiqueta etiqueta--si">LinkedIn</span>` : ""}
           ${p.faltantes.length ? `<span class="etiqueta etiqueta--no">${p.faltantes.length} dato(s) sin completar</span>` : ""}
         </div>
       </div>`;
@@ -346,12 +348,16 @@ async function abrirPieza(carpeta) {
 
       ${p.instagram?.permalink ? `
         <p class="aviso aviso--si">Publicada en Instagram: ${escapar(p.instagram.permalink)}</p>` : ""}
+      ${p.linkedin?.permalink ? `
+        <p class="aviso aviso--si">Publicada en LinkedIn: ${escapar(p.linkedin.permalink)}</p>` : ""}
 
       <div class="acciones" style="margin-top:20px">
         <button class="boton boton--lleno" id="btn-aprobar"
                 ${p.estado !== "borrador" ? "disabled" : ""}>Aprobar</button>
         <button class="boton boton--lleno" id="btn-instagram"
-                ${p.estado !== "aprobada" ? "disabled" : ""}>Publicar en Instagram</button>
+                ${p.estado === "borrador" || p.instagram ? "disabled" : ""}>Publicar en Instagram</button>
+        <button class="boton boton--lleno" id="btn-linkedin"
+                ${p.estado === "borrador" || p.linkedin ? "disabled" : ""}>Publicar en LinkedIn</button>
         <button class="boton boton--linea" id="btn-publicada"
                 ${p.estado === "borrador" || p.estado === "publicada" ? "disabled" : ""}>Marcar como publicada</button>
         <button class="boton boton--linea" id="btn-descartar">Descartar</button>
@@ -411,6 +417,40 @@ async function abrirPieza(carpeta) {
     } else {
       b.disabled = false;
       b.textContent = "Publicar en Instagram";
+      avisarPiezas(r.motivo || r.error);
+    }
+  });
+
+  /* LinkedIn. Un carrusel sale como PDF, que es el único formato que
+     LinkedIn muestra deslizable, así que la confirmación lo aclara: no
+     es lo mismo que va a Instagram. */
+  $("#btn-linkedin").addEventListener("click", async () => {
+    const esCarrusel = p.formato === "carrusel" && (p.placas || []).length > 1;
+    const tieneCopyPropio = (p.copyLinkedin || "").trim().length > 0;
+
+    const pregunta =
+      `Se publica AHORA en LinkedIn:\n\n` +
+      `· ${esCarrusel ? `Un PDF de ${p.placas.length} páginas` : `${(p.imagenes || []).length} imagen(es)`}\n` +
+      `· ${tieneCopyPropio ? "Con el copy adaptado a LinkedIn" : "Con el copy de Instagram, hashtags incluidos"}\n\n` +
+      (tieneCopyPropio ? "" : "Podés pedirle a HERALDO que lo adapte antes.\n\n") +
+      `Sale al mundo y desde acá no se puede borrar.\n\n¿Publico?`;
+    if (!confirm(pregunta)) return;
+
+    const b = $("#btn-linkedin");
+    b.disabled = true;
+    b.textContent = "Publicando…";
+    avisarPiezas(esCarrusel
+      ? "Armando el PDF y subiéndolo. Puede tardar medio minuto."
+      : "Subiendo a LinkedIn.");
+
+    const r = await herramienta("publicar_en_linkedin", { carpeta });
+
+    if (r.publicada) {
+      avisarPiezas("✓ Publicada en LinkedIn." + (r.permalink ? ` Está en ${r.permalink}` : ""));
+      abrirPieza(carpeta);
+    } else {
+      b.disabled = false;
+      b.textContent = "Publicar en LinkedIn";
       avisarPiezas(r.motivo || r.error);
     }
   });
@@ -683,6 +723,15 @@ async function cargarEstado() {
                ? `<span class="etiqueta ${e.instagram.diasRestantes < 10 ? "etiqueta--no" : ""}">token por ${e.instagram.diasRestantes} días</span>`
                : "")}
       ${e.instagram.aviso ? `<p class="aviso aviso--no">${escapar(e.instagram.aviso)}</p>` : ""}
+      ${fila("LinkedIn", e.linkedin,
+             e.linkedin.tipo ? `<span class="etiqueta">${escapar(e.linkedin.tipo)}</span>` +
+               (e.linkedin.activo ? `<span class="etiqueta ${e.linkedin.diasRestantes < 10 ? "etiqueta--no" : ""}">acceso por ${e.linkedin.diasRestantes} días</span>` : "")
+               : "")}
+      ${e.linkedin.aviso ? `<p class="aviso aviso--no">${escapar(e.linkedin.aviso)}</p>` : ""}
+      ${e.linkedin.necesitaConectar ? `
+        <div class="acciones" style="margin-top:-8px;margin-bottom:20px">
+          <button class="boton boton--lleno" id="btn-conectar-li">Conectar con LinkedIn</button>
+        </div>` : ""}
     </div>
     <div class="grupo">
       <h2 class="grupo__t">Contenido</h2>
@@ -698,6 +747,14 @@ async function cargarEstado() {
         <span class="etiqueta">${e.temas.total} en total</span>
       </div>
     </div>`;
+
+  const conectar = $("#btn-conectar-li");
+  if (conectar) conectar.addEventListener("click", async () => {
+    const r = await herramienta("conectar_linkedin");
+    if (r.error) return alert(r.error);
+    // La vuelta cae en /linkedin/callback, que es este mismo servidor.
+    window.open(r.url, "_blank", "noopener");
+  });
 
   const btn = $("#btn-respaldar");
   if (btn) btn.addEventListener("click", async () => {

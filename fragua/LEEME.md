@@ -113,6 +113,56 @@ el piso razonable; `large-v3-turbo` es lo mejor si la máquina da.
 Sólo si te pasa seguido estar más de un día lejos de la PC. Ver
 `bandeja/LEEME.md`.
 
+### Publicar en LinkedIn
+
+Para AgroTitan esta red probablemente rinda más que Instagram: el que decide una
+inversión está acá, y llega con más paciencia para leer.
+
+**El permiso depende de dónde publiques, y ahí está toda la diferencia.**
+
+| | Tu perfil | La página de AgroTitan |
+|---|---|---|
+| Producto | Share on LinkedIn | Community Management API |
+| Revisión | ninguna | de semanas a meses |
+| Requisito | ser vos | entidad legal registrada |
+| Cuándo anda | hoy | cuando LinkedIn conteste |
+
+**El código es el mismo para las dos.** Lo único que cambia es el URN del autor,
+que es una línea del `.env`. Así que mientras LinkedIn revisa la página, apuntás
+`LINKEDIN_AUTOR` a tu perfil y probás todo el circuito desde hoy; el día que
+aprueben, cambiás esa línea y ya está publicando en la página. No se rehace nada.
+
+Los pasos, una sola vez:
+
+1. En `developers.linkedin.com`, **crear una app** y asociarla a la página de
+   empresa de AgroTitan. Para asociarla hay que ser administrador de la página.
+2. Agregarle los productos **Sign In with LinkedIn using OpenID Connect** y
+   **Share on LinkedIn**. Los dos son autoservicio, se activan al momento.
+3. Si vas por la página: pedir además la **Community Management API**. Es la que
+   tarda. Mientras tanto, seguí con tu perfil.
+4. En *Auth*, agregar la dirección de retorno: `http://localhost:4321/linkedin/callback`
+5. Copiar el **Client ID** y el **Client Secret** al `.env`, y poner el URN del
+   autor en `LINKEDIN_AUTOR`.
+6. Abrir FRAGUA, ir a *Estado* y apretar **Conectar con LinkedIn**. Se abre
+   LinkedIn, aceptás, y volvés solo.
+
+**El acceso dura 60 días.** Si LinkedIn le dio token de refresco a tu app, FRAGUA
+lo renueva en cada arranque y no te enterás nunca. Si no se lo dio —pasa con las
+apps que no están aprobadas para la plataforma de marketing— hay que apretar
+*Conectar* de nuevo cada dos meses. La pantalla de *Estado* te dice cuál de los
+dos casos sos, y avisa diez días antes.
+
+**El carrusel de LinkedIn es un PDF.** LinkedIn sacó el carrusel de imágenes
+deslizable de las publicaciones orgánicas; hoy lo que se desliza es el documento.
+FRAGUA arma el PDF con las mismas placas del carrusel de Instagram, así que no
+hay que diseñar nada aparte. Le queda mejor al contenido, que es didáctico y
+encadenado.
+
+**El copy no es el mismo.** LinkedIn lleva 3 a 5 hashtags en vez de 8 a 15, sin
+emojis, y admite más desarrollo y más precisión técnica. Pedile a HERALDO que lo
+adapte: guarda un `copy-linkedin.txt` al lado del de Instagram, y al publicar usa
+ése. Si no lo adaptaste, publica con el de Instagram y el panel te avisa antes.
+
 ### Publicar solo en Instagram
 
 Lo último y lo más opcional de todo. Subir una pieza a mano lleva treinta
@@ -158,8 +208,8 @@ falten, la página los muestra entre corchetes y el publicador se niega a
 subirla salvo que se lo pidas.
 
 **Piezas.** Todo lo que generaste, lo más nuevo arriba. Al abrir una ves las
-imágenes, el copy con un botón para copiarlo entero, y cuatro acciones: aprobar,
-publicar en Instagram, marcar como publicada y descartar. **Una pieza con datos
+imágenes, el copy con un botón para copiarlo entero, y cinco acciones: aprobar,
+publicar en Instagram, publicar en LinkedIn, marcar como publicada y descartar. **Una pieza con datos
 entre corchetes no se puede aprobar**, y te dice cuáles faltan.
 
 *Publicar en Instagram* sube la pieza de verdad, y sólo funciona con una pieza
@@ -167,6 +217,10 @@ ya aprobada: como una pieza con corchetes no se puede aprobar, la regla de oro
 llega intacta hasta el último paso. Pregunta qué va a subir antes de hacerlo. Si
 Meta corta a la mitad, la pieza queda aprobada y se puede reintentar: nunca
 queda marcada como publicada algo que no salió.
+
+Una pieza puede salir en las dos redes: el candado mira cada red por separado,
+así que la que ya está en Instagram todavía puede irse a LinkedIn. A la misma
+red, dos veces, no.
 
 *Marcar como publicada* es para cuando la subiste a mano: la anota en el
 historial y pasa el tema a «publicado», así HERALDO no vuelve a proponerlo.
@@ -215,6 +269,10 @@ copy.
 arrancar te avisa si quedó algo pendiente, pero no lo empuja solo. Y hay un
 botón **Respaldar ahora** en *Estado*. Si preferís que nunca lo haga solo, poné
 `FRAGUA_RESPALDO=manual` en el `.env`.
+
+En el historial del repositorio van a aparecer commits que dicen *«Respaldo de
+FRAGUA»* con la fecha. Son éstos, y son automáticos: no hace falta hacer nada
+con ellos.
 
 **Cambiar de computadora**, entonces, es:
 
@@ -297,8 +355,8 @@ contenido/        los datos de la página
 plantillas/       la página con marcadores
 piezas/           las cuatro plantillas de Instagram
 nucleo/           render, plantillas, contrato, conocimiento, piezas,
-                  calendario, transcribir, audios, vitrina, git, respaldo
-motores/          claude, ollama, plantillas, cascada, instagram
+                  calendario, transcribir, audios, vitrina, git, respaldo, pdf
+motores/          claude, ollama, plantillas, cascada, instagram, linkedin
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
 sitio/            extraer, construir, publicar, fuentes
@@ -346,6 +404,14 @@ buscar las imágenes a una dirección pública; la bandeja es la que se las
 muestra, y las borra apenas termina. Los tres comandos están en
 `bandeja/LEEME.md`.
 
+**«El acceso a LinkedIn venció.»** Andá a *Estado* y apretá *Conectar con
+LinkedIn*. Es la misma pantalla de la primera vez y tarda diez segundos.
+
+**LinkedIn rechaza la autorización entera.** Suele ser porque `LINKEDIN_AUTOR`
+apunta a la página de empresa y la Community Management API todavía no está
+aprobada: FRAGUA pide el permiso de organización y LinkedIn lo niega. Apuntá el
+autor a tu perfil mientras tanto.
+
 **El chat dice que el motor está apagado.** Falta la clave en el `.env` o falta
 `npm install`. La pantalla de *Estado* te dice cuál de las dos.
 
@@ -357,7 +423,7 @@ muestra, y las borra apenas termina. Los tres comandos están en
   AgroTitan son placas y carruseles.
 - **Publicar a una hora programada.** El calendario dice qué día va cada pieza;
   apretar el botón sigue siendo un acto tuyo.
-- **Publicar en cuentas que no sean la tuya.** Eso sí necesita la revisión de
-  Meta.
+- **Publicar en cuentas o páginas que no sean las tuyas**, en ninguna de las dos
+  redes.
 - **Fotos propias.** Las piezas usan composiciones tipográficas hasta que
   existan fotos reales de campo.

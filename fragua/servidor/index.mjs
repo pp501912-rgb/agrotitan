@@ -24,6 +24,7 @@ import { leerTemas } from "../nucleo/conocimiento.mjs";
 import * as bandeja from "../nucleo/bandeja.mjs";
 import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
 import * as instagram from "../motores/instagram.mjs";
+import * as linkedin from "../motores/linkedin.mjs";
 import * as respaldo from "../nucleo/respaldo.mjs";
 
 const PUERTO = Number(process.env.FRAGUA_PUERTO) || 4321;
@@ -96,12 +97,13 @@ async function servirArchivo(res, base, relativo) {
 
 /** El estado de los tres motores y del renderizador, en castellano. */
 async function estadoGeneral() {
-  const [c, o, nav, w, ig, resp, sitio, temas] = await Promise.all([
+  const [c, o, nav, w, ig, li, resp, sitio, temas] = await Promise.all([
     claude.estado(),
     ollama.estado(),
     buscarNavegador(),
     estadoWhisper(),
     instagram.estado(),
+    linkedin.estado(),
     respaldo.pendiente(),
     leerDatos(),
     leerTemas(),
@@ -120,6 +122,7 @@ async function estadoGeneral() {
       : { activo: false, motivo: "No encontré Chrome, Edge ni Chromium. Poné la ruta en el .env con FRAGUA_NAVEGADOR." },
     audio: w,
     instagram: ig,
+    linkedin: li,
     respaldo: {
       automatico: respaldo.automatico(),
       sinRespaldar: resp.total,
@@ -187,6 +190,52 @@ const RUTAS_API = {
   "POST /api/respaldar": async () => respaldo.respaldar("botón del panel"),
 };
 
+/* ── La vuelta de LinkedIn ─────────────────────────────────────── */
+
+/** Responde en HTML: esto lo ve una persona en su navegador, no el panel. */
+async function atenderLinkedin(res, url) {
+  const puerto = PUERTO;
+  const pagina = (titulo, cuerpo, color) => `<!doctype html>
+<html lang="es-AR"><head><meta charset="utf-8">
+<title>${titulo} · FRAGUA</title>
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:#0A0A0A;color:#F5F3EE;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:520px;padding:40px;text-align:center}
+  h1{font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:${color};margin:0 0 16px}
+  p{color:rgba(245,243,238,.72);white-space:pre-wrap}
+  a{color:#E5C158}
+</style></head><body><main>
+<h1>${titulo}</h1><p>${cuerpo}</p>
+<p><a href="http://127.0.0.1:${puerto}/#estado">Volver a FRAGUA</a></p>
+</main></body></html>`;
+
+  const responderHtml = (codigo, html) => {
+    res.writeHead(codigo, { "content-type": "text/html; charset=utf-8" });
+    res.end(html);
+  };
+
+  // LinkedIn avisa así cuando la persona aprieta «Cancelar».
+  const negado = url.searchParams.get("error");
+  if (negado) {
+    return responderHtml(200, pagina("No se autorizó",
+      url.searchParams.get("error_description") || negado, "#C4553D"));
+  }
+
+  try {
+    const guardado = await linkedin.atender({
+      code: url.searchParams.get("code"),
+      state: url.searchParams.get("state"),
+    });
+    const hasta = guardado.hasta.slice(0, 10);
+    return responderHtml(200, pagina("Listo",
+      `FRAGUA ya puede publicar en tu ${linkedin.tipoDeAutor()}.\nEl acceso vale hasta el ${hasta}.`,
+      "#2D6A4F"));
+  } catch (e) {
+    return responderHtml(400, pagina("No pude conectar", e.message, "#C4553D"));
+  }
+}
+
 /* ── Servidor ──────────────────────────────────────────────────── */
 
 const servidor = http.createServer(async (req, res) => {
@@ -197,6 +246,14 @@ const servidor = http.createServer(async (req, res) => {
     if (RUTAS_API[clave]) {
       const cuerpo = req.method === "POST" ? await leerCuerpo(req) : Object.fromEntries(url.searchParams);
       return responder(res, 200, await RUTAS_API[clave](cuerpo));
+    }
+
+    /* La vuelta del consentimiento de LinkedIn. Cae acá porque el
+       servidor ya está escuchando en 127.0.0.1 y LinkedIn acepta
+       localhost como dirección de retorno: así no hay que copiar y
+       pegar un código a mano. */
+    if (req.method === "GET" && url.pathname === "/linkedin/callback") {
+      return atenderLinkedin(res, url);
     }
 
     // Las piezas generadas, para verlas en el panel.
@@ -256,6 +313,7 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
     Render de imágenes ..... ${marca(est.render)}${est.render.activo ? `  · ${est.render.navegador}` : `  · ${est.render.motivo}`}
     Transcripción de voz ... ${marca(est.audio)}${est.audio.activo ? `  · ${est.audio.motor} (${est.audio.modelo})` : ""}
     Instagram .............. ${marca(est.instagram)}${est.instagram.activo && est.instagram.diasRestantes !== null ? `  · token por ${est.instagram.diasRestantes} días` : ""}
+    LinkedIn ............... ${marca(est.linkedin)}${est.linkedin.activo ? `  · ${est.linkedin.tipo}, ${est.linkedin.diasRestantes} días` : (est.linkedin.necesitaConectar ? "  · falta conectar" : "")}
 
   Página: faltan ${est.sitio.faltan} de ${est.sitio.total} datos.
   Temas sin usar: ${est.temas.sinUsar} de ${est.temas.total}.
@@ -268,6 +326,14 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
   if (process.env.IG_TOKEN) {
     const t = await instagram.refrescarToken();
     if (t.refrescado) console.log(`  Token de Instagram renovado hasta ${t.hasta.slice(0, 10)}.\n`);
+  }
+
+  // Igual que el de Instagram: con abrir la app antes de que venza, se
+  // renueva solo. LinkedIn no siempre da token de refresco, y en ese
+  // caso esto no hace nada y el aviso del panel lo dice.
+  if (linkedin.configurado()) {
+    const t = await linkedin.refrescarToken();
+    if (t.refrescado) console.log(`  Acceso a LinkedIn renovado hasta ${t.hasta.slice(0, 10)}.\n`);
   }
 
   // Lo que todavía no está respaldado. Sólo avisa: empujar al

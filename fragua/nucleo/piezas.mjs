@@ -20,6 +20,8 @@ import { RUTAS } from "./marca.mjs";
 import { anotarPublicacion } from "./conocimiento.mjs";
 import * as vitrina from "./vitrina.mjs";
 import * as instagram from "../motores/instagram.mjs";
+import * as linkedin from "../motores/linkedin.mjs";
+import { pdfDePieza } from "./pdf.mjs";
 
 /** Lee la ficha de una carpeta de salida. */
 async function leerFicha(carpeta) {
@@ -61,6 +63,8 @@ export async function listar() {
         estado:    f.estado || "borrador",
         imagenes:  f.imagenes || [],
         faltantes: f.faltantes || [],
+        instagram: f.instagram || null,
+        linkedin:  f.linkedin || null,
       });
     } catch { /* carpeta a medio escribir: la salteamos */ }
   }
@@ -77,9 +81,19 @@ export async function listar() {
 /** Una pieza con todo: ficha, copy y nombres de las imágenes. */
 export async function abrir(carpeta) {
   const ficha = await leerFicha(carpeta);
-  let copy = "";
-  try { copy = await fs.readFile(path.join(RUTAS.salida, carpeta, "copy.txt"), "utf8"); } catch { /* sin copy */ }
-  return { ...ficha, carpeta, copy };
+
+  const leer = async (nombre) => {
+    try { return await fs.readFile(path.join(RUTAS.salida, carpeta, nombre), "utf8"); }
+    catch { return ""; }
+  };
+
+  return {
+    ...ficha,
+    carpeta,
+    copy: await leer("copy.txt"),
+    // Si HERALDO lo adaptó, el panel avisa que va a usar éste.
+    copyLinkedin: await leer("copy-linkedin.txt"),
+  };
 }
 
 /**
@@ -123,6 +137,44 @@ export async function marcarPublicada(carpeta) {
   return { publicada: true, carpeta, enHistorial: total };
 }
 
+/* ── Publicar ──────────────────────────────────────────────────── */
+
+/**
+ * Si esta pieza puede salir en esta red, o por qué no.
+ *
+ * El candado mira `ficha.<red>` y no `ficha.estado`, porque una pieza
+ * puede salir en dos redes: la que ya está en Instagram todavía puede
+ * irse a LinkedIn. A la MISMA red, dos veces, no.
+ *
+ * Exigir el estado «aprobada» es lo que arrastra la regla de oro hasta
+ * el último paso: una pieza con datos entre corchetes no se puede
+ * aprobar, así que nada con un [X] adentro llega a publicarse.
+ */
+function trabaDeRed(ficha, clave, nombre) {
+  if (ficha[clave]) {
+    return { publicada: false, motivo: `Esta pieza ya salió en ${nombre}.`, ...ficha[clave] };
+  }
+  if (ficha.estado === "borrador") {
+    return { publicada: false, motivo: "Primero hay que aprobarla. Miralá y dale el visto bueno." };
+  }
+
+  // «Publicada» sin registro de ninguna red es una pieza que marcaste a
+  // mano: la subiste vos y no sabemos adónde. Publicarla ahora podría
+  // duplicarla en el mismo lugar, y una publicación repetida es peor
+  // que una negativa que podés levantar descartando y regenerando.
+  if (ficha.estado === "publicada" && !ficha.instagram && !ficha.linkedin) {
+    return {
+      publicada: false,
+      motivo:
+        `Esta pieza está marcada como publicada a mano, así que no sé en qué red salió. ` +
+        `Si querés que FRAGUA la suba a ${nombre}, quitale la marca editando ` +
+        `ficha.json y poniendo estado en "aprobada".`,
+    };
+  }
+
+  return null;
+}
+
 /* ── Publicar en Instagram ─────────────────────────────────────── */
 
 /**
@@ -138,12 +190,8 @@ export async function marcarPublicada(carpeta) {
 export async function publicarEnInstagram(carpeta) {
   const ficha = await leerFicha(carpeta);
 
-  if (ficha.estado === "publicada") {
-    return { publicada: false, motivo: "Esta pieza ya está publicada." };
-  }
-  if (ficha.estado !== "aprobada") {
-    return { publicada: false, motivo: "Primero hay que aprobarla. Miralá y dale el visto bueno." };
-  }
+  const trabada = trabaDeRed(ficha, "instagram", "Instagram");
+  if (trabada) return trabada;
 
   const ig = await instagram.estado();
   if (!ig.activo) return { publicada: false, motivo: ig.motivo };
@@ -163,11 +211,15 @@ export async function publicarEnInstagram(carpeta) {
     const r = await instagram.publicar({ caption: copy.trim() }, subidas.map((x) => x.url));
 
     // Recién ahora, con la publicación confirmada, movemos el estado.
+    ficha.instagram = { id: r.id, permalink: r.permalink, cuando: new Date().toISOString() };
     ficha.estado = "publicada";
-    ficha.publicada = new Date().toISOString();
-    ficha.instagram = { id: r.id, permalink: r.permalink };
+    ficha.publicada = ficha.publicada || ficha.instagram.cuando;
     await guardarFicha(carpeta, ficha);
-    await anotarPublicacion(ficha, { carpeta });
+
+    // Al historial va una sola vez, salga por donde salga: es lo que
+    // evita que HERALDO vuelva a proponer el tema, no un registro de
+    // publicaciones.
+    if (!ficha.linkedin) await anotarPublicacion(ficha, { carpeta });
 
     return { publicada: true, carpeta, id: r.id, permalink: r.permalink };
   } finally {
@@ -175,6 +227,114 @@ export async function publicarEnInstagram(carpeta) {
     // también falla, caducan solas en una hora.
     await vitrina.borrar(subidas.map((x) => x.id));
   }
+}
+
+/* ── Publicar en LinkedIn ──────────────────────────────────────── */
+
+/**
+ * Sube una pieza aprobada a LinkedIn.
+ *
+ * Dos diferencias con Instagram, las dos a favor:
+ *
+ * · Las imágenes se suben directo, así que no hace falta la vitrina ni
+ *   dejar nada en una dirección pública mientras tanto.
+ *
+ * · Un carrusel se manda como PDF. LinkedIn sacó el carrusel de
+ *   imágenes deslizable de las publicaciones orgánicas, y el documento
+ *   es lo único que hoy se desliza. Le queda mejor al contenido, que es
+ *   didáctico y encadenado.
+ *
+ * Si LinkedIn falla en la mitad, la pieza NO queda marcada: es mejor
+ * reintentar que creer que salió algo que no salió.
+ */
+export async function publicarEnLinkedin(carpeta) {
+  const ficha = await leerFicha(carpeta);
+
+  const trabada = trabaDeRed(ficha, "linkedin", "LinkedIn");
+  if (trabada) return trabada;
+
+  const li = await linkedin.estado();
+  if (!li.activo) return { publicada: false, motivo: li.motivo, necesitaConectar: li.necesitaConectar };
+
+  const carpetaCompleta = path.join(RUTAS.salida, carpeta);
+  if (!(ficha.imagenes || []).length) {
+    return { publicada: false, motivo: "La pieza no tiene imágenes." };
+  }
+
+  // El copy de LinkedIn si existe; si no, el de Instagram. Los hashtags
+  // sobran acá, pero es mejor publicar con los de más que no publicar.
+  const texto = await leerCopy(carpetaCompleta);
+
+  let medio;
+  let pdf = null;
+
+  if (ficha.formato === "carrusel" && ficha.placas?.length > 1) {
+    pdf = path.join(carpetaCompleta, "carrusel.pdf");
+    await pdfDePieza(
+      ficha.plantilla,
+      ficha.placas.map((_, i) => datosDePlaca(ficha, i)),
+      pdf
+    );
+    medio = { documento: pdf };
+  } else {
+    medio = { imagenes: ficha.imagenes.map((n) => path.join(carpetaCompleta, n)) };
+  }
+
+  const r = await linkedin.publicar({ texto, titulo: ficha.titular }, medio);
+
+  // Recién ahora, con la publicación confirmada, movemos el estado.
+  ficha.linkedin = { id: r.id, permalink: r.permalink, cuando: new Date().toISOString() };
+  ficha.estado = "publicada";
+  ficha.publicada = ficha.publicada || ficha.linkedin.cuando;
+  await guardarFicha(carpeta, ficha);
+
+  // Al historial va una sola vez, salga por donde salga.
+  if (!ficha.instagram) await anotarPublicacion(ficha, { carpeta });
+
+  return { publicada: true, carpeta, id: r.id, permalink: r.permalink, formato: r.formato };
+}
+
+/**
+ * Guarda la versión de LinkedIn del copy, al lado de la de Instagram.
+ *
+ * Una pieza, dos registros, una sola aprobación: las imágenes y los
+ * datos son los mismos, cambia cómo se cuenta.
+ */
+export async function guardarCopyLinkedin(carpeta, texto) {
+  if (!texto?.trim()) return { guardado: false, motivo: "El copy vino vacío." };
+
+  const destino = path.resolve(RUTAS.salida, carpeta);
+  if (!destino.startsWith(path.resolve(RUTAS.salida))) {
+    return { guardado: false, motivo: "Ruta fuera de salida/." };
+  }
+
+  // Que la pieza exista, para no dejar copys sueltos de carpetas mal escritas.
+  await leerFicha(carpeta);
+
+  const hashtags = (texto.match(/#[\wáéíóúñ]+/gi) || []).length;
+  await fs.writeFile(path.join(destino, "copy-linkedin.txt"), texto.trim() + "\n", "utf8");
+
+  return {
+    guardado: true,
+    carpeta,
+    hashtags,
+    // Un aviso, no un rechazo: la vara es del prompt maestro y la
+    // decisión final es de quien mira la pieza.
+    nota: hashtags > 5
+      ? `Son ${hashtags} hashtags. En LinkedIn van 3 a 5: más lee a desesperación.`
+      : "Guardado. Al publicar en LinkedIn se usa éste en vez del de Instagram.",
+  };
+}
+
+/** El copy de LinkedIn si lo adaptaste, y si no el de Instagram. */
+async function leerCopy(carpetaCompleta) {
+  for (const nombre of ["copy-linkedin.txt", "copy.txt"]) {
+    try {
+      const t = await fs.readFile(path.join(carpetaCompleta, nombre), "utf8");
+      if (t.trim()) return t.trim();
+    } catch { /* probamos el siguiente */ }
+  }
+  throw new Error("La pieza no tiene copy.");
 }
 
 /* ── Rehacer las imágenes ──────────────────────────────────────── */
