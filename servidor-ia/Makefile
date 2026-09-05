@@ -14,8 +14,8 @@ MODELO := $(if $(MODELO),$(MODELO),qwen2.5:7b-instruct)
 
 .DEFAULT_GOAL := ayuda
 .PHONY: ayuda instalar arriba arriba-gpu arriba-api abajo reiniciar estado logs \
-        modelos bajar-modelo listar-modelos borrar-modelo chat actualizar \
-        check-gpu limpiar respaldo
+        probar modelos bajar-modelo listar-modelos borrar-modelo chat actualizar \
+        check-gpu autoarranque sin-autoarranque limpiar respaldo
 
 ayuda:  ## Muestra esta ayuda
 	@echo ""
@@ -53,6 +53,9 @@ estado:  ## Muestra si está vivo, qué modelos hay y qué está cargado en memo
 logs:  ## Sigue los logs en vivo (Ctrl-C para salir)
 	$(COMPOSE) --profile web logs -f --tail=100
 
+probar:  ## Prueba de humo: responde, tiene los modelos y genera embeddings
+	@./scripts/probar.sh
+
 modelos:  ## Baja los modelos definidos en .env (chat + embeddings)
 	@./scripts/modelos.sh bajar
 
@@ -74,6 +77,12 @@ actualizar:  ## Baja las imágenes nuevas y reinicia
 
 check-gpu:  ## Verifica si Docker puede usar la GPU NVIDIA
 	@./scripts/check-gpu.sh
+
+autoarranque:  ## Hace que el servidor se levante solo al prender la máquina
+	@./scripts/autoarranque.sh instalar
+
+sin-autoarranque:  ## Desactiva el arranque automático
+	@./scripts/autoarranque.sh desinstalar
 
 respaldo:  ## Copia los modelos y los datos de la web a ./respaldos/
 	@./scripts/respaldo.sh

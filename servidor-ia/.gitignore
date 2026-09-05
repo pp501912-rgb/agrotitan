@@ -1,3 +1,6 @@
 # Configuración local con puertos, modelos y credenciales propias.
 .env
 respaldos/
+
+# Índice local de documentos (ejemplos/documentos.py)
+.indice.json

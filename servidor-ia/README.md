@@ -23,7 +23,18 @@ Ese comando verifica el entorno, crea el `.env`, levanta los
 contenedores, detecta si hay GPU y baja los modelos. La primera vez
 tarda: son varios GB de descarga.
 
-Cuando termina:
+Cuando termina, verificá que quedó realmente en condiciones:
+
+```bash
+make probar
+```
+
+Esa prueba comprueba las cuatro cosas que importan: que el motor
+responda, que los modelos estén descargados, que conteste una consulta
+—midiendo cuántos tokens por segundo da tu máquina— y que genere
+embeddings. Si algo falla, dice cuál y qué hacer.
+
+Después, a usarlo:
 
 ```bash
 ./ejemplos/consulta.sh "Contame en una línea qué sabés hacer."
@@ -42,11 +53,13 @@ Cuando termina:
 | `make arriba-api`    | Solo la API, sin interfaz web                     |
 | `make abajo`         | Apaga (los modelos descargados se conservan)      |
 | `make estado`        | Si está vivo, qué modelos hay, qué está en RAM    |
+| `make probar`        | Prueba de humo de punta a punta                   |
 | `make logs`          | Logs en vivo                                      |
 | `make chat`          | Chat en la terminal, sin navegador                |
 | `make modelos`       | Baja los modelos del `.env`                       |
 | `make actualizar`    | Baja imágenes nuevas y reinicia                   |
 | `make respaldo`      | Copia modelos e historial a `respaldos/`          |
+| `make autoarranque`  | Que se levante solo al prender la máquina         |
 
 ---
 
@@ -82,10 +95,14 @@ documentos propios —informes, planillas, normativa— sin mandarlos a
 ningún lado:
 
 ```bash
-curl -s http://localhost:11434/api/embeddings \
-  -d '{"model":"nomic-embed-text","prompt":"margen bruto por hectárea"}' \
-  | jq '.embedding | length'
+curl -s http://localhost:11434/v1/embeddings \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"nomic-embed-text","input":"margen bruto por hectárea"}' \
+  | jq '.data[0].embedding | length'
 ```
+
+Hay un ejemplo completo que los usa: ver **Consultar documentos propios**,
+más abajo.
 
 ---
 
@@ -100,14 +117,52 @@ api_key  = local        (el servidor la ignora, pero el protocolo la exige)
 model    = qwen2.5:7b-instruct
 ```
 
-Hay dos ejemplos completos en `ejemplos/`: uno en `curl`
-(`consulta.sh`) y otro en Python con el SDK de OpenAI, con respuesta en
-streaming (`consulta.py`).
+Hay tres ejemplos completos en `ejemplos/`: uno en `curl`
+(`consulta.sh`), otro en Python con el SDK de OpenAI y respuesta en
+streaming (`consulta.py`), y uno que consulta documentos propios
+(`documentos.py`, más abajo).
 
 Para **TITANOMAQUIA** u otro proceso que corra en la misma máquina,
 apuntalo a `http://localhost:11434/v1`. Si corre dentro de otro
 contenedor Docker, usá `http://host.docker.internal:11434/v1` en lugar
 de `localhost`.
+
+---
+
+## Consultar documentos propios
+
+El caso concreto: tenés informes, normativa, planillas exportadas, y
+querés preguntarles cosas sin subirlos a ningún servicio.
+
+```bash
+# indexar una carpeta (.txt, .md, .csv)
+python3 ejemplos/documentos.py indexar ~/agrotitan/informes
+
+# preguntar
+python3 ejemplos/documentos.py preguntar "¿Qué rinde asumimos para nogal?"
+```
+
+El script corta los documentos en fragmentos, los convierte en vectores
+con el modelo de embeddings, busca los cinco más parecidos a tu pregunta
+y se los pasa al modelo como contexto. Es RAG en su versión mínima: sin
+base de datos vectorial y sin dependencias fuera de la biblioteca
+estándar de Python.
+
+El modelo tiene instrucción de citar el archivo de donde sacó cada dato
+y de decir que no sabe cuando la respuesta no está en los documentos, en
+vez de inventarla. Igual conviene verificar: sigue siendo un modelo de
+lenguaje, y con documentos técnicos el riesgo de que mezcle cifras de
+dos informes distintos es real.
+
+Para PDFs, convertilos antes:
+
+```bash
+pdftotext informe.pdf informe.txt
+```
+
+El índice queda en `.indice.json` y no se versiona. Hay que rehacerlo si
+cambiás los documentos o el modelo de embeddings —el script avisa en ese
+segundo caso en vez de devolver resultados sin sentido.
 
 ---
 
@@ -172,6 +227,25 @@ la GPU: para aprovecharla hay que instalar Ollama nativo
 
 ---
 
+## Que arranque solo
+
+En una máquina que va a hacer de servidor conviene que el servicio vuelva
+solo después de un corte de luz o un reinicio:
+
+```bash
+make autoarranque
+```
+
+En Linux instala una unidad de systemd (pide `sudo`) que levanta el
+servidor en cada arranque, usando GPU si la detecta. Para desactivarlo,
+`make sin-autoarranque`.
+
+En macOS no hace falta: los contenedores ya están definidos con
+`restart: unless-stopped`, así que alcanza con que Docker Desktop
+arranque al iniciar sesión.
+
+---
+
 ## Problemas frecuentes
 
 **Tarda muchísimo la primera consulta.** El modelo se carga en memoria
@@ -202,8 +276,10 @@ servidor-ia/
 ├── compose.gpu.yaml    override para GPU NVIDIA
 ├── .env.ejemplo        plantilla de configuración
 ├── Makefile            atajos
-├── scripts/            instalación, estado, modelos, respaldo
-└── ejemplos/           cliente en bash y en Python
+├── scripts/            instalación, prueba, estado, modelos, respaldo,
+│                    arranque automático
+└── ejemplos/           clientes en bash y Python, y consulta sobre
+                     documentos propios
 ```
 
 Los modelos viven en el volumen `agrotitan-ia_modelos` y el historial de
