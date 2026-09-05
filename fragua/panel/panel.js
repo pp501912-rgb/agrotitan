@@ -656,6 +656,27 @@ async function cargarEstado() {
              e.audio.motor ? `<span class="etiqueta">${e.audio.motor}</span><span class="etiqueta">${e.audio.modelo}</span>` : "")}
     </div>
     <div class="grupo">
+      <h2 class="grupo__t">Respaldo</h2>
+      <div class="tarjeta">
+        <h3 class="tarjeta__t">Lo que todavía no está en el repositorio</h3>
+        <span class="etiqueta ${e.respaldo.sinRespaldar ? "etiqueta--oro" : "etiqueta--si"}">
+          ${e.respaldo.sinRespaldar ? `${e.respaldo.sinRespaldar} archivo(s) sin respaldar` : "todo respaldado"}
+        </span>
+        <span class="etiqueta">${e.respaldo.automatico ? "automático al cerrar" : "sólo a mano"}</span>
+        ${e.respaldo.error ? `<p class="tarjeta__a" style="margin-top:10px">${escapar(e.respaldo.error)}</p>` : ""}
+        ${e.respaldo.archivos.length ? `
+          <p class="tarjeta__a" style="margin-top:10px">${e.respaldo.archivos.map(escapar).join("<br>")}</p>` : ""}
+        <div class="acciones" style="margin-top:14px">
+          <button class="boton boton--linea" id="btn-respaldar"
+                  ${e.respaldo.sinRespaldar ? "" : "disabled"}>Respaldar ahora</button>
+        </div>
+        <p class="sub" style="margin-top:10px">
+          Las notas, el historial, los temas, los datos de la página y las fichas de
+          las piezas. Las imágenes no: se rehacen con <code>npm run rehacer</code>.
+        </p>
+      </div>
+    </div>
+    <div class="grupo">
       <h2 class="grupo__t">Publicación</h2>
       ${fila("Instagram", e.instagram,
              (e.instagram.diasRestantes ?? null) !== null
@@ -677,6 +698,17 @@ async function cargarEstado() {
         <span class="etiqueta">${e.temas.total} en total</span>
       </div>
     </div>`;
+
+  const btn = $("#btn-respaldar");
+  if (btn) btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    btn.textContent = "Respaldando…";
+    const r = await api("/api/respaldar", {});
+    if (r.respaldado) btn.textContent = `✓ ${r.total} archivo(s) a la rama ${r.rama}`;
+    else if (r.sinCambios) btn.textContent = "No había nada";
+    else { btn.textContent = "No se pudo"; alert(r.motivo || r.error); }
+    setTimeout(cargarEstado, 2500);
+  });
 }
 
 $("#btn-refrescar").addEventListener("click", cargarEstado);

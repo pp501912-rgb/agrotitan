@@ -24,6 +24,7 @@ import { leerTemas } from "../nucleo/conocimiento.mjs";
 import * as bandeja from "../nucleo/bandeja.mjs";
 import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
 import * as instagram from "../motores/instagram.mjs";
+import * as respaldo from "../nucleo/respaldo.mjs";
 
 const PUERTO = Number(process.env.FRAGUA_PUERTO) || 4321;
 
@@ -95,12 +96,13 @@ async function servirArchivo(res, base, relativo) {
 
 /** El estado de los tres motores y del renderizador, en castellano. */
 async function estadoGeneral() {
-  const [c, o, nav, w, ig, sitio, temas] = await Promise.all([
+  const [c, o, nav, w, ig, resp, sitio, temas] = await Promise.all([
     claude.estado(),
     ollama.estado(),
     buscarNavegador(),
     estadoWhisper(),
     instagram.estado(),
+    respaldo.pendiente(),
     leerDatos(),
     leerTemas(),
   ]);
@@ -118,6 +120,12 @@ async function estadoGeneral() {
       : { activo: false, motivo: "No encontré Chrome, Edge ni Chromium. Poné la ruta en el .env con FRAGUA_NAVEGADOR." },
     audio: w,
     instagram: ig,
+    respaldo: {
+      automatico: respaldo.automatico(),
+      sinRespaldar: resp.total,
+      archivos: resp.archivos.slice(0, 12),
+      error: resp.error || null,
+    },
     sitio: {
       total: sitio.ficha.campos?.length ?? 0,
       faltan: faltan.length,
@@ -172,6 +180,11 @@ const RUTAS_API = {
   },
 
   "GET /api/verificar-sitio": async () => verificar(),
+
+  /* El botón «Respaldar ahora». No pasa por herramientas.mjs a
+     propósito: empujar al repositorio no es algo que HERALDO deba
+     poder decidir. */
+  "POST /api/respaldar": async () => respaldo.respaldar("botón del panel"),
 };
 
 /* ── Servidor ──────────────────────────────────────────────────── */
@@ -257,8 +270,64 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
     if (t.refrescado) console.log(`  Token de Instagram renovado hasta ${t.hasta.slice(0, 10)}.\n`);
   }
 
+  // Lo que todavía no está respaldado. Sólo avisa: empujar al
+  // repositorio sin que lo pidas sería tomar una decisión tuya.
+  const av = await respaldo.aviso();
+  if (av) console.log(`  ${av}\n`);
+
   // Si configuraste la bandeja del celular, se vacía sola al arrancar.
   const b = await bandeja.bajar();
   if (b.bajadas) console.log(`  Bajé ${b.bajadas} captura(s) del celular a conocimiento/notas/.\n`);
   if (b.error)   console.log(`  La bandeja del celular no respondió: ${b.error}\n`);
 });
+
+/* ── Al cerrar ─────────────────────────────────────────────────────
+   Ctrl+C es el momento en que terminaste de trabajar, y es el único
+   momento en que se sabe con certeza que no vas a escribir más. Ahí se
+   respalda: es la diferencia entre perder una tarde de notas y no
+   perderla.
+
+   Se apaga con FRAGUA_RESPALDO=manual. Empujar solo a un repositorio
+   es exactamente la clase de cosa que conviene poder desactivar.
+   ────────────────────────────────────────────────────────────────── */
+
+let cerrando = false;
+
+async function cerrar() {
+  // Un segundo Ctrl+C mientras el push está en curso corta el proceso:
+  // el commit ya está hecho y se puede empujar a mano.
+  if (cerrando) {
+    console.log("\n  Cortando sin terminar el respaldo. El commit quedó hecho: git push\n");
+    process.exit(130);
+  }
+  cerrando = true;
+
+  servidor.close();
+
+  if (!respaldo.automatico()) {
+    const hay = await respaldo.pendiente();
+    if (hay.total) {
+      console.log(`\n  Quedan ${hay.total} archivo(s) sin respaldar y el respaldo automático está apagado.`);
+      console.log(`  Para guardarlos: abrí FRAGUA y usá «Respaldar ahora» en Estado.\n`);
+    }
+    process.exit(0);
+  }
+
+  const hay = await respaldo.pendiente();
+  if (!hay.total) {
+    console.log("\n  Nada que respaldar. Hasta luego.\n");
+    process.exit(0);
+  }
+
+  console.log(`\n  Respaldando ${hay.total} archivo(s) antes de cerrar…`);
+  const r = await respaldo.respaldar("cierre de la app");
+
+  if (r.respaldado) console.log(`  ✓ ${r.total} archivo(s) empujados a la rama ${r.rama}.\n`);
+  else if (r.sinCambios) console.log("  Nada que respaldar.\n");
+  else console.log(`  No pude respaldar: ${r.motivo}\n  Tus archivos están en el disco; probá de nuevo cuando vuelva la red.\n`);
+
+  process.exit(0);
+}
+
+process.on("SIGINT", cerrar);
+process.on("SIGTERM", cerrar);

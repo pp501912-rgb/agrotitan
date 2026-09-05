@@ -4,8 +4,13 @@
 # Dependencias
 node_modules/
 
-# Lo que genera la app
-salida/
+# Lo que genera la app.
+#
+# Las imágenes NO se versionan: se rehacen desde la ficha con
+# `npm run rehacer`, así que son peso muerto en el repositorio. Las
+# fichas y los copys SÍ, porque no se reconstruyen con nada.
+salida/**/*.png
+salida/respaldos/
 *.log
 
 # Basura del sistema

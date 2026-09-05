@@ -384,23 +384,9 @@ export const IMPLEMENTACIONES = {
 
     // Las imágenes. Esto es código puro: no interviene ningún modelo.
     const imagenes = [];
-    for (const [i, placa] of pieza.placas.entries()) {
-      const esCarrusel = pieza.formato === "carrusel";
-      const datos = {
-        volanta: pieza.tema.replace(/-/g, " "),
-        titular: placa.titulo || pieza.titular,
-        subtitulo: placa.titulo,
-        texto: placa.texto,
-        destacado: placa.destacado,
-        lista: placa.lista,
-        nota: pieza.faltantes.length ? "Faltan datos" : "",
-        ...(esCarrusel
-          ? { tipo: i === 0 ? "portada" : i === pieza.placas.length - 1 ? "cierre" : "interior",
-              n: i + 1, total: pieza.placas.length, accion: i === pieza.placas.length - 1 ? "Escribinos por WhatsApp" : "" }
-          : {}),
-      };
+    for (let i = 0; i < pieza.placas.length; i++) {
       const destino = path.join(carpeta, `${String(i + 1).padStart(2, "0")}.png`);
-      await renderizar(pieza.plantilla, datos, destino);
+      await renderizar(pieza.plantilla, piezas.datosDePlaca(pieza, i), destino);
       imagenes.push(path.basename(destino));
     }
 

@@ -13,6 +13,7 @@
     "publicar": "node sitio/publicar.mjs",
     "pieza": "node nucleo/render.mjs",
     "transcribir": "node nucleo/audios.mjs",
+    "rehacer": "node nucleo/piezas.mjs",
     "probar": "node --test nucleo/*.test.mjs motores/*.test.mjs"
   },
   "optionalDependencies": {

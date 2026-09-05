@@ -177,6 +177,74 @@ export async function publicarEnInstagram(carpeta) {
   }
 }
 
+/* ── Rehacer las imágenes ──────────────────────────────────────── */
+
+/**
+ * Los datos con que se renderiza la placa número `i` de una pieza.
+ *
+ * Vive acá y no adentro de guardar_pieza porque la usan dos: el que
+ * genera la pieza por primera vez y el que la rehace desde la ficha.
+ * Con dos copias, una pieza rehecha saldría distinta de la original y
+ * nadie se enteraría hasta verla publicada.
+ */
+export function datosDePlaca(pieza, i) {
+  const placa = pieza.placas[i];
+  const esCarrusel = pieza.formato === "carrusel";
+  const ultima = i === pieza.placas.length - 1;
+
+  return {
+    volanta: pieza.tema.replace(/-/g, " "),
+    titular: placa.titulo || pieza.titular,
+    subtitulo: placa.titulo,
+    texto: placa.texto,
+    destacado: placa.destacado,
+    lista: placa.lista,
+    nota: (pieza.faltantes || []).length ? "Faltan datos" : "",
+    ...(esCarrusel
+      ? {
+          tipo: i === 0 ? "portada" : ultima ? "cierre" : "interior",
+          n: i + 1,
+          total: pieza.placas.length,
+          accion: ultima ? "Escribinos por WhatsApp" : "",
+        }
+      : {}),
+  };
+}
+
+/**
+ * Vuelve a generar las imágenes que falten, leyendo las fichas.
+ *
+ * Es lo que hace honesto tener los PNG fuera del repositorio: después
+ * de clonar en otra máquina, esto los trae de vuelta idénticos.
+ */
+export async function rehacer({ todas = false } = {}) {
+  const { renderizar } = await import("./render.mjs");
+
+  const hechas = [];
+  for (const p of await listar()) {
+    const carpeta = path.join(RUTAS.salida, p.carpeta);
+    const ficha = await leerFicha(p.carpeta);
+    if (!ficha.placas?.length) continue;
+
+    const faltan = [];
+    for (const [i, nombre] of (ficha.imagenes || []).entries()) {
+      const destino = path.join(carpeta, nombre);
+      if (!todas) {
+        try { await fs.access(destino); continue; } catch { /* falta: se rehace */ }
+      }
+      faltan.push([i, destino]);
+    }
+    if (!faltan.length) continue;
+
+    for (const [i, destino] of faltan) {
+      await renderizar(ficha.plantilla, datosDePlaca(ficha, i), destino);
+    }
+    hechas.push({ carpeta: p.carpeta, imagenes: faltan.length });
+  }
+
+  return { piezas: hechas.length, imagenes: hechas.reduce((t, h) => t + h.imagenes, 0), hechas };
+}
+
 /** Borra una pieza que no va. */
 export async function descartar(carpeta) {
   const destino = path.resolve(RUTAS.salida, carpeta);
@@ -185,4 +253,18 @@ export async function descartar(carpeta) {
   }
   await fs.rm(destino, { recursive: true, force: true });
   return { borrada: true, carpeta };
+}
+
+/* ── Uso desde la terminal ─────────────────────────────────────── */
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const todas = process.argv.includes("--todas");
+  const r = await rehacer({ todas });
+
+  if (!r.imagenes) {
+    console.log("No falta ninguna imagen. Para rehacerlas todas igual: --todas");
+  } else {
+    for (const h of r.hechas) console.log(`  ${h.carpeta} — ${h.imagenes} imagen(es)`);
+    console.log(`\n${r.imagenes} imagen(es) rehechas en ${r.piezas} pieza(s).`);
+  }
 }

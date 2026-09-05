@@ -177,7 +177,45 @@ corto. *Agendar* es un paso aparte: la propuesta no se guarda sola.
 transcripción. Los audios sin pasar a texto se ven aparte, con un botón para
 hacerlos todos de una.
 
-**Estado.** Qué está andando y qué no, y por qué.
+**Estado.** Qué está andando y qué no, y por qué. Y el respaldo: cuántos
+archivos todavía no salieron de esta máquina, con un botón para empujarlos ya.
+
+---
+
+## Que no se pierda nada
+
+FRAGUA escribe adentro del repositorio, así que la regla es simple:
+
+> **Lo que se puede volver a calcular se ignora. Lo que no, se versiona.**
+
+Un PNG se rehace desde su ficha en dos segundos, así que las imágenes quedan
+fuera del repositorio. Una nota de voz que dictaste manejando no se rehace con
+nada, así que va adentro.
+
+**Se respalda:** las notas y sus transcripciones, el banco de temas, el
+historial de lo publicado, los datos de la página, y de cada pieza su ficha y su
+copy.
+
+**No se respalda:** las imágenes (`npm run rehacer` las trae de vuelta), el
+`.env` y los tokens, porque son secretos.
+
+**Cuándo.** Al cerrar con Ctrl+C, que es cuando se sabe que terminaste. Al
+arrancar te avisa si quedó algo pendiente, pero no lo empuja solo. Y hay un
+botón **Respaldar ahora** en *Estado*. Si preferís que nunca lo haga solo, poné
+`FRAGUA_RESPALDO=manual` en el `.env`.
+
+**Cambiar de computadora**, entonces, es:
+
+```
+git clone <el repositorio>
+cd fragua
+npm run fuentes          las tipografías
+npm run rehacer          las imágenes de las piezas
+```
+
+Más copiar el `.env`, que no está en el repositorio porque tiene las claves.
+Guardalo en tu gestor de contraseñas. Los tokens de Instagram no hace falta
+guardarlos: se vuelven a sacar.
 
 ---
 
@@ -221,6 +259,7 @@ destruye exactamente lo que se está vendiendo.
 npm start                            el panel (lo mismo que iniciar.bat)
 npm run bot                          el bot de Telegram
 npm run transcribir                  pasa a texto los audios pendientes
+npm run rehacer                      rehace las imágenes que falten
 npm run probar                       las pruebas
 node sitio/construir.mjs --verificar compara la página con la maqueta
 node sitio/publicar.mjs --simulacro  muestra qué publicaría, sin tocar nada
@@ -245,14 +284,15 @@ contenido/        los datos de la página
 plantillas/       la página con marcadores
 piezas/           las cuatro plantillas de Instagram
 nucleo/           render, plantillas, contrato, conocimiento, piezas,
-                  calendario, transcribir, audios, vitrina
+                  calendario, transcribir, audios, vitrina, git, respaldo
 motores/          claude, ollama, plantillas, cascada, instagram
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
 sitio/            extraer, construir, publicar
 telegram/         el bot
 bandeja/          el Worker de Cloudflare
-salida/           las piezas generadas (no se versiona)
+salida/           las piezas generadas. Las fichas y los copys se
+                  versionan; las imágenes no, se rehacen.
 ```
 
 **Una sola dependencia de npm en todo el proyecto**, `@anthropic-ai/sdk`, y es

@@ -17,27 +17,15 @@
      node sitio/publicar.mjs --sin-preguntar    para el panel
    ═══════════════════════════════════════════════════════════════════ */
 
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import fs from "node:fs/promises";
 import path from "node:path";
 import readline from "node:readline/promises";
 
 import { RUTAS, REPO } from "../nucleo/marca.mjs";
+import { git, ramaActual, empujar as empujarRutas } from "../nucleo/git.mjs";
 import { construir, leerDatos, pendientes } from "./construir.mjs";
 
-const ejecutar = promisify(execFile);
-
-/** Corre git dentro del repositorio y devuelve su salida. */
-async function git(...args) {
-  const { stdout } = await ejecutar("git", args, { cwd: REPO, maxBuffer: 10 << 20 });
-  return stdout;
-}
-
-/** La rama en la que estamos parados. */
-export async function ramaActual() {
-  return (await git("branch", "--show-current")).trim();
-}
+export { ramaActual };
 
 /**
  * Deja public/index.html actualizado y devuelve qué cambió.
@@ -85,31 +73,9 @@ export async function diffDelSitio() {
   catch { return ""; }
 }
 
-/** Commit y push. Reintenta el push: la red del campo se corta. */
+/** Commit y push de la página y sus datos. El reintento vive en nucleo/git. */
 export async function empujar(mensaje) {
-  const rama = await ramaActual();
-
-  await git("add", "--", "public/", "fragua/contenido/");
-
-  const pendiente = await git("diff", "--cached", "--name-only");
-  if (!pendiente.trim()) return { rama, sinCambios: true };
-
-  await git("commit", "-m", mensaje);
-
-  let ultimoError;
-  for (let intento = 0; intento < 4; intento++) {
-    try {
-      await git("push", "-u", "origin", rama);
-      return { rama, sinCambios: false };
-    } catch (e) {
-      ultimoError = e;
-      await new Promise((r) => setTimeout(r, 2000 * 2 ** intento));
-    }
-  }
-  throw new Error(
-    `El commit quedó hecho pero el push falló cuatro veces.\n` +
-    `Probá de nuevo con:  git push -u origin ${rama}\n\n${ultimoError?.message ?? ""}`
-  );
+  return empujarRutas(mensaje, ["public/", "fragua/contenido/"]);
 }
 
 /* ── Uso desde la terminal ─────────────────────────────────────── */
