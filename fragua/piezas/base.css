@@ -24,8 +24,13 @@
   --oro-tenue:   rgba(229, 193, 88, 0.18);
   --linea:       rgba(245, 243, 238, 0.12);
 
+  /* Las mismas tres del sitio. Hasta acá el cuerpo de las placas era
+     EB Garamond y el del sitio IBM Plex Sans: eran dos marcas
+     conviviendo, y quien viera una publicación y después entrara a la
+     página no reconocería que son la misma casa. */
   --titulo: "Rajdhani", "Segoe UI Semibold", "Arial Narrow", system-ui, sans-serif;
-  --cuerpo: "EB Garamond", Georgia, "Times New Roman", serif;
+  --cuerpo: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --dato:   "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --margen: 88px;
 }
@@ -214,6 +219,9 @@ body {
 .cifra--larga { font-size: 180px; }
 
 .cifra__unidad {
+  /* La unidad en monoespaciada, como en el sitio: la cifra manda y la
+     unidad la acompaña sin competirle. */
+  font-family: var(--dato);
   font-size: 0.42em;
   letter-spacing: 0.02em;
   color: var(--oro-claro);

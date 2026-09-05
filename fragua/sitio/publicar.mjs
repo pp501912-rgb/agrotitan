@@ -24,6 +24,7 @@ import readline from "node:readline/promises";
 import { RUTAS, REPO } from "../nucleo/marca.mjs";
 import { git, ramaActual, empujar as empujarRutas } from "../nucleo/git.mjs";
 import { construir, leerDatos, pendientes } from "./construir.mjs";
+import { faltantes as fuentesFaltantes } from "./fuentes.mjs";
 
 export { ramaActual };
 
@@ -73,6 +74,26 @@ export async function diffDelSitio() {
   catch { return ""; }
 }
 
+/**
+ * Las tipografías tienen que estar antes de publicar.
+ *
+ * Sin esto la primera publicación sale con letras del sistema y nadie
+ * se entera hasta verla en vivo, que es el peor momento posible.
+ */
+export async function revisarFuentes() {
+  const falta = await fuentesFaltantes();
+  if (!falta.length) return { completas: true };
+
+  return {
+    completas: false,
+    faltan: falta.map((f) => f.archivo),
+    motivo:
+      `Faltan ${falta.length} de las tipografías de la marca en public/fuentes/.\n` +
+      `Sin ellas la página sale con la letra del sistema.\n\n` +
+      `Se bajan una sola vez:  npm run fuentes`,
+  };
+}
+
 /** Commit y push de la página y sus datos. El reintento vive en nucleo/git. */
 export async function empujar(mensaje) {
   return empujarRutas(mensaje, ["public/", "fragua/contenido/"]);
@@ -84,6 +105,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const args = new Set(process.argv.slice(2));
 
   const { ficha, valores } = await leerDatos();
+  const fuentes = await revisarFuentes();
+  if (!fuentes.completas) {
+    console.error(`\n${fuentes.motivo}\n`);
+    for (const f of fuentes.faltan) console.error(`  · ${f}`);
+    console.error("");
+    process.exit(1);
+  }
+
   const faltan = pendientes(ficha, valores);
 
   if (faltan.length && !args.has("--igual-publicar")) {

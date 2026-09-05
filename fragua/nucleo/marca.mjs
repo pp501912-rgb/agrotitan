@@ -68,10 +68,21 @@ export const PALETA = {
    además un tercero vería la IP del visitante.
    ────────────────────────────────────────────────────────────────── */
 export const FUENTES = [
-  { familia: "Rajdhani",    archivo: "rajdhani-600.woff2",          peso: 600, estilo: "normal" },
-  { familia: "Rajdhani",    archivo: "rajdhani-700.woff2",          peso: 700, estilo: "normal" },
-  { familia: "EB Garamond", archivo: "ebgaramond-400.woff2",        peso: 400, estilo: "normal" },
-  { familia: "EB Garamond", archivo: "ebgaramond-500italic.woff2",  peso: 500, estilo: "italic" },
+  // Títulos y cifras destacadas: condensada, industrial.
+  { familia: "Rajdhani",      archivo: "rajdhani-600.woff2",        peso: 600, estilo: "normal" },
+  { familia: "Rajdhani",      archivo: "rajdhani-700.woff2",        peso: 700, estilo: "normal" },
+
+  // Cuerpo. Reemplazó a EB Garamond cuando se unificaron el sitio y las
+  // placas: la maqueta nueva ya usaba Plex y las placas seguían en serif,
+  // así que eran dos marcas conviviendo.
+  { familia: "IBM Plex Sans", archivo: "ibmplexsans-400.woff2",       peso: 400, estilo: "normal" },
+  { familia: "IBM Plex Sans", archivo: "ibmplexsans-400italic.woff2", peso: 400, estilo: "italic" },
+  { familia: "IBM Plex Sans", archivo: "ibmplexsans-500.woff2",       peso: 500, estilo: "normal" },
+  { familia: "IBM Plex Sans", archivo: "ibmplexsans-600.woff2",       peso: 600, estilo: "normal" },
+
+  // Cifras y unidades, que van en columnas y necesitan ancho fijo.
+  { familia: "IBM Plex Mono", archivo: "ibmplexmono-500.woff2",       peso: 500, estilo: "normal" },
+  { familia: "IBM Plex Mono", archivo: "ibmplexmono-600.woff2",       peso: 600, estilo: "normal" },
 ];
 
 /** Formato de las piezas de Instagram: vertical, que ocupa más pantalla. */

@@ -319,8 +319,17 @@ PALETA · son las únicas cinco. No se agregan colores.
 
 TIPOGRAFÍAS
     Títulos y cifras .... Rajdhani 600/700 (condensada, industrial)
-    Cuerpo .............. serif clásica
+    Cuerpo .............. IBM Plex Sans 400/500/600 (aguanta bloques largos)
+    Cifras y unidades ... IBM Plex Mono 500/600 (van en columnas)
     Interfaz ............ Rajdhani
+
+    Las mismas tres en el sitio y en las placas. Durante un tiempo no fue
+    así —el sitio en Plex, las placas en una serif— y quien viera una
+    publicación y después entrara a la página no reconocía la misma casa.
+
+    Se sirven desde el propio sitio, nunca desde Google Fonts: cada visita
+    a una tipografía alojada afuera le avisa a un tercero que alguien
+    entró, y este proyecto no rastrea a nadie.
 
 FORMATO DE LAS PIEZAS
     Instagram feed: 1080 × 1350 px (4:5). Siempre vertical: ocupa más pantalla.

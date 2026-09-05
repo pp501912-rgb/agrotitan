@@ -23,7 +23,7 @@ import * as ollama from "../motores/ollama.mjs";
 import * as cascada from "../motores/cascada.mjs";
 import * as audios from "../nucleo/audios.mjs";
 import { leerDatos, pendientes, construir } from "../sitio/construir.mjs";
-import { actualizarSitio, empujar, ramaActual } from "../sitio/publicar.mjs";
+import { actualizarSitio, empujar, ramaActual, revisarFuentes } from "../sitio/publicar.mjs";
 
 /* ═══ Definiciones · lo que ve el modelo ═════════════════════════ */
 
@@ -494,6 +494,14 @@ export const IMPLEMENTACIONES = {
   },
 
   async publicar_sitio({ simulacro = true, igualPublicar = false } = {}) {
+    // Las tipografías van primero y no se pueden saltear con
+    // igualPublicar: publicar sin datos es una decisión discutible,
+    // publicar con la letra del sistema es siempre un error.
+    const fuentes = await revisarFuentes();
+    if (!fuentes.completas) {
+      return { publicado: false, motivo: fuentes.motivo, faltan: fuentes.faltan };
+    }
+
     const { ficha, valores } = await leerDatos();
     const faltan = pendientes(ficha, valores);
 

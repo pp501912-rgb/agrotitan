@@ -1,9 +1,41 @@
 <meta charset="utf-8">
 <title>Maqueta AgroTitan</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   TIPOGRAFÍAS · servidas por nosotros, no por Google.
+
+   Antes acá había tres <link> a las tipografías de Google. Cada visita
+   al sitio le avisaba a un tercero que alguien había entrado, y eso
+   contradice el «sin rastreo» de todo el proyecto.
+
+   (El nombre de ese dominio no se escribe ni en un comentario: hay una
+   prueba que falla si aparece en este archivo, y así tiene que ser.)
+
+   Los archivos los baja `npm run fuentes`, una sola vez, y quedan en
+   public/fuentes/. Auto-alojarlas está expresamente permitido: las dos
+   familias son SIL Open Font License 1.1.
+
+   Si faltan, el publicador se niega a publicar y te dice qué correr.
+   ═══════════════════════════════════════════════════════════════════ */
+
+  @font-face{font-family:"Rajdhani";font-style:normal;font-weight:600;font-display:swap;
+             src:url(/fuentes/rajdhani-600.woff2) format("woff2")}
+  @font-face{font-family:"Rajdhani";font-style:normal;font-weight:700;font-display:swap;
+             src:url(/fuentes/rajdhani-700.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;
+             src:url(/fuentes/ibmplexsans-400.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Sans";font-style:italic;font-weight:400;font-display:swap;
+             src:url(/fuentes/ibmplexsans-400italic.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;
+             src:url(/fuentes/ibmplexsans-500.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;
+             src:url(/fuentes/ibmplexsans-600.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;
+             src:url(/fuentes/ibmplexmono-500.woff2) format("woff2")}
+  @font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:600;font-display:swap;
+             src:url(/fuentes/ibmplexmono-600.woff2) format("woff2")}
+</style>
 
 <style>
 /* ═══════════════════════════════════════════════════════════════════

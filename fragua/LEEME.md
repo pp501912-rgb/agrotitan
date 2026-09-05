@@ -13,6 +13,18 @@ Adentro vive **HERALDO**, con quien se conversa.
 
 ## Arrancar
 
+**La primera vez, una sola vez:**
+
+```
+npm run fuentes
+```
+
+Baja las tipografías de la marca al repositorio. Hace falta internet ese rato y
+nada más: después el sitio no le pide nada a nadie. Sin ellas, las placas salen
+con la letra del sistema y el publicador se niega a publicar.
+
+**Después, siempre:**
+
 **Windows:** doble clic en `iniciar.bat`.
 **macOS o Linux:** `./iniciar.sh` desde la terminal.
 
@@ -261,6 +273,7 @@ npm run bot                          el bot de Telegram
 npm run transcribir                  pasa a texto los audios pendientes
 npm run rehacer                      rehace las imágenes que falten
 npm run probar                       las pruebas
+npm run fuentes                      baja las tipografías (una sola vez)
 node sitio/construir.mjs --verificar compara la página con la maqueta
 node sitio/publicar.mjs --simulacro  muestra qué publicaría, sin tocar nada
 node sitio/extraer.mjs               rehace la plantilla si editaste la maqueta
@@ -288,7 +301,7 @@ nucleo/           render, plantillas, contrato, conocimiento, piezas,
 motores/          claude, ollama, plantillas, cascada, instagram
 servidor/         el servidor, el agente y sus herramientas
 panel/            la interfaz
-sitio/            extraer, construir, publicar
+sitio/            extraer, construir, publicar, fuentes
 telegram/         el bot
 bandeja/          el Worker de Cloudflare
 salida/           las piezas generadas. Las fichas y los copys se
@@ -313,7 +326,12 @@ otra ventana. Entrá a `http://127.0.0.1:4321`. Si querés otro puerto, poné
 `FRAGUA_NAVEGADOR=C:\ruta\a\chrome.exe`.
 
 **Las piezas salen con otra tipografía.** Faltan los archivos de
-`public/fuentes/`. La pieza igual se genera, pero con la tipografía del sistema.
+`public/fuentes/`. Corré `npm run fuentes`. La pieza igual se genera, pero con
+la tipografía del sistema, y no es la de la marca.
+
+**«Faltan N de las tipografías de la marca.»** Lo mismo: `npm run fuentes`. El
+publicador lo frena a propósito, porque una página con la letra equivocada sólo
+se descubre viéndola en vivo.
 
 **«Encontré whisper.cpp, pero no lee el Opus…»** Las notas de voz de Telegram
 vienen en un formato que whisper.cpp no abre. Instalá ffmpeg y poné su ruta en
