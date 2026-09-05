@@ -1,0 +1,326 @@
+# ═══════════════════════════════════════════════════════════════
+#  AGROTITAN · CONTENIDO DEL SITIO
+#  Fuente de verdad de todo el texto público.
+# ═══════════════════════════════════════════════════════════════
+#
+#  Este archivo existía y se borró en el commit «Publicar solo el
+#  sitio: nada de archivos internos» (0c6adb7), junto con LEEME.md
+#  y «Ver el sitio.bat». La intención era correcta —no publicar
+#  archivos internos— pero se llevó puesta la fuente de verdad,
+#  que es justamente lo que NO tiene que perderse.
+#
+#  Ahora vive fuera de public/, así que queda versionado y con
+#  historial, pero nunca se publica: wrangler.toml manda a la web
+#  solamente la carpeta public/.
+#
+#  ── Cómo usarlo ────────────────────────────────────────────────
+#  Si cambiás una palabra en public/index.html, cambiala TAMBIÉN
+#  acá. Este es el archivo que lee TITANOMAQUIA para saber qué
+#  ofrecés públicamente; si los dos no dicen lo mismo, va a estar
+#  trabajando sobre una versión del negocio que ya no existe.
+#
+#  ⚠ Reconstruido el 2026-09-05 a partir de public/index.html en el
+#    commit e3b8eb3 («Actualizar el sitio», 2026-09-03). Es el
+#    contenido real publicado, no una propuesta. Si algo acá no
+#    coincide con lo que querés ofrecer, mandá el cambio a los dos
+#    lados.
+# ═══════════════════════════════════════════════════════════════
+
+sitio:
+  nombre: AgroTitan
+  lema: La fuerza de la tierra. La precisión del capital.
+  idioma: es-AR
+  url: https://agrotitan.inversionesdelagro.workers.dev
+  titulo: AgroTitan · Evaluación de proyectos agropecuarios
+  descripcion: >-
+    Evaluamos si un proyecto agropecuario conviene antes de comprometer
+    capital, y preparamos la documentación que respalda esa decisión.
+    Ingenieros agrónomos y zootecnistas.
+  paginas:
+    - public/index.html
+    - public/articulo.html
+
+# ── Qué se vende ───────────────────────────────────────────────
+# La promesa, en los términos en que la página la formula hoy.
+propuesta:
+  titular: Ningún imperio se levantó sobre tierra sin medir.
+  antetitulo: Evaluación de proyectos agropecuarios
+  bajada: >-
+    Antes de que inmovilices capital en un campo, alguien tiene que decirte
+    con números si conviene, cuánto tarda en volver y en qué escenario deja
+    de cerrar. Eso es lo que hacemos, y te lo entregamos por escrito.
+  diferencial: >-
+    El rendimiento que estima el agrónomo es exactamente el número que entra
+    en el flujo de fondos: la mirada productiva y la financiera son dos manos
+    sobre el mismo modelo desde el primer dato, no dos trabajos que se pegan
+    al final.
+
+# ── Cifras de portada ──────────────────────────────────────────
+# Son las que más pesan, porque la marca decidió no publicar nombres.
+cifras:
+  - valor: 10 años
+    detalle: evaluando proyectos agropecuarios
+  - valor: 10 rubros
+    detalle: del frutal de vida larga a la producción intensiva
+  - valor: 130 ha
+    detalle: superficie promedio de los proyectos
+  - valor: En dólares
+    detalle: moneda de evaluación de todos los proyectos
+
+# ── El equipo ──────────────────────────────────────────────────
+# Credenciales colectivas: por decisión del propietario, no se
+# publican nombres propios.
+equipo:
+  profesionales: 3 ingenieros agrónomos y 2 zootecnistas
+  formacion: >-
+    Universidad Nacional de Lomas de Zamora, Universidad de Buenos Aires
+    y Universidad Católica Argentina
+  ejercicio: Más de 30 años combinados en el sector agropecuario
+  alcance: Todo el Cono Sur, con equipo propio en cada país donde trabajamos
+  territorio: Río Negro, Buenos Aires, Mendoza, San Juan y Araucanía
+
+# ── El método ──────────────────────────────────────────────────
+# Tres estudios encadenados: el resultado de cada uno alimenta al
+# siguiente. Si el primero se equivoca, los otros dos también.
+metodo:
+  - etapa: Análisis técnico
+    pregunta: ¿Qué puede producir este campo?
+    contenido: >-
+      Aptitud del suelo, agua disponible y su calidad, clima de la zona y
+      tecnología aplicable. De acá sale el rendimiento esperado, el número
+      del que dependen todos los cálculos que vienen después.
+  - etapa: Análisis económico
+    pregunta: ¿Cuánto deja por año?
+    contenido: >-
+      Al rendimiento esperado le aplicamos precios de referencia y le restamos
+      los costos directos de implantación y manejo. Sale el margen bruto, en la
+      unidad que manda en cada caso: por hectárea, por cabeza o por litro.
+  - etapa: Análisis financiero
+    pregunta: ¿Conviene inmovilizar el capital?
+    contenido: >-
+      Flujo de fondos a lo largo de toda la vida del proyecto, medido con VAN,
+      TIR y período de repago, y comparado contra el costo de oportunidad: lo
+      que ese mismo dinero rendiría en la mejor alternativa disponible.
+
+# ── Supuestos declarados ───────────────────────────────────────
+# «Un modelo sin supuestos declarados es una opinión con decimales.»
+# Son las definiciones metodológicas que se fijan por escrito en cada
+# informe, antes del primer número.
+supuestos:
+  moneda_de_evaluacion: >-
+    Dólares. Es la moneda en la que se sostiene el valor de la tierra, de la
+    maquinaria y de buena parte de los insumos, y la única que permite comparar
+    un proyecto con otro a diez o veinte años.
+  tasa_de_descuento: >-
+    El costo de oportunidad del capital, en términos reales: lo que ese mismo
+    dinero rendiría en la mejor alternativa disponible. Es la variable que más
+    mueve el resultado, así que va explícita en cada informe.
+  horizonte: >-
+    Veinte años en proyectos de vida larga, diez cuando la actividad lo
+    justifica. El horizonte se fija según el bien más importante del proyecto,
+    y el valor de la tierra y del monte al final del período entra en el cálculo.
+  tratamiento_impositivo: >-
+    Se contemplan las exenciones, percepciones y regímenes aplicables a cada
+    actividad y a cada jurisdicción. Un flujo antes y uno después de impuestos
+    son dos proyectos distintos.
+  flujo_evaluado: >-
+    Del proyecto o del inversionista, según lo que el proyecto necesite
+    responder. Con y sin financiamiento son dos tasas de retorno distintas y
+    contestan dos preguntas distintas.
+  fuentes_de_datos: >-
+    Valores de referencia de la zona, ensayos y series propias. Cada precio y
+    cada rinde lleva su fuente al lado.
+  tratamiento_del_riesgo: >-
+    Análisis de sensibilidad sobre los factores críticos de cada proyecto,
+    trabajados sobre series históricas de rindes y precios.
+  relevamiento_a_campo: >-
+    Análisis de suelo, balance hídrico, horas de frío, disponibilidad y calidad
+    del agua de riego, y mapa de ambientes. El escritorio no alcanza.
+
+# ── El entregable ──────────────────────────────────────────────
+# Índice del informe completo, capítulo por capítulo.
+informe:
+  entrega: >-
+    Primero llega el análisis de factibilidad con el modelo de negocio: lo
+    suficiente para decidir si el proyecto sigue. Si seguís, el informe completo
+    desarrolla el planeamiento de la producción, capítulo por capítulo.
+  capitulos:
+    - numero: "01"
+      titulo: Resumen ejecutivo y recomendación
+      puntos:
+        - La recomendación, en una página, con las condiciones bajo las que se sostiene.
+        - "Indicadores principales: VAN, TIR, período de repago."
+        - Los escenarios donde el proyecto deja de cerrar.
+    - numero: "02"
+      titulo: Relevamiento y aptitud productiva
+      puntos:
+        - Análisis de suelo y clasificación por ambiente.
+        - "Agua: disponibilidad, calidad y balance hídrico."
+        - Clima de la zona y su variabilidad. Riesgos agroclimáticos.
+        - Mapa de ambientes del establecimiento.
+    - numero: "03"
+      titulo: Modelo productivo
+      puntos:
+        - Escala, tecnología aplicada y planteo de manejo.
+        - Curva de producción hasta el régimen pleno.
+        - Rendimiento esperado, con su fundamento y su fuente.
+    - numero: "04"
+      titulo: Inversión y estructura de costos
+      puntos:
+        - Inversión inicial discriminada por rubro.
+        - Costos operativos anuales y su evolución.
+        - "Margen bruto por unidad: hectárea, cabeza o litro."
+    - numero: "05"
+      titulo: Evaluación financiera
+      puntos:
+        - Flujo de fondos a horizonte completo.
+        - VAN, TIR y período de repago, contra el costo de oportunidad.
+        - Escenario con y sin financiamiento.
+    - numero: "06"
+      titulo: Riesgo y sensibilidad
+      puntos:
+        - Sensibilidad sobre los factores críticos del proyecto.
+        - "Umbrales: desde dónde el proyecto deja de cerrar."
+        - Riesgo climático sobre series históricas de la zona.
+    - numero: "07"
+      titulo: Planeamiento de la producción
+      puntos:
+        - Plan de implantación y calendario de tareas.
+        - Requerimientos de maquinaria, personal e insumos.
+        - Documentación de respaldo y análisis de laboratorio.
+
+# ── La escalera comercial ──────────────────────────────────────
+# Cada etapa cierra en sí misma. La siguiente sólo se justifica si
+# la anterior dio que sí.
+etapas:
+  - numero: 1
+    titulo: Factibilidad y modelo de negocio
+    contenido: >-
+      Responde si el proyecto conviene y bajo qué condiciones, con el modelo de
+      negocio que lo sostiene. Es la puerta de entrada y, muchas veces, donde
+      termina el trabajo: si la respuesta es que no, te ahorraste la inversión
+      y el resto del estudio.
+  - numero: 2
+    titulo: Proyecto llave en mano
+    contenido: >-
+      Si la factibilidad dio que sí, acá se desarrolla el planeamiento completo
+      de la producción: el informe detallado, con el flujo de fondos, la
+      evaluación financiera y la documentación lista para presentar ante un
+      banco, un socio o un directorio. Es lo que se firma y se defiende.
+  - numero: 3
+    titulo: Acompañamiento durante la ejecución
+    contenido: >-
+      Con el proyecto en marcha, comparamos lo planificado contra lo que
+      efectivamente pasó, con datos reales y no estimados. Muestra dónde se
+      desvió el resultado y por qué. Se contrata aparte y sólo si el proyecto
+      lo justifica.
+
+# ── Servicios que se contratan aparte ──────────────────────────
+servicios:
+  - titulo: Valuación de campos
+    contenido: >-
+      Cuánto vale un campo, por los dos caminos que usa la tasación rural:
+      capitalizando la renta que la tierra es capaz de generar, y comparándolo
+      con operaciones reales de la zona. El cruce da un valor defendible con
+      números, para comprar, vender o respaldar una operación.
+  - titulo: Impacto climático y de riesgo
+    contenido: >-
+      Dos zonas con el mismo rinde promedio pueden tener riesgos muy distintos:
+      lo que las diferencia es la variabilidad. Trabajamos sobre series
+      históricas de rindes y precios para saber en qué escenarios el proyecto
+      sigue cerrando, y desde dónde empieza a ser una apuesta.
+
+# ── Rubros ─────────────────────────────────────────────────────
+# «No evaluamos cualquier cosa.» Cada rubro con la variable que
+# define el resultado.
+rubros:
+  frutales_extensivos:
+    - nombre: Nogal
+      variable: Los años improductivos iniciales definen el repago.
+    - nombre: Avellano
+      variable: Aptitud de zona en cultivo en expansión.
+    - nombre: Cerezo
+      variable: La ventana comercial manda sobre el retorno.
+  frutales_intensivos:
+    - nombre: Arándano
+      variable: Costo de mano de obra sobre el margen.
+    - nombre: Vid
+      variable: Variedad y destino comercial como variable central.
+  produccion_intensiva:
+    - nombre: Avícola tradicional
+      variable: Capacidad instalada, ciclos y contrato de integración.
+    - nombre: Avícola black-out
+      variable: Conversión y consumo energético.
+    - nombre: Feedlot
+      variable: Costo de la ración y relación compra-venta.
+  ganaderia_y_leche:
+    - nombre: Tambo
+      variable: Dinámica del rodeo y costo del litro producido.
+    - nombre: Cría e invernada
+      variable: Carga animal, índices reproductivos, margen por hectárea.
+
+# ── Cómo empieza el trabajo ────────────────────────────────────
+proceso:
+  - numero: 1
+    titulo: Nos escribís
+    contenido: >-
+      Por WhatsApp o por correo, contándonos qué proyecto tenés en mente.
+      Con eso alcanza para empezar.
+  - numero: 2
+    titulo: Entrevista sin cargo
+    contenido: >-
+      Conversamos para entender el proyecto y tomar el pedido. Acá se define
+      qué tipo de evaluación necesita, y si es un trabajo para nosotros.
+      No tiene costo y no compromete a nada.
+  - numero: 3
+    titulo: Plan de acción y presupuesto
+    contenido: >-
+      Armamos un plan personalizado según lo que el proyecto necesite, con el
+      alcance y el precio por escrito. Recién ahí decidís si seguimos.
+
+# ── Contacto ───────────────────────────────────────────────────
+# El número y el correo viven en public/js/contacto.js. Si cambian
+# allá, cambian acá.
+contacto:
+  whatsapp_mostrado: +54 9 11 5873-5770
+  whatsapp_internacional: "5491158735770"
+  # ⚠ Provisorio. El propietario avisó que lo va a reemplazar por uno
+  #   con dominio propio (contacto@agrotitan.com o similar). Es el
+  #   punto 10 de la lista de datos pendientes.
+  email: augustoniente@gmail.com
+  paises:
+    - Argentina
+    - Chile
+    - Uruguay
+    - Paraguay
+  provincias: Río Negro, Buenos Aires, Mendoza, San Juan y Araucanía
+  que_pedimos_en_la_primera_consulta:
+    - Superficie aproximada y zona.
+    - Qué querés producir, o qué estás produciendo hoy.
+    - "En qué etapa está: idea, decisión tomada, o proyecto en marcha."
+    - "Qué necesitás resolver: decidir, conseguir financiamiento, o corregir el rumbo."
+
+# ── Restricciones autoimpuestas ────────────────────────────────
+# Las tres son deliberadas y condicionan todo lo que se puede hacer
+# en marketing. No son limitaciones a corregir: son definiciones.
+restricciones:
+  confidencialidad: >-
+    No se publican nombres de clientes, superficies, ubicaciones ni resultados.
+    La información de un proyecto le pertenece al productor. Publicamos el
+    método, no el cliente. Los casos publicados están construidos a modo de
+    ejemplo y el sitio lo aclara.
+  sin_nombres_propios: >-
+    Sólo credenciales colectivas del equipo. Decisión del propietario.
+  sin_rastreo: >-
+    Sin cookies, sin analítica de terceros y sin guardar información del
+    visitante. Las tipografías se sirven desde el propio sitio para que ningún
+    tercero vea su IP. El formulario no manda nada a ningún servidor: arma el
+    mensaje y lo abre en WhatsApp o en el correo del visitante.
+    Costo práctico a tener presente: sin ninguna medición, no hay forma de
+    saber si un cambio en la página funcionó.
+
+# ── Aviso legal ────────────────────────────────────────────────
+descargo: >-
+  Los análisis publicados en este sitio son de carácter orientativo y no
+  constituyen recomendación de inversión. Cada proyecto requiere un estudio
+  particular. AgroTitan no garantiza resultados productivos ni financieros.
