@@ -151,3 +151,24 @@ test("descartar sí borra una pieza de verdad", async () => {
   assert.equal((await descartar(c)).borrada, true);
   await assert.rejects(() => fs.access(path.join(RUTAS.salida, c)));
 });
+
+test("marcar a mano una pieza ya publicada por una red no la anota dos veces", async () => {
+  // El historial es lo que evita repetir un tema. Una entrada duplicada
+  // no rompe nada visible, pero ensucia justamente eso.
+  const c = await crearPieza("ya-anotada", {
+    estado: "publicada",
+    linkedin: { id: "urn:li:share:1", permalink: "https://x" },
+  });
+  const antes = JSON.parse(await fs.readFile(RUTAS.historial, "utf8"));
+
+  try {
+    const r = await marcarPublicada(c);
+    assert.equal(r.publicada, false);
+    assert.match(r.motivo, /ya está publicada y anotada/);
+
+    const despues = JSON.parse(await fs.readFile(RUTAS.historial, "utf8"));
+    assert.equal(despues.publicaciones.length, antes.publicaciones.length);
+  } finally {
+    await fs.writeFile(RUTAS.historial, JSON.stringify(antes, null, 2) + "\n", "utf8");
+  }
+});

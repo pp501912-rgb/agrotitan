@@ -23,6 +23,7 @@ import { leerDatos, pendientes, verificar } from "../sitio/construir.mjs";
 import { leerTemas } from "../nucleo/conocimiento.mjs";
 import * as bandeja from "../nucleo/bandeja.mjs";
 import { estado as estadoWhisper } from "../nucleo/transcribir.mjs";
+import { faltantes as fuentesFaltantes } from "../sitio/fuentes.mjs";
 import * as instagram from "../motores/instagram.mjs";
 import * as linkedin from "../motores/linkedin.mjs";
 import * as respaldo from "../nucleo/respaldo.mjs";
@@ -97,7 +98,7 @@ async function servirArchivo(res, base, relativo) {
 
 /** El estado de los tres motores y del renderizador, en castellano. */
 async function estadoGeneral() {
-  const [c, o, nav, w, ig, li, resp, sitio, temas] = await Promise.all([
+  const [c, o, nav, w, ig, li, resp, sinFuente, sitio, temas] = await Promise.all([
     claude.estado(),
     ollama.estado(),
     buscarNavegador(),
@@ -105,6 +106,7 @@ async function estadoGeneral() {
     instagram.estado(),
     linkedin.estado(),
     respaldo.pendiente(),
+    fuentesFaltantes(),
     leerDatos(),
     leerTemas(),
   ]);
@@ -117,6 +119,16 @@ async function estadoGeneral() {
       ollama: o,
       plantillas: plantillas.estado(),
     },
+    fuentes: sinFuente.length
+      ? {
+          activo: false,
+          faltan: sinFuente.map((f) => f.archivo),
+          motivo:
+            `Faltan ${sinFuente.length} tipografía(s) de la marca. Las placas van a ` +
+            `salir con la letra del sistema y la página no se puede publicar.\n\n` +
+            `Se bajan una sola vez:  npm run fuentes`,
+        }
+      : { activo: true },
     render: nav
       ? { activo: true, navegador: path.basename(nav) }
       : { activo: false, motivo: "No encontré Chrome, Edge ni Chromium. Poné la ruta en el .env con FRAGUA_NAVEGADOR." },
@@ -310,6 +322,7 @@ servidor.listen(PUERTO, "127.0.0.1", async () => {
     Claude (el chat) ....... ${marca(est.motores.claude)}${est.motores.claude.activo ? "" : `  · ${est.motores.claude.motivo}`}
     Ollama (local) ......... ${marca(est.motores.ollama)}${est.motores.ollama.activo ? "" : `  · ${est.motores.ollama.motivo}`}
     Plantillas ............. sí
+    Tipografías ............ ${marca(est.fuentes)}${est.fuentes.activo ? "" : `  · faltan ${est.fuentes.faltan.length}, corré:  npm run fuentes`}
     Render de imágenes ..... ${marca(est.render)}${est.render.activo ? `  · ${est.render.navegador}` : `  · ${est.render.motivo}`}
     Transcripción de voz ... ${marca(est.audio)}${est.audio.activo ? `  · ${est.audio.motor} (${est.audio.modelo})` : ""}
     Instagram .............. ${marca(est.instagram)}${est.instagram.activo && est.instagram.diasRestantes !== null ? `  · token por ${est.instagram.diasRestantes} días` : ""}

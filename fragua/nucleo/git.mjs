@@ -30,7 +30,11 @@ export async function ramaActual() {
 export async function sinCommitear(rutas) {
   // --porcelain da una línea por archivo, con dos caracteres de estado
   // adelante. Nos alcanza con los nombres.
-  const salida = await git("status", "--porcelain", "--", ...rutas);
+  //
+  // quotePath apagado porque si no, git escapa cualquier nombre con
+  // tilde: una nota que se llame "riego-por-goteo-ñandú.md" saldría en
+  // el panel como "riego-por-goteo-\303\261and\303\272.md".
+  const salida = await git("-c", "core.quotePath=false", "status", "--porcelain", "--", ...rutas);
   return salida
     .split("\n")
     .filter(Boolean)

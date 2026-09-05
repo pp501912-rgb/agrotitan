@@ -687,6 +687,8 @@ async function cargarEstado() {
     </div>
     <div class="grupo">
       <h2 class="grupo__t">Imágenes</h2>
+      ${fila("Tipografías de la marca", e.fuentes,
+             e.fuentes.activo ? `<span class="etiqueta">las 8 en su lugar</span>` : "")}
       ${fila("Renderizador", e.render,
              e.render.navegador ? `<span class="etiqueta">${e.render.navegador}</span>` : "")}
     </div>

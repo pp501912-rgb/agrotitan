@@ -163,6 +163,8 @@ test("el .gitignore deja fuera las imágenes y los secretos, y adentro las ficha
   const reglas = ignore.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
 
   assert.ok(reglas.includes("salida/**/*.png"), "las imágenes se ignoran");
+  // El PDF del carrusel lo rehace publicarEnLinkedin en cada publicación.
+  assert.ok(reglas.includes("salida/**/*.pdf"), "el PDF del carrusel también");
   assert.ok(!reglas.includes("salida/"),
     "salida/ entera NO puede estar ignorada: adentro van las fichas y los copys");
   assert.ok(reglas.includes(".env"), "el .env nunca al repositorio");
@@ -200,5 +202,22 @@ test("el respaldo automático se puede apagar desde el .env", async () => {
   } finally {
     if (antes === undefined) delete process.env.FRAGUA_RESPALDO;
     else process.env.FRAGUA_RESPALDO = antes;
+  }
+});
+
+test("un nombre con tilde se lee entero, no escapado", async () => {
+  // Las notas que baja el bot de Telegram salen del texto del mensaje,
+  // así que llevan tildes y eñes con toda naturalidad.
+  const { sinCommitear } = await import("./git.mjs");
+  const nombre = "prueba-respaldo-ñandú-í.md";
+  const ruta = path.join(RUTAS.notas, nombre);
+
+  try {
+    await fs.writeFile(ruta, "una nota\n", "utf8");
+    const vistos = await sinCommitear(["fragua/conocimiento/"]);
+    assert.ok(vistos.some((v) => v.endsWith(nombre)),
+      `git devolvió ${JSON.stringify(vistos)} y ninguno termina en ${nombre}`);
+  } finally {
+    await fs.rm(ruta, { force: true });
   }
 });

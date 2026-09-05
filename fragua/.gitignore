@@ -9,7 +9,11 @@ node_modules/
 # Las imágenes NO se versionan: se rehacen desde la ficha con
 # `npm run rehacer`, así que son peso muerto en el repositorio. Las
 # fichas y los copys SÍ, porque no se reconstruyen con nada.
+#
+# El PDF del carrusel es lo mismo: lo arma publicarEnLinkedin cada vez
+# que publica, desde las mismas placas.
 salida/**/*.png
+salida/**/*.pdf
 salida/respaldos/
 *.log
 

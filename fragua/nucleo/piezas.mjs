@@ -129,8 +129,19 @@ export async function marcarPublicada(carpeta) {
     return { publicada: false, motivo: "Todavía no la aprobaste. Miralá primero." };
   }
 
+  // Si ya salió por alguna red, esto no agrega nada: el historial la
+  // tiene y la fecha original es la buena. Anotarla de nuevo la
+  // duplicaría, y el historial es lo que evita repetir un tema.
+  const yaAnotada = Boolean(ficha.instagram || ficha.linkedin);
+  if (yaAnotada && ficha.estado === "publicada") {
+    return {
+      publicada: false,
+      motivo: "Esta pieza ya está publicada y anotada en el historial.",
+    };
+  }
+
   ficha.estado = "publicada";
-  ficha.publicada = new Date().toISOString();
+  ficha.publicada = ficha.publicada || new Date().toISOString();
   await guardarFicha(carpeta, ficha);
 
   const total = await anotarPublicacion(ficha, { carpeta });
