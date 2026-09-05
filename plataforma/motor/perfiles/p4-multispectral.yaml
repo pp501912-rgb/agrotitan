@@ -1,0 +1,18 @@
+# ═══════════════════════════════════════════════════════════════════════
+# DJI PHANTOM 4 MULTISPECTRAL
+#
+# Generación anterior al Mavic 3M, todavía muy presente en el mercado
+# usado. A diferencia del 3M, SÍ tiene banda azul. Guarda la irradiancia
+# en el tag XMP @drone-dji:Irradiance, que ODM sabe leer.
+# ═══════════════════════════════════════════════════════════════════════
+id: p4-multispectral
+marca: DJI
+modelo: Phantom 4 Multispectral
+tiene_dls: true
+tiene_panel: false
+bandas:
+  - {orden: 1, rol: blue,    lambda_nm: 450, fwhm_nm: 16}
+  - {orden: 2, rol: green,   lambda_nm: 560, fwhm_nm: 16}
+  - {orden: 3, rol: red,     lambda_nm: 650, fwhm_nm: 16}
+  - {orden: 4, rol: rededge, lambda_nm: 730, fwhm_nm: 16}
+  - {orden: 5, rol: nir,     lambda_nm: 840, fwhm_nm: 26}

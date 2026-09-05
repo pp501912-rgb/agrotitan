@@ -1,0 +1,22 @@
+# ═══════════════════════════════════════════════════════════════════════
+# DJI MAVIC 3 MULTISPECTRAL
+#
+# La cámara más difundida del Cono Sur. NO TIENE BANDA AZUL, y eso no es un
+# detalle: deja afuera EVI, MCARI y todo índice que necesite el azul. El
+# motor lo reporta en vez de sustituir el azul por el verde "porque está
+# cerca". Este perfil es el caso de prueba del agnosticismo de sensor.
+# ═══════════════════════════════════════════════════════════════════════
+id: mavic3m
+marca: DJI
+modelo: Mavic 3 Multispectral
+tiene_dls: true          # sensor de luz solar integrado
+tiene_panel: false       # DJI no provee panel calibrado con el equipo
+notas: >
+  Aeronave integrada, no es un sensor montable en otra plataforma.
+  Lleva además una cámara RGB de 20 MP que no forma parte del apilado
+  multiespectral y que el motor ignora.
+bandas:
+  - {orden: 1, rol: green,   lambda_nm: 560, fwhm_nm: 16}
+  - {orden: 2, rol: red,     lambda_nm: 650, fwhm_nm: 16}
+  - {orden: 3, rol: rededge, lambda_nm: 730, fwhm_nm: 16}
+  - {orden: 4, rol: nir,     lambda_nm: 860, fwhm_nm: 26}

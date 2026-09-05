@@ -86,7 +86,7 @@ el puente con la **evaluación económica del proyecto**, que ninguna de estas p
 |---|---|---|
 | Precio | ~US$ 4.959, aeronave integrada | ~US$ 7.995 + drone (M300/M350) |
 | Bandas | 4: verde, rojo, borde rojo, NIR + RGB 20 MP | 5 estrechas + pancromática |
-| **Banda azul** | **No tiene** → sin EVI ni MCARI | Sí |
+| **Banda azul** | **No tiene** → sin EVI ni ARVI (MCARI sí: no usa azul) | Sí |
 | Resolución | — | 1,6 MP por banda; 2 cm a 60 m |
 | Panel + DLS | Limitado | Panel calibrado + DLS 2 |
 

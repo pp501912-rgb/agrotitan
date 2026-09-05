@@ -1,0 +1,132 @@
+{
+  "_comentario": [
+    "CATÁLOGO DE ÍNDICES ESPECTRALES",
+    "",
+    "Las fórmulas y las citas vienen de Awesome Spectral Indices (MIT).",
+    "No se reimplementa un NDVI: se copia la fórmula publicada, con su fuente.",
+    "",
+    "Los nombres dentro de 'formula' son ROLES de banda (vocabulario common_name",
+    "de la extensión EO de STAC), nunca números de banda ni marcas. Lo que no es",
+    "un rol se declara en 'constantes'. Los roles requeridos NO se escriben a mano:",
+    "el motor los deduce de la fórmula, así que no pueden quedar desactualizados.",
+    "",
+    "Para agregar un índice: agregar una entrada acá. No hay que tocar código."
+  ],
+
+  "NDVI": {
+    "nombre_largo": "Índice de vegetación de diferencia normalizada",
+    "formula": "(nir - red) / (nir + red)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Rouse et al. (1974), Third ERTS Symposium",
+    "uso": "Vigor general y cobertura. SATURA en canopeo denso: no usarlo para decidir nitrógeno en el momento en que hay que decidirlo."
+  },
+
+  "NDRE": {
+    "nombre_largo": "Índice de diferencia normalizada de borde rojo",
+    "formula": "(nir - rededge) / (nir + rededge)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Barnes et al. (2000); Gitelson y Merzlyak (1994)",
+    "uso": "Estado de nitrógeno del canopeo. Es el índice del método de suficiencia porque no satura donde el NDVI sí."
+  },
+
+  "GNDVI": {
+    "nombre_largo": "NDVI con banda verde",
+    "formula": "(nir - green) / (nir + green)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Gitelson, Kaufman y Merzlyak (1996), Remote Sensing of Environment",
+    "uso": "Más sensible a la clorofila que el NDVI; alternativa cuando no hay borde rojo."
+  },
+
+  "CIre": {
+    "nombre_largo": "Índice de clorofila de borde rojo",
+    "formula": "(nir / rededge) - 1",
+    "constantes": {},
+    "rango": [0.0, 15.0],
+    "fuente": "Gitelson et al. (2003), Journal of Plant Physiology",
+    "uso": "Clorofila del canopeo. Respuesta más lineal que el NDRE en biomasa alta."
+  },
+
+  "CIg": {
+    "nombre_largo": "Índice de clorofila verde",
+    "formula": "(nir / green) - 1",
+    "constantes": {},
+    "rango": [0.0, 15.0],
+    "fuente": "Gitelson et al. (2003), Journal of Plant Physiology",
+    "uso": "Como el CIre pero sin borde rojo; sirve en cámaras que no lo traen."
+  },
+
+  "OSAVI": {
+    "nombre_largo": "Índice de vegetación ajustado al suelo, optimizado",
+    "formula": "(nir - red) / (nir + red + 0.16)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Rondeaux, Steven y Baret (1996), Remote Sensing of Environment",
+    "uso": "Cobertura parcial: reduce el efecto del suelo desnudo entre hileras. Útil temprano en el cultivo."
+  },
+
+  "SAVI": {
+    "nombre_largo": "Índice de vegetación ajustado al suelo",
+    "formula": "((nir - red) / (nir + red + L)) * (1 + L)",
+    "constantes": {"L": 0.5},
+    "rango": [-1.0, 1.0],
+    "fuente": "Huete (1988), Remote Sensing of Environment",
+    "uso": "Como el OSAVI. L = 0,5 es el valor de cobertura intermedia; se ajusta según el cultivo."
+  },
+
+  "MSAVI2": {
+    "nombre_largo": "SAVI modificado, segunda versión",
+    "formula": "(2 * nir + 1 - ((2 * nir + 1) ** 2 - 8 * (nir - red)) ** 0.5) / 2",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Qi et al. (1994), Remote Sensing of Environment",
+    "uso": "No necesita elegir L a mano: lo resuelve la propia fórmula. Bueno para implantación."
+  },
+
+  "EVI": {
+    "nombre_largo": "Índice de vegetación mejorado",
+    "formula": "2.5 * (nir - red) / (nir + 6 * red - 7.5 * blue + 1)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Huete et al. (2002), Remote Sensing of Environment",
+    "uso": "Corrige suelo y atmósfera. NECESITA BANDA AZUL: no está disponible en Mavic 3M ni en Sequoia."
+  },
+
+  "EVI2": {
+    "nombre_largo": "Índice de vegetación mejorado, versión de dos bandas",
+    "formula": "2.5 * (nir - red) / (nir + 2.4 * red + 1)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Jiang et al. (2008), Remote Sensing of Environment",
+    "uso": "Diseñado justamente para sensores SIN banda azul. Es el reemplazo correcto del EVI en un Mavic 3M — y es un reemplazo publicado, no una sustitución improvisada de bandas."
+  },
+
+  "ARVI": {
+    "nombre_largo": "Índice de vegetación resistente a la atmósfera",
+    "formula": "(nir - (2 * red - blue)) / (nir + (2 * red - blue))",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "Kaufman y Tanre (1992), IEEE TGRS",
+    "uso": "Resiste el efecto de aerosoles. NECESITA BANDA AZUL."
+  },
+
+  "MCARI": {
+    "nombre_largo": "Índice de absorción de clorofila en reflectancia, modificado",
+    "formula": "((rededge - red) - 0.2 * (rededge - green)) * (rededge / red)",
+    "constantes": {},
+    "rango": [0.0, 5.0],
+    "fuente": "Daughtry et al. (2000), Remote Sensing of Environment",
+    "uso": "Clorofila foliar con corrección de suelo. Usa borde rojo, rojo y verde: NO necesita azul, así que sí funciona en un Mavic 3M."
+  },
+
+  "NDWI": {
+    "nombre_largo": "Índice de diferencia normalizada de agua",
+    "formula": "(green - nir) / (green + nir)",
+    "constantes": {},
+    "rango": [-1.0, 1.0],
+    "fuente": "McFeeters (1996), International Journal of Remote Sensing",
+    "uso": "Detecta agua libre: bebederos, encharcamientos, canales. En ganadería sirve para descontar superficie no pastoreable."
+  }
+}

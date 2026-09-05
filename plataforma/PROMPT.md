@@ -58,8 +58,13 @@ explícitamente cuando el ajuste es pobre**.
 - Los índices se declaran como fórmulas sobre roles, tomadas del catálogo Awesome Spectral Indices
   (MIT), con su cita. El motor calcula automáticamente qué índices son posibles con cada cámara.
 
-  **Comportamiento obligatorio:** el DJI Mavic 3M no tiene banda azul → EVI y MCARI quedan
-  **deshabilitados y reportados**, nunca calculados con un sustituto.
+  **Comportamiento obligatorio:** el DJI Mavic 3M no tiene banda azul → **EVI y ARVI** quedan
+  **deshabilitados y reportados**, nunca calculados con un sustituto. En su lugar el motor
+  ofrece el **EVI2**, que es la versión publicada para sensores sin azul: ofrecer otro índice
+  publicado no es lo mismo que sustituir una banda por otra parecida.
+
+  (MCARI sí se puede: usa borde rojo, rojo y verde. Es un error frecuente creer que necesita
+  azul, y el catálogo tiene que seguir la fórmula publicada, no la intuición.)
 
 ## Restricciones de hardware (el diseño depende de esto)
 
@@ -155,7 +160,8 @@ degradada), corre el pipeline completo y **falla** si no se cumple todo esto:
 
 - [ ] `indices/ndvi.tif`, `ndre.tif`, `gndvi.tif` existen, son COG con overviews y sus valores caen
       en el rango físico válido.
-- [ ] Con el perfil `mavic3m`, EVI y MCARI aparecen **deshabilitados y reportados**, no calculados.
+- [ ] Con el perfil `mavic3m`, EVI y ARVI aparecen **deshabilitados y reportados**, no calculados,
+      y el motor ofrece EVI2 como alternativa publicada. MCARI sí se calcula: no necesita azul.
 - [ ] `zonas.gpkg` tiene k polígonos, sin islas menores al umbral de superficie mínima.
 - [ ] Sin franja de referencia, `nitrogeno.py` **se niega** a dar dosis y explica por qué.
 - [ ] La calibración de biomasa, alimentada con puntos sintéticos de R² conocido, devuelve ese R²

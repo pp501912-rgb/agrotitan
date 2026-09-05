@@ -1,0 +1,16 @@
+# Artefactos de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Datos generados: el ortomosaico sintético se regenera con `make datos`,
+# y los rásters de verdad NO van al repositorio: pesan gigabytes y son del
+# cliente. La carpeta datos/ es de trabajo, no de versionado.
+datos/ejemplo/
+datos/*/
+!datos/generar_sintetico.py
+
+# Entorno local
+.env
+*.log

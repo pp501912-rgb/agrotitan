@@ -1,0 +1,22 @@
+# ═══════════════════════════════════════════════════════════════════════
+# MICASENSE ALTUM
+#
+# Las cinco bandas de la RedEdge más una banda térmica (LWIR). La térmica
+# abre el estrés hídrico —temperatura de canopeo— que es un problema
+# distinto del vigor y todavía no está implementado en el motor.
+# ═══════════════════════════════════════════════════════════════════════
+id: altum
+marca: MicaSense
+modelo: Altum
+tiene_dls: true
+tiene_panel: true
+notas: >
+  La banda térmica se declara para que la ingesta no la descarte, pero
+  ningún índice del catálogo la usa todavía.
+bandas:
+  - {orden: 1, rol: blue,    lambda_nm: 475,   fwhm_nm: 32}
+  - {orden: 2, rol: green,   lambda_nm: 560,   fwhm_nm: 27}
+  - {orden: 3, rol: red,     lambda_nm: 668,   fwhm_nm: 14}
+  - {orden: 4, rol: rededge, lambda_nm: 717,   fwhm_nm: 12}
+  - {orden: 5, rol: nir,     lambda_nm: 842,   fwhm_nm: 57}
+  - {orden: 6, rol: lwir,    lambda_nm: 11000, fwhm_nm: 6000}

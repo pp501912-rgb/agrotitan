@@ -1,0 +1,16 @@
+# ═══════════════════════════════════════════════════════════════════════
+# PARROT SEQUOIA
+#
+# Equipo discontinuado pero muy presente en universidades y en el mercado
+# usado del Cono Sur. Sin banda azul, igual que el Mavic 3M.
+# ═══════════════════════════════════════════════════════════════════════
+id: sequoia
+marca: Parrot
+modelo: Sequoia
+tiene_dls: true          # "sunshine sensor"
+tiene_panel: true
+bandas:
+  - {orden: 1, rol: green,   lambda_nm: 550, fwhm_nm: 40}
+  - {orden: 2, rol: red,     lambda_nm: 660, fwhm_nm: 40}
+  - {orden: 3, rol: rededge, lambda_nm: 735, fwhm_nm: 10}
+  - {orden: 4, rol: nir,     lambda_nm: 790, fwhm_nm: 40}

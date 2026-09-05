@@ -134,8 +134,13 @@ roles (`(nir - rededge) / (nir + rededge)`), de modo que:
 - agregar una cámara futura es agregar filas / un YAML, sin tocar código;
 - el motor calcula automáticamente **qué índices son imposibles** con cada cámara y lo reporta.
 
-Caso de prueba obligatorio: el DJI Mavic 3M no tiene banda azul → **EVI y MCARI deshabilitados y
-reportados**, nunca calculados con un sustituto.
+Caso de prueba obligatorio: el DJI Mavic 3M no tiene banda azul → **EVI y ARVI deshabilitados y
+reportados**, nunca calculados con un sustituto, con **EVI2** ofrecido como alternativa publicada
+para sensores sin azul.
+
+MCARI, en cambio, **sí se calcula** en un Mavic 3M: su fórmula usa borde rojo, rojo y verde. Es un
+error frecuente suponer que necesita azul — el catálogo sigue la fórmula publicada, no la intuición,
+y por eso los roles requeridos se deducen de la fórmula en vez de escribirse a mano.
 
 ---
 

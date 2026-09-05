@@ -1,0 +1,20 @@
+# ═══════════════════════════════════════════════════════════════════════
+# GENÉRICO · 4 BANDAS (sin azul)
+#
+# Para una cámara que el catálogo todavía no conoce. Sirve para trabajar
+# hoy mismo, pero conviene crear su propio archivo apenas se sepan las
+# longitudes de onda reales: sin eso, el informe no puede citarlas.
+# ═══════════════════════════════════════════════════════════════════════
+id: generico-4bandas
+marca: genérico
+modelo: 4 bandas (G/R/RE/NIR)
+tiene_dls: false
+tiene_panel: false
+notas: >
+  Longitudes de onda nominales, NO medidas. Un vuelo ingerido con este
+  perfil se puede analizar, pero su calibración hay que declararla aparte.
+bandas:
+  - {orden: 1, rol: green,   lambda_nm: 560, fwhm_nm: 20}
+  - {orden: 2, rol: red,     lambda_nm: 660, fwhm_nm: 20}
+  - {orden: 3, rol: rededge, lambda_nm: 730, fwhm_nm: 15}
+  - {orden: 4, rol: nir,     lambda_nm: 840, fwhm_nm: 40}

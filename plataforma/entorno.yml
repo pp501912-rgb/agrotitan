@@ -31,11 +31,17 @@ dependencies:
   # Base de datos
   - psycopg=3.1        # sin ORM, a propósito
 
+  # Exportación
+  - pyshp=2.3          # shapefile sin arrastrar GDAL: son unos pocos kB
+
   # Utilidades
   - pyyaml=6.0         # perfiles de cámara
-  - click=8.1          # CLI
-  - rich=13.7          # salida legible en consola
   - psutil=5.9         # medición del pico de memoria, que se audita
+  #
+  # NO hay click: el CLI usa argparse, de la biblioteca estándar, para que
+  # los comandos que solo tocan el dominio (listar-indices, calibrar-biomasa,
+  # forraje, suficiencia) funcionen en cualquier máquina con Python, sin
+  # instalar nada. Sirve para revisar un número desde una notebook pelada.
 
   # Desarrollo
   - pytest=8.2

@@ -1,0 +1,26 @@
+# ═══════════════════════════════════════════════════════════════════════
+# MICASENSE REDEDGE-P
+#
+# La referencia para trabajo publicable: bandas estrechas, panel calibrado
+# y DLS 2. Es la única configuración de esta lista que permite una serie
+# temporal defendible sin discusión.
+#
+# La banda pancromática se declara pero el motor no la usa para índices:
+# sirve para afinar la resolución espacial (pan-sharpening), que es otro
+# problema.
+# ═══════════════════════════════════════════════════════════════════════
+id: rededge-p
+marca: MicaSense
+modelo: RedEdge-P
+tiene_dls: true          # DLS 2
+tiene_panel: true        # panel calibrado con código QR
+notas: >
+  Sensor montable (M300/M350 vía Skyport). 1,6 MP por banda multiespectral
+  y 5,1 MP en pancromática; ~2 cm de GSD a 60 m.
+bandas:
+  - {orden: 1, rol: blue,    lambda_nm: 475, fwhm_nm: 32}
+  - {orden: 2, rol: green,   lambda_nm: 560, fwhm_nm: 27}
+  - {orden: 3, rol: red,     lambda_nm: 668, fwhm_nm: 14}
+  - {orden: 4, rol: rededge, lambda_nm: 717, fwhm_nm: 12}
+  - {orden: 5, rol: nir,     lambda_nm: 842, fwhm_nm: 57}
+  - {orden: 6, rol: pan,     lambda_nm: 634, fwhm_nm: 463}

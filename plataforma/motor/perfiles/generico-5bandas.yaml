@@ -1,0 +1,19 @@
+# ═══════════════════════════════════════════════════════════════════════
+# GENÉRICO · 5 BANDAS (con azul)
+#
+# Igual que el de 4 bandas, pero para cámaras que sí traen azul y por lo
+# tanto habilitan EVI y MCARI.
+# ═══════════════════════════════════════════════════════════════════════
+id: generico-5bandas
+marca: genérico
+modelo: 5 bandas (B/G/R/RE/NIR)
+tiene_dls: false
+tiene_panel: false
+notas: >
+  Longitudes de onda nominales, NO medidas.
+bandas:
+  - {orden: 1, rol: blue,    lambda_nm: 475, fwhm_nm: 30}
+  - {orden: 2, rol: green,   lambda_nm: 560, fwhm_nm: 20}
+  - {orden: 3, rol: red,     lambda_nm: 660, fwhm_nm: 20}
+  - {orden: 4, rol: rededge, lambda_nm: 730, fwhm_nm: 15}
+  - {orden: 5, rol: nir,     lambda_nm: 840, fwhm_nm: 40}
