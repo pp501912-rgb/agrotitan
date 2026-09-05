@@ -64,6 +64,42 @@ SENTENCIAS = {
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     """,
 
+    # ── Claves naturales ───────────────────────────────────────────────
+    # El manifiesto guarda nombres, no uuids: estas sentencias los traducen
+    # a identificadores, creando lo que falte. Son lo que hace posible
+    # reconstruir la base desde las carpetas.
+
+    "upsert_organizacion": """
+        INSERT INTO nucleo.organizacion (nombre, pais)
+        VALUES (%s, %s)
+        ON CONFLICT (nombre) DO UPDATE SET nombre = EXCLUDED.nombre
+        RETURNING id
+    """,
+
+    "upsert_campo": """
+        INSERT INTO nucleo.campo (organizacion_id, nombre, pais, epsg_utm)
+        VALUES (%s, %s, %s, %s)
+        ON CONFLICT (organizacion_id, nombre) DO UPDATE SET epsg_utm = EXCLUDED.epsg_utm
+        RETURNING id
+    """,
+
+    # El lote se crea con la huella del vuelo como geometría PROVISORIA
+    # cuando todavía no existe. No es el lote relevado: es lo que el vuelo
+    # cubrió. Queda marcado en el aviso de reconstrucción para que alguien
+    # lo reemplace por el polígono de verdad.
+    "upsert_lote": """
+        INSERT INTO nucleo.lote (organizacion_id, campo_id, nombre, geom)
+        VALUES (%s, %s, %s, ST_Multi(ST_GeomFromGeoJSON(%s)))
+        ON CONFLICT (campo_id, nombre) DO UPDATE SET nombre = EXCLUDED.nombre
+        RETURNING id
+    """,
+
+    "ortomosaico_por_hash": """
+        SELECT o.id, o.vuelo_id, o.vuelo_fecha
+          FROM vuelo.ortomosaico o
+         WHERE o.organizacion_id = %s AND o.sha256 = %s
+    """,
+
     "insertar_prescripcion": """
         INSERT INTO manejo.prescripcion
             (organizacion_id, vuelo_id, vuelo_fecha, insumo, unidad,

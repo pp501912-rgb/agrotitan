@@ -111,7 +111,30 @@ Si nadie lo setea, la función devuelve `NULL` y **no se ve nada**. Fallar cerra
 preferimos una consulta vacía antes que mostrarle a un cliente los lotes de otro.
 
 Hoy hay una sola organización y esto parece burocracia. No lo es: agregar RLS más tarde obliga a
-reauditar la aplicación entera. Verificado: 23 tablas con RLS activa.
+reauditar la aplicación entera.
+
+### El agujero que tenía esto, y cómo se cerró
+
+La primera verificación comprobó que las 23 políticas **existen**. Eso no es lo mismo que
+comprobar que se **aplican**, y la diferencia era grave:
+
+**Row Level Security no se aplica a un superusuario, ni al dueño de las tablas.** El usuario que
+crea la base es superusuario. Si el motor se conectaba con él —que era lo que decía la
+configuración— las políticas no filtraban nada.
+
+`base/004_rol_aplicacion.sql` lo cierra con dos medidas:
+
+1. `FORCE ROW LEVEL SECURITY` en las 23 tablas, para que las políticas alcancen también al dueño.
+2. El rol `plataforma_app`: `LOGIN`, sin `SUPERUSER`, sin `BYPASSRLS` y **sin `DELETE`** — un vuelo
+   se marca `rechazado`, no se borra.
+
+Contra un superusuario no hay defensa del lado de la base; la única defensa es no usarlo, así que
+`motor/base/conexion.py` avisa por pantalla si detecta que está conectado con uno, y la vista
+`auditoria.roles_que_saltean_rls` los lista.
+
+**Verificado de verdad**, conectándose como `plataforma_app` con dos organizaciones cargadas: con
+`app.organizacion` puesta en A se ve 1 vuelo y no 2; sin declararla no se ve ninguno (falla
+cerrado); y el `DELETE` rebota por permisos.
 
 Los **perfiles de cámara y sus bandas no llevan RLS**: son catálogo compartido. Que dos clientes
 usen el mismo Mavic 3M no es información de nadie.
@@ -212,6 +235,11 @@ El DDL se ejecutó contra **PostgreSQL 16.13 real**, con estos resultados:
 | Columna generada `ajuste_pobre` con R² = 0,41 | ✅ devuelve `true` |
 | Recomendación sin fuente | ✅ **rechazada** por `NOT NULL` |
 | Tablas con RLS activa | ✅ 23 |
+| Un plan de escritura completo (15 operaciones) | ✅ entra sin error |
+| Las filas caen en la partición del año | ✅ `p_vuelo_2026`, DEFAULT vacía |
+| p5 y p95 se guardan | ✅ |
+| **Aislamiento entre organizaciones, como `plataforma_app`** | ✅ A no ve nada de B |
+| Sin declarar organización no se ve nada | ✅ falla cerrado |
 
 **Limitación honesta de esta verificación:** en el contenedor de desarrollo no se pudo instalar
 PostGIS (sin acceso a repositorios apt ni daemon Docker), así que las columnas `geometry(...)` se

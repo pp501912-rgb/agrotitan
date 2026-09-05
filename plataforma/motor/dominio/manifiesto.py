@@ -30,7 +30,7 @@ class Manifiesto:
     def __init__(self, organizacion, campo, lote, fecha, perfil_camara,
                  calibracion=None, comparable=False, indices=None,
                  salidas=None, parametros=None, version_motor=None,
-                 creado=None):
+                 creado=None, vuelo_id=None, geo=None):
         self.organizacion = organizacion
         self.campo = campo
         self.lote = lote
@@ -47,6 +47,18 @@ class Manifiesto:
         self.parametros = dict(parametros or {})
         self.version_motor = version_motor or VERSION
         self.creado = creado or datetime.now().isoformat(timespec="seconds")
+
+        # El identificador del vuelo se genera ANTES de procesar, para que la
+        # carpeta en disco y la fila en la base sean la misma cosa. Sin esto,
+        # reconstruir tendría que inventar un id nuevo y la carpeta dejaría de
+        # apuntar a nada.
+        self.vuelo_id = vuelo_id
+
+        # Lo que hace falta para volver a crear el lote si no existe: sistema
+        # de coordenadas, zona UTM, huella del vuelo y superficie. Sin este
+        # bloque el manifiesto describe el vuelo pero no alcanza para
+        # reconstruir la base, que es toda la razón de que exista.
+        self.geo = dict(geo or {})
 
         self._validar()
 
@@ -81,10 +93,23 @@ class Manifiesto:
             "parametros": self.parametros,
             "version_motor": self.version_motor,
             "creado": self.creado,
+            "vuelo_id": self.vuelo_id,
+            "geo": self.geo,
         }
 
     def __eq__(self, otro):
         return isinstance(otro, Manifiesto) and self.como_dict() == otro.como_dict()
+
+    @property
+    def reconstruible(self):
+        """
+        Si este manifiesto alcanza, solo, para volver a crear las filas.
+
+        Un manifiesto sin huella ni identificador de vuelo describe lo que
+        pasó pero no permite rehacerlo: vale la pena saberlo antes de que la
+        base se pierda, no después.
+        """
+        return bool(self.vuelo_id and self.geo.get("footprint"))
 
     def __repr__(self):
         return f"Manifiesto({self.lote!r}, {self.fecha}, {self.perfil_camara!r})"

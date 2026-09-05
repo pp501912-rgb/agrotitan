@@ -5,7 +5,13 @@
 # ya configurado con los ajustes que este proyecto necesita.
 #
 #     docker compose up -d
-#     psql -h localhost -p 5432 -U plataforma -d plataforma -f base/001_esquema.sql
+#     make esquema      (corre las cinco migraciones, en orden)
+#
+# ⚠ EL USUARIO plataforma ES SUPERUSUARIO, Y ROW LEVEL SECURITY NO SE
+#   APLICA A UN SUPERUSUARIO. Sirve para crear el esquema y para tareas de
+#   administración, NUNCA para que el motor se conecte: con él, las
+#   políticas de aislamiento entre clientes no filtran nada.
+#   El motor usa plataforma_app, que crea base/004_rol_aplicacion.sql.
 #
 # El volumen 'datos_pg' persiste la base entre reinicios. La carpeta ./datos
 # se monta dentro del contenedor en la MISMA ruta que ve el motor, para que

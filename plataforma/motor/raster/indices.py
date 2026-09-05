@@ -18,7 +18,7 @@ from rasterio.enums import Resampling
 
 from motor.dominio import catalogo as cat
 from motor.dominio.errores import IndiceNoDisponible
-from motor.dominio.estadistica import Acumulador
+from motor.dominio.estadistica import Acumulador, Histograma
 from motor.raster import cog, ventanas
 
 
@@ -62,6 +62,12 @@ def _una_capa(ruta_cog, indice, directorio_salida):
     ruta_salida = os.path.join(directorio_salida, f"{indice.nombre.lower()}.tif")
     acumulador = Acumulador()
 
+    # p5 y p95 describen el lote mucho mejor que el mínimo y el máximo, que
+    # casi siempre son un píxel de ruido. Se acumulan en un histograma sobre
+    # el rango declarado del índice; los valores que se salgan se amontonan
+    # en los extremos en vez de descartarse.
+    histograma = Histograma(indice.rango[0], indice.rango[1])
+
     with rasterio.open(ruta_cog) as origen:
         escala_entrada = float(origen.tags().get("escala", 10000))
         ordenes = {d: i for i, d in enumerate(origen.descriptions, start=1) if d}
@@ -100,7 +106,17 @@ def _una_capa(ruta_cog, indice, directorio_salida):
                     cog.a_entero(valores, indice.escala, validos), 1, window=ventana)
 
                 if validos.any():
-                    ventanas.acumular_bloque(acumulador, valores[validos])
+                    buenos = valores[validos]
+                    ventanas.acumular_bloque(acumulador, buenos)
+
+                    # np.histogram con range descarta lo que se sale; se
+                    # recorta antes para que pese en el extremo, no que
+                    # desaparezca y corra los percentiles hacia adentro.
+                    recortados = np.clip(buenos, histograma.minimo, histograma.maximo)
+                    cuentas, _ = np.histogram(
+                        recortados, bins=histograma.canastos,
+                        range=(histograma.minimo, histograma.maximo))
+                    histograma.combinar_cuentas(cuentas)
 
             destino.update_tags(
                 indice=indice.nombre,
@@ -125,6 +141,14 @@ def _una_capa(ruta_cog, indice, directorio_salida):
             media=round(resumen["media"], 4),
             desvio=round(resumen["desvio"], 4),
             n_px=resumen["n"],
+        )
+
+    percentiles = histograma.resumen()
+    if percentiles:
+        fila.update(
+            p5=round(percentiles["p5"], 4),
+            p95=round(percentiles["p95"], 4),
+            error_percentiles=percentiles["error_maximo"],
         )
 
     return fila

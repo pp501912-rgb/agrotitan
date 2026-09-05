@@ -61,10 +61,29 @@ maintenance_work_mem = 512MB
 ### Crear el esquema (los dos caminos)
 
 ```bash
-psql -h localhost -U plataforma -d plataforma -f base/001_esquema.sql
-psql -h localhost -U plataforma -d plataforma -f base/002_particiones.sql
-psql -h localhost -U plataforma -d plataforma -f base/003_rls.sql
+make esquema BASE_URL="postgresql://plataforma:plataforma@localhost:5432/plataforma"
 ```
+
+Corre las cinco migraciones en orden: esquema, particiones, RLS, rol de aplicación y claves
+naturales.
+
+### ⚠ Con qué usuario se conecta el motor
+
+**El usuario que crea la base es superusuario, y Row Level Security NO SE APLICA a un
+superusuario.** Si el motor se conectara con él, las políticas de aislamiento entre clientes
+estarían perfectas y no filtrarían nada: un cliente vería los lotes de otro, sin ningún síntoma
+hasta el día que alguien lo note.
+
+`base/004_rol_aplicacion.sql` crea el rol `plataforma_app`, sin `SUPERUSER`, sin `BYPASSRLS` y sin
+permiso de borrar. **Ese es el usuario del motor.** Cambiale la contraseña antes de usarlo en serio:
+
+```bash
+psql "$BASE_URL" -c "ALTER ROLE plataforma_app PASSWORD 'una contraseña de verdad'"
+export PLATAFORMA_BASE_URL="postgresql://plataforma_app:esa_contraseña@localhost:5432/plataforma"
+```
+
+El motor avisa por pantalla si detecta que está conectado como superusuario. No falla —hay tareas
+de administración legítimas— pero no lo deja pasar en silencio.
 
 **Este es el primer paso obligatorio** y además es la verificación pendiente: el DDL fue probado
 contra PostgreSQL 16 real, pero con PostGIS sustituido (no se pudo instalar en el contenedor de
@@ -76,6 +95,14 @@ Comprobación rápida de que quedó bien:
 SELECT postgis_full_version();
 SELECT count(*) FROM pg_class WHERE relrowsecurity;     -- debe dar 23
 SELECT * FROM auditoria.particiones_default_ocupadas;   -- todo en 0
+SELECT * FROM auditoria.roles_que_saltean_rls;          -- NO debe devolver nada
+```
+
+Y la comprobación que de verdad importa, que ejecuta un plan de escritura completo y prueba el
+aislamiento conectándose como `plataforma_app`:
+
+```bash
+make persistencia BASE_URL="$PLATAFORMA_BASE_URL"
 ```
 
 ---

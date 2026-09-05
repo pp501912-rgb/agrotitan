@@ -40,7 +40,7 @@ make verificar
 
 ```bash
 # Estos comandos funcionan en cualquier máquina con Python. Sin instalar nada.
-python3 -m unittest discover -s pruebas -t . -v      # 118 pruebas del dominio
+python3 -m unittest discover -s pruebas -t . -v      # 165 pruebas del dominio
 python3 -m motor listar-indices --perfil mavic3m
 python3 -m motor verificar-entorno
 python3 -m motor forraje --kg-ms-ha 2800 --superficie-ha 25 --cabezas 120 --peso 420
@@ -53,8 +53,8 @@ python3 -m motor forraje --kg-ms-ha 2800 --superficie-ha 25 --cabezas 120 --peso
 | `docs/01-arquitectura-datos.md` | Por qué la base está hecha así |
 | `docs/02-instalacion.md` | Paso a paso para dejar la PC lista |
 | `docs/03-protocolo-de-vuelo.md` | La parte que se ejecuta con las manos |
-| `base/*.sql` | El esquema, ejecutable |
-| `Makefile` | `make pruebas`, `make verificar`, `make sql`, `make esquema` |
+| `base/*.sql` | El esquema, ejecutable: esquema, particiones, RLS, rol de aplicación, claves naturales |
+| `Makefile` | `make pruebas`, `make verificar`, `make sql`, `make persistencia`, `make esquema` |
 
 ---
 
@@ -112,6 +112,18 @@ la base.
 
 7. **Nunca se calculan hectáreas en grados.** El trigger de `nucleo.lote` reproyecta a la UTM del
    campo; la zonificación rechaza un ortomosaico en coordenadas geográficas.
+
+8. **Ningún cliente ve los datos de otro, y sin declarar cuál sos no ves nada.** Las políticas de
+   aislamiento se aplican de verdad —no solo existen— porque el motor se conecta con un rol sin
+   privilegios especiales. Probado con dos organizaciones cargadas.
+
+9. **Una corrida que falla deja rastro.** Se registra en `auditoria.corrida` con `resultado =
+   'error'` y el mensaje. Una corrida que se cae sin dejar ninguna fila es indistinguible de una
+   que nunca se intentó.
+
+10. **Si la base se pierde, las carpetas la reconstruyen.** `python3 -m motor reconstruir` recorre
+    los manifiestos y repuebla. Es idempotente: correrlo dos veces no duplica nada. Y avisa que los
+    lotes creados desde la huella del vuelo son provisorios, porque la huella no es el lote relevado.
 
 ---
 

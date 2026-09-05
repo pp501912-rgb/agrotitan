@@ -151,14 +151,129 @@ def cmd_procesar(args):
         indices=args.indices.split(",") if args.indices else None,
         k_zonas=args.zonas,
         ndre_referencia=args.ndre_referencia,
+        guardar_en_base=args.guardar_en_base,
         metadatos={
             "organizacion": args.organizacion,
+            "organizacion_id": args.organizacion_id,
             "campo": args.campo,
             "lote": args.lote,
             "fecha": args.fecha,
             "calibracion": args.calibracion,
         },
     )
+
+
+# ── guardar ────────────────────────────────────────────────────────────
+
+def cmd_guardar(args):
+    """Sube a la base una corrida que ya está procesada en disco."""
+    from motor import persistencia
+    from motor.dominio import manifiesto as manifiestos
+
+    man = manifiestos.leer(args.vuelo)
+
+    if not man.reconstruible:
+        raise ErrorDominio(
+            f"El manifiesto de {args.vuelo} no tiene vuelo_id o no tiene huella: "
+            f"describe el vuelo pero no alcanza para crear las filas. Se arregla "
+            f"volviendo a procesar el vuelo con esta versión del motor.")
+
+    from motor.reconstruir import _contexto
+    plan = persistencia.plan_de_escritura(
+        _contexto(man), ids={"vuelo_id": man.vuelo_id,
+                             "organizacion_id": args.organizacion_id})
+
+    print(f"\nPlan de escritura para {man.lote} · {man.fecha}")
+    for nombre, cuenta in persistencia.resumen(plan).items():
+        print(f"  {cuenta:3d}  {nombre}")
+
+    if args.simular:
+        print("\n  (--simular: no se escribió nada)\n")
+        return 0
+
+    try:
+        from motor.base import conexion
+    except ImportError as e:
+        raise _falta_entorno("psycopg") from e
+
+    with conexion.conectar(args.organizacion_id) as cx:
+        with cx.cursor() as cur:
+            persistencia.ejecutar(plan, cur)
+        cx.commit()
+
+    print(f"\n  Guardado: {len(plan)} operaciones\n")
+    return 0
+
+
+# ── reconstruir ────────────────────────────────────────────────────────
+
+def cmd_reconstruir(args):
+    """Repuebla la base recorriendo los manifiestos de las carpetas."""
+    from motor import reconstruir
+
+    hashes = ()
+    if not args.simular:
+        try:
+            from motor.base import conexion
+            from motor.base.repositorio import SENTENCIAS
+        except ImportError as e:
+            raise _falta_entorno("psycopg") from e
+
+        with conexion.conectar(args.organizacion_id) as cx:
+            with cx.cursor() as cur:
+                cur.execute("SELECT sha256 FROM vuelo.ortomosaico")
+                hashes = {fila[0] for fila in cur.fetchall()}
+
+    hallazgos = reconstruir.planificar(args.datos, hashes)
+    print(reconstruir.informe(hallazgos))
+
+    if args.simular:
+        print("\n  (--simular: no se escribió nada)\n")
+        return 0
+
+    from motor.base import conexion
+    with conexion.conectar(args.organizacion_id) as cx:
+        with cx.cursor() as cur:
+            cuenta = reconstruir.aplicar(hallazgos, cur)
+        cx.commit()
+
+    print(f"\n  {cuenta}\n")
+    return 1 if cuenta.get("error") else 0
+
+
+# ── serie ──────────────────────────────────────────────────────────────
+
+def cmd_serie(args):
+    """
+    Evolución de un índice en el tiempo.
+
+    Usa la vista indice.serie_comparable, que EXCLUYE los vuelos sin
+    calibración radiométrica. No hay una versión de este comando que los
+    incluya, y esa ausencia es deliberada: comparar números digitales entre
+    fechas es comparar la nubosidad de cada día.
+    """
+    try:
+        from motor.base import conexion, repositorio
+    except ImportError as e:
+        raise _falta_entorno("psycopg") from e
+
+    with conexion.conectar(args.organizacion_id) as cx:
+        with cx.cursor() as cur:
+            filas = repositorio.serie_temporal(cur, args.lote, args.indice)
+
+    if not filas:
+        print(f"\nNo hay vuelos comparables de este lote con {args.indice}.")
+        print("Puede ser que no haya vuelos, o que los que hay no tengan "
+              "calibración\nradiométrica y por eso no entren en una serie.\n")
+        return 1
+
+    print(f"\nSerie de {args.indice} · lote {args.lote}\n")
+    print(f"  {'fecha':12s} {'media':>8s} {'p5':>8s} {'p95':>8s}  calibración")
+    for fecha, indice, media, p5, p95, metodo in filas:
+        print(f"  {str(fecha):12s} {media or 0:8.3f} {p5 or 0:8.3f} "
+              f"{p95 or 0:8.3f}  {metodo}")
+    print()
+    return 0
 
 
 # ── verificar-entorno ──────────────────────────────────────────────────
@@ -255,7 +370,35 @@ def construir_parser():
     s.add_argument("--fecha", default=None)
     s.add_argument("--calibracion", default="ninguna",
                    choices=("ninguna", "panel", "dls", "panel+dls"))
+    s.add_argument("--guardar-en-base", action="store_true",
+                   dest="guardar_en_base",
+                   help="además de los archivos, escribe en PostGIS")
+    s.add_argument("--organizacion-id", default=None, dest="organizacion_id",
+                   help="uuid de la organización; obligatorio con --guardar-en-base")
     s.set_defaults(func=cmd_procesar)
+
+    s = sub.add_parser("guardar",
+                       help="sube a la base una corrida ya procesada en disco")
+    s.add_argument("--vuelo", required=True, help="carpeta con el manifiesto")
+    s.add_argument("--organizacion-id", required=True, dest="organizacion_id")
+    s.add_argument("--simular", action="store_true",
+                   help="muestra el plan sin escribir nada")
+    s.set_defaults(func=cmd_guardar)
+
+    s = sub.add_parser("reconstruir",
+                       help="repuebla la base desde los manifiestos del disco")
+    s.add_argument("--datos", required=True, help="raíz del árbol de datos")
+    s.add_argument("--organizacion-id", required=True, dest="organizacion_id")
+    s.add_argument("--simular", action="store_true",
+                   help="muestra qué se encontró sin escribir nada")
+    s.set_defaults(func=cmd_reconstruir)
+
+    s = sub.add_parser("serie",
+                       help="evolución de un índice, solo con vuelos comparables")
+    s.add_argument("--lote", required=True)
+    s.add_argument("--indice", default="NDRE")
+    s.add_argument("--organizacion-id", required=True, dest="organizacion_id")
+    s.set_defaults(func=cmd_serie)
 
     s = sub.add_parser("verificar-entorno",
                        help="qué está instalado y qué falta")
