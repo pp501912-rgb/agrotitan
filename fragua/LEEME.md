@@ -13,6 +13,10 @@ Adentro vive **HERALDO**, con quien se conversa.
 
 ## Arrancar
 
+> **¿Primera vez?** Hay una guía paso a paso, con lo que tiene que aparecer en
+> cada uno y una prueba que funciona sin cargar ningún dato todavía:
+> **[PRIMERA-PRUEBA.md](PRIMERA-PRUEBA.md)**.
+
 **La primera vez, una sola vez:**
 
 ```

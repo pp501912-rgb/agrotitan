@@ -221,6 +221,18 @@ export async function renderizar(plantilla, datos, destino) {
       "--disable-gpu",
       "--no-sandbox",
       "--hide-scrollbars",
+      // Chrome, aunque sea headless, sale a internet solo: busca
+      // actualizaciones, resuelve dominios y manda telemetría. Nada de eso
+      // hace falta para fotografiar una placa, tarda, y en un proyecto que
+      // se define por no rastrear a nadie es lo mínimo apagarlo acá.
+      "--disable-background-networking",
+      "--disable-component-update",
+      "--disable-default-apps",
+      "--disable-sync",
+      "--no-first-run",
+      "--no-default-browser-check",
+      "--metrics-recording-only",
+
       "--force-device-scale-factor=1",
       "--default-background-color=00000000",
       `--window-size=${PIEZA.ancho},${PIEZA.alto}`,

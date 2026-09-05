@@ -96,6 +96,18 @@ export async function pdfDePieza(plantilla, placas, destino) {
       "--disable-gpu",
       "--no-sandbox",
       "--no-pdf-header-footer",
+      // Chrome, aunque sea headless, sale a internet solo: busca
+      // actualizaciones, resuelve dominios y manda telemetría. Nada de eso
+      // hace falta para fotografiar una placa, tarda, y en un proyecto que
+      // se define por no rastrear a nadie es lo mínimo apagarlo acá.
+      "--disable-background-networking",
+      "--disable-component-update",
+      "--disable-default-apps",
+      "--disable-sync",
+      "--no-first-run",
+      "--no-default-browser-check",
+      "--metrics-recording-only",
+
       `--print-to-pdf=${destino}`,
       pathAUrl(archivoHtml),
     ], { timeout: 90_000 });
