@@ -1,37 +1,8 @@
-/* ═══════════════════════════════════════════════════════════════════
-   AGROTITAN · BASE
-   Variables, tipografía, reset y utilidades. Los estilos por sección
-   están en secciones.css
-
-   Mobile-first: los estilos de base son los del teléfono. Las media
-   queries agregan, nunca corrigen. Es deliberado — la mayoría de los
-   productores va a entrar desde el celular, muchos con señal débil.
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* ── Tipografías locales ───────────────────────────────────────────
-   Servidas desde el propio sitio, NO desde Google Fonts.
-
-   Dos motivos:
-   1. Privacidad — con Google Fonts, Google ve la IP de cada visitante.
-   2. Velocidad — una petición menos a otro servidor. Con señal débil
-      en el campo, cada petición externa cuesta segundos.
-
-   Licencia OFL: descargarlas y servirlas es legal.
-
-   Rajdhani      → titulares (identidad de marca)
-   IBM Plex Sans → cuerpo de texto, más robusto en bloques largos
-   IBM Plex Mono → cifras, unidades y etiquetas técnicas
-
-   ⚠ Si la carpeta fuentes/ está vacía, el sitio usa las tipografías
-     del sistema (ver la cascada de --tipo-*). Se ve distinto pero
-     funciona perfecto. Instrucciones en fuentes/LEEME.md
-   ────────────────────────────────────────────────────────────────── */
-
 @font-face {
   font-family: "Rajdhani";
   src: url("../fuentes/rajdhani-600.woff2") format("woff2");
   font-weight: 600;
-  font-display: swap;   /* el texto se ve enseguida, aunque la fuente tarde */
+  font-display: swap;
 }
 
 @font-face {
@@ -41,9 +12,6 @@
   font-display: swap;
 }
 
-/* Fuente variable: un solo archivo cubre de 400 a 600.
-   Google entrega el mismo .woff2 para los tres pesos, así que servir
-   uno solo ahorra 91 KB sin perder nada. */
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("../fuentes/plexsans-var.woff2") format("woff2");
@@ -73,17 +41,9 @@
   font-display: swap;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   VARIABLES
-   El sitio está comprometido con el tema oscuro: no cambia según la
-   configuración del visitante. Por eso todo color se pinta explícito
-   y no hay bloque de tema claro.
-   ═══════════════════════════════════════════════════════════════════ */
-
 :root {
   color-scheme: dark;
 
-  /* Marca */
   --obsidiana:       #0B0C0A;
   --acero:           #141613;
   --superficie:      #1B1E19;
@@ -97,7 +57,6 @@
   --verde-claro:     #2D6A4F;
   --verde-vivo:      #4EA37A;
 
-  /* Arcilla: solo para señalar lo negativo en el gráfico */
   --arcilla:         #C4674A;
 
   --hueso:           #F2F0E9;
@@ -107,24 +66,18 @@
   --linea:           rgba(242, 240, 233, .11);
   --linea-fuerte:    rgba(242, 240, 233, .20);
 
-  /* Tipografía · con cascada al sistema si falta el archivo */
   --tipo-titulo: "Rajdhani", "Segoe UI Semibold", "Arial Narrow",
                  system-ui, sans-serif;
   --tipo-cuerpo: "IBM Plex Sans", "Segoe UI", system-ui,
                  -apple-system, sans-serif;
   --tipo-dato:   "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-  /* Medidas */
   --ancho:  1120px;
-  --medida: 66ch;      /* ancho de lectura cómoda */
+  --medida: 66ch;
   --radio:  3px;
 
   --transicion: .18s ease;
 }
-
-/* ═══════════════════════════════════════════════════════════════════
-   RESET
-   ═══════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -152,10 +105,6 @@ body {
 img, svg { max-width: 100%; }
 img { height: auto; display: block; }
 
-/* ═══════════════════════════════════════════════════════════════════
-   TIPOGRAFÍA
-   ═══════════════════════════════════════════════════════════════════ */
-
 h1, h2, h3, h4 {
   font-family: var(--tipo-titulo);
   font-weight: 700;
@@ -176,7 +125,6 @@ a { color: var(--oro); text-underline-offset: 3px; }
 
 strong { font-weight: 600; color: var(--hueso); }
 
-/* Etiqueta corta en mayúsculas, encima de cada título de sección */
 .antetitulo {
   font-family: var(--tipo-dato);
   font-size: .72rem;
@@ -197,15 +145,10 @@ strong { font-weight: 600; color: var(--hueso); }
 
 .medida { max-width: var(--medida); }
 
-/* Cifras en columnas: que los dígitos ocupen todos lo mismo */
 .dato, .num {
   font-family: var(--tipo-dato);
   font-variant-numeric: tabular-nums;
 }
-
-/* ═══════════════════════════════════════════════════════════════════
-   ESTRUCTURA
-   ═══════════════════════════════════════════════════════════════════ */
 
 .contenedor {
   width: 100%;
@@ -219,14 +162,11 @@ section {
   border-top: 1px solid var(--linea);
 }
 
-/* Alterna el fondo para separar secciones sin necesidad de más reglas */
 .banda { background: var(--acero); }
 
 .seccion__cabecera { margin-bottom: clamp(28px, 4vw, 48px); }
 .seccion__cabecera h2 { margin-bottom: .5rem; }
 
-/* minmax(0,1fr) y no 1fr: sin eso las columnas no bajan del ancho de
-   su contenido y la página desborda a lo ancho en pantallas chicas. */
 .rejilla { display: grid; gap: 20px; }
 .rejilla--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -234,12 +174,7 @@ section {
   .rejilla--2, .rejilla--3 { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Lo ancho scrollea dentro de su caja, nunca la página entera */
 .desborde-x { overflow-x: auto; }
-
-/* ═══════════════════════════════════════════════════════════════════
-   COMPONENTES COMPARTIDOS
-   ═══════════════════════════════════════════════════════════════════ */
 
 .tarjeta {
   background: var(--superficie);
@@ -285,7 +220,6 @@ section {
 
 .boton--chico { padding: 10px 18px; font-size: .94rem; }
 
-/* El foco de teclado tiene que verse siempre */
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
@@ -297,10 +231,6 @@ textarea:focus-visible {
   border-radius: 2px;
 }
 
-/* ⚠ TEMPORAL · marcador de dato faltante.
-   Todo lo que lleve esta clase es un dato que el propietario todavía
-   no aportó. Tiene que saltar a la vista para que ninguno se publique
-   por error. Cuando no quede ninguno, borrar esta regla. */
 .falta {
   font-family: var(--tipo-dato);
   font-size: .86em;
@@ -313,7 +243,6 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
-/* Salto al contenido, para quien navega con teclado */
 .saltar {
   position: absolute;
   top: -100px;

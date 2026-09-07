@@ -1,11 +1,3 @@
-/* ═══════════════════════════════════════════════════════════════════
-   AGROTITAN · SECCIONES
-   Estilos específicos, en el mismo orden que el HTML.
-   Las variables y utilidades están en base.css
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* ── BARRA SUPERIOR ────────────────────────────────────────────── */
-
 .barra {
   position: sticky;
   top: 0;
@@ -50,19 +42,14 @@
 .nav a:hover { color: var(--oro); }
 .nav .boton { color: var(--oro); }
 
-/* La sección que se está viendo queda marcada en el menú.
-   Lo maneja navegacion.js con IntersectionObserver. */
 .nav a.activo { color: var(--oro); }
 .nav .boton.activo { color: var(--oro); }
 
-/* Al bajar, el fondo se cierra y la línea se marca: arriba de todo el
-   hero respira sin cortes. Lo maneja navegacion.js */
 .barra.desplazada {
   background: rgba(11, 12, 10, .98);
   border-bottom-color: var(--linea-fuerte);
 }
 
-/* Menú de teléfono */
 .menu-boton {
   margin-left: auto;
   display: none;
@@ -108,8 +95,6 @@
   .nav .boton { margin-top: 14px; border-bottom: 0; justify-content: center; }
 }
 
-/* ── 1 · HERO ───────────────────────────────────────────────────── */
-
 .hero {
   position: relative;
   overflow: hidden;
@@ -148,7 +133,6 @@
   margin: 0;
 }
 
-/* Franja de cifras al pie del hero */
 .cifras {
   position: relative;
   margin-top: clamp(40px, 5vw, 64px);
@@ -179,8 +163,6 @@
   .cifra:nth-child(n+3) { border-top: 1px solid var(--linea); }
 }
 
-/* ── 2 · QUIÉNES SOMOS ──────────────────────────────────────────── */
-
 .ficha { margin: 14px 0 0; }
 .ficha__fila {
   display: grid;
@@ -202,10 +184,6 @@
   .ficha__fila { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }
 
-/* ── 3 · MÉTODO ─────────────────────────────────────────────────── */
-
-/* Los pilares no son tarjetas: una regla arriba alcanza para agruparlos,
-   y evita que toda la página sea una sucesión de cajas iguales. */
 .pilar { border-top: 2px solid var(--oro); padding-top: 16px; }
 .pilar__pregunta {
   font-family: var(--tipo-dato);
@@ -223,8 +201,6 @@
   margin-top: clamp(32px, 4vw, 48px);
 }
 .supuestos h3 { margin: clamp(32px, 4vw, 48px) 0 6px; }
-
-/* ── 4 · EL INFORME ─────────────────────────────────────────────── */
 
 .informe {
   display: grid;
@@ -285,7 +261,6 @@
   padding: 5px 13px;
 }
 
-/* Gráfico de sensibilidad */
 .grafico {
   background: var(--superficie);
   border: 1px solid var(--linea);
@@ -353,7 +328,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* El estado no viaja solo en el color: siempre lo acompaña una palabra */
 .veredicto {
   margin-top: 14px;
   font-size: .9rem;
@@ -394,8 +368,6 @@
 }
 .tip.visible { opacity: 1; }
 
-/* ── 5 · EL CASO ────────────────────────────────────────────────── */
-
 .caso {
   border-left: 2px solid var(--oro);
   padding-left: clamp(20px, 3vw, 36px);
@@ -420,10 +392,6 @@
 }
 .caso dd { margin: 0; color: var(--hueso-2); }
 
-/* ── 6 · ETAPAS ─────────────────────────────────────────────────── */
-
-/* Van numeradas porque son una secuencia real: cada una depende de que
-   la anterior haya dado que sí. */
 .etapa {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -457,8 +425,6 @@
   .etapa__n { grid-row: auto; margin-bottom: 6px; font-size: 1.5rem; }
 }
 
-/* ── 7 · RUBROS ─────────────────────────────────────────────────── */
-
 .rubros { columns: 3; column-gap: 36px; }
 @media (max-width: 860px) { .rubros { columns: 2; } }
 @media (max-width: 520px) { .rubros { columns: 1; } }
@@ -481,8 +447,6 @@
   break-inside: avoid;
 }
 .rubro__grupo:first-child { margin-top: 0; }
-
-/* ── 8 · PRECIOS ────────────────────────────────────────────────── */
 
 .tabla-precios { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .94rem; }
 .tabla-precios caption {
@@ -515,8 +479,6 @@
 }
 .tabla-precios td.num { white-space: nowrap; }
 
-/* ── 9 · CARRIL PRODUCTOR ───────────────────────────────────────── */
-
 .carril {
   background: var(--superficie);
   border: 1px solid var(--linea);
@@ -526,8 +488,6 @@
 }
 .carril h2 { font-size: clamp(1.5rem, 3vw, 2.05rem); margin-bottom: .6rem; }
 .carril .antetitulo { color: var(--verde-vivo); }
-
-/* ── 10 · CONTACTO ──────────────────────────────────────────────── */
 
 .contacto {
   display: grid;
@@ -544,7 +504,6 @@
 .que-mandar { font-size: .95rem; color: var(--hueso-2); padding-left: 20px; margin: 0; }
 .que-mandar li { margin-bottom: 6px; }
 
-/* Formulario · abre WhatsApp o el correo con el mensaje ya redactado */
 .formulario {
   margin-top: clamp(32px, 4vw, 48px);
   border-top: 1px solid var(--linea-fuerte);
@@ -611,8 +570,6 @@
 }
 .formulario__nota { font-size: .86rem; color: var(--hueso-3); margin: 14px 0 0; }
 
-/* ── PIE ────────────────────────────────────────────────────────── */
-
 .pie {
   background: var(--acero);
   border-top: 1px solid var(--linea);
@@ -653,8 +610,6 @@
   max-width: 80ch;
 }
 
-/* ── BOTÓN FLOTANTE DE WHATSAPP ─────────────────────────────────── */
-
 .whatsapp-flotante {
   position: fixed;
   right: 18px;
@@ -673,3 +628,135 @@
   transition: transform var(--transicion), background var(--transicion);
 }
 .whatsapp-flotante:hover { background: #37805E; transform: scale(1.06); }
+
+.arsenal {
+  display: grid;
+  gap: 22px;
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+@media (min-width: 1080px) {
+  .arsenal { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.arsenal__pieza {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.arsenal__visual {
+  margin: 0;
+  background: #000;
+  border-bottom: 1px solid var(--linea);
+}
+
+.arsenal__visual img { display: block; width: 100%; height: auto; }
+
+.arsenal__visual figcaption {
+  font-family: var(--tipo-dato);
+  font-size: .68rem;
+  line-height: 1.45;
+  min-height: 3rem;
+  color: var(--hueso-3);
+  padding: 8px 12px;
+  border-top: 1px solid var(--linea);
+}
+
+.arsenal__cuerpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px;
+}
+
+.arsenal__nombre {
+  font-family: var(--tipo-dato);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin: 0 0 .35rem;
+}
+
+.arsenal__pieza h3 { font-size: 1.24rem; margin-bottom: .55rem; }
+.arsenal__cuerpo > p { font-size: .97rem; color: var(--hueso-2); margin-bottom: .9rem; }
+.arsenal__cuerpo > p:not(.arsenal__sostiene):not(.arsenal__nombre) { flex: 1; }
+
+.arsenal__sostiene {
+  min-height: 5rem;
+  margin-bottom: 0;
+  padding-top: .9rem;
+  border-top: 1px solid var(--linea);
+  font-size: .88rem;
+  color: var(--hueso-3);
+}
+.arsenal__sostiene strong {
+  display: block;
+  font-family: var(--tipo-dato);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--verde-vivo);
+  margin-bottom: .3rem;
+}
+
+.ciclo { margin-top: clamp(32px, 4vw, 48px); }
+.ciclo__titulo { font-size: 1.24rem; margin-bottom: .4rem; }
+.ciclo__bajada { font-size: .97rem; color: var(--hueso-2); max-width: var(--medida); }
+
+.ciclo__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: estadio;
+}
+@media (min-width: 780px) {
+  .ciclo__lista { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.ciclo__lista li { min-width: 0; }
+.ciclo__lista img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+.ciclo__mes {
+  font-family: var(--tipo-dato);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin: .7rem 0 .25rem;
+}
+.ciclo__lista li p:last-child {
+  font-size: .88rem;
+  line-height: 1.5;
+  color: var(--hueso-3);
+  margin: 0;
+}
+
+.arsenal__cierre {
+  margin: clamp(32px, 4vw, 44px) 0 0;
+  padding: 20px 22px;
+  max-width: var(--medida);
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-left: 2px solid var(--verde-vivo);
+  border-radius: var(--radio);
+  font-size: .97rem;
+  color: var(--hueso-2);
+}

@@ -4,19 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ═══════════════════════════════════════════════════════════════
-     AGROTITAN · SITIO INSTITUCIONAL
-     ═══════════════════════════════════════════════════════════════
-
-     Todo el texto de esta página sale de contenido.yaml. Si vas a
-     cambiar una palabra, cambiala TAMBIÉN allá: ese archivo lo lee
-     TITANOMAQUIA para saber qué ofrecés públicamente.
-
-     ⚠ ANTES DE PUBLICAR — buscá la clase "falta". Cada aparición es
-       un dato que el propietario todavía no aportó. No tiene que
-       quedar ninguno cuando el sitio salga a la web.
-     ═══════════════════════════════════════════════════════════════ -->
-
 <title>AgroTitan · Evaluación de proyectos agropecuarios</title>
 <meta name="description" content="Evaluamos si un proyecto agropecuario conviene antes de comprometer capital, y preparamos la documentación que respalda esa decisión. Ingenieros agrónomos y zootecnistas.">
 <meta name="keywords" content="factibilidad proyecto agropecuario, evaluación económica agro, análisis financiero agropecuario Argentina, valuación de campos, proyecto de inversión frutales, rentabilidad nogal avellano cerezo arándano, evaluación proyecto avícola">
@@ -24,7 +11,6 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0B0C0A">
 
-<!-- Open Graph · así se ve cuando alguien comparte el link por WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta property="og:site_name" content="AgroTitan">
@@ -36,17 +22,13 @@
 
 <link rel="icon" href="img/isotipo-a.svg" type="image/svg+xml">
 
-<!-- El ?v= al final es la versión de los archivos. Cuando cambies el CSS
-     o el JS, subile el número: sin eso, quien ya visitó el sitio sigue
-     viendo la versión vieja que le quedó guardada en el navegador. -->
-<link rel="stylesheet" href="css/base.css?v=2">
-<link rel="stylesheet" href="css/secciones.css?v=2">
+<link rel="stylesheet" href="css/base.css?v=3">
+<link rel="stylesheet" href="css/secciones.css?v=3">
 </head>
 <body>
 
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-<!-- ═══ BARRA SUPERIOR ═══════════════════════════════════════════ -->
 <header class="barra" id="barra">
   <div class="contenedor">
 
@@ -69,6 +51,7 @@
       <a href="#quienes">Quiénes somos</a>
       <a href="#metodo">Método</a>
       <a href="#informe">El informe</a>
+      <a href="#arsenal">El arsenal</a>
       <a href="#etapas">Cómo trabajamos</a>
       <a href="#rubros">Rubros</a>
       <a class="boton boton--linea boton--chico" href="#contacto">Escribinos</a>
@@ -80,7 +63,6 @@
 <main id="contenido">
 <div id="inicio"></div>
 
-<!-- ═══ 1 · HERO ═════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero__fondo" aria-hidden="true"></div>
   <div class="contenedor hero__interior">
@@ -125,7 +107,6 @@
   </div>
 </section>
 
-<!-- ═══ 2 · QUIÉNES SOMOS ════════════════════════════════════════ -->
 <section class="banda" id="quienes">
   <div class="contenedor">
 
@@ -194,7 +175,6 @@
   </div>
 </section>
 
-<!-- ═══ 3 · MÉTODO ═══════════════════════════════════════════════ -->
 <section id="metodo">
   <div class="contenedor">
 
@@ -290,7 +270,6 @@
   </div>
 </section>
 
-<!-- ═══ 4 · EL INFORME ═══════════════════════════════════════════ -->
 <section class="banda" id="informe">
   <div class="contenedor">
 
@@ -425,7 +404,6 @@
         </div>
       </div>
 
-      <!-- Gráfico interactivo · el capítulo 06, en vivo -->
       <figure class="grafico">
         <figcaption class="grafico__titulo">El capítulo 06, en vivo</figcaption>
         <p class="grafico__nota">
@@ -437,7 +415,7 @@
         <div class="lienzo">
           <svg id="grafico" viewBox="0 0 520 300" role="img" aria-labelledby="g-titulo g-desc">
             <title id="g-titulo">Flujo de fondos acumulado y descontado, año por año</title>
-            <desc id="g-desc">La curva arranca negativa por la inversión inicial y los años improductivos, y cruza el cero cuando el proyecto termina de repagarse.</desc>
+            <desc id="g-desc">La curva arranca negativa por la inversión inicial y los años improductivos, y termina en el valor actual neto del proyecto. El período de repago se indica aparte, en la lectura de abajo.</desc>
           </svg>
           <div class="tip" id="tip" role="status"></div>
         </div>
@@ -468,7 +446,135 @@
   </div>
 </section>
 
-<!-- ═══ 5 · EL CASO ══════════════════════════════════════════════ -->
+<section id="arsenal">
+  <div class="contenedor">
+
+    <div class="seccion__cabecera">
+      <p class="antetitulo">Lo que hay detrás del informe</p>
+      <h2>El Arsenal de Hefesto</h2>
+      <p class="bajada">
+        No usamos planillas prestadas. Cuando el cálculo que necesitaba un
+        proyecto no existía, lo escribimos. Así se sostienen los números que
+        después firmamos.
+      </p>
+    </div>
+
+    <div class="arsenal">
+
+      <article class="arsenal__pieza">
+        <figure class="arsenal__visual">
+          <img src="img/arsenal-clima.jpg" width="900" height="506" loading="lazy" decoding="async"
+               alt="Panel de resumen agroclimático: temperatura media anual, precipitación, días libres de helada, clasificación de Köppen e índice de aridez, con las curvas mensuales de temperatura y de lluvia.">
+          <figcaption>Estación de ejemplo · serie 1991-2020</figcaption>
+        </figure>
+        <div class="arsenal__cuerpo">
+          <p class="arsenal__nombre">Céfiro</p>
+          <h3>Qué permite el clima del lugar</h3>
+          <p>
+            Antes de proyectar un rinde hay que saber qué tolera el sitio.
+            Temperatura media, lluvia anual, días libres de helada, clasificación
+            climática e índice de aridez, calculados sobre treinta años de serie.
+          </p>
+          <p class="arsenal__sostiene">
+            <strong>Sostiene</strong>
+            El análisis técnico: los factores ambientales que actúan como
+            limitantes y marcan la producción esperada.
+          </p>
+        </div>
+      </article>
+
+      <article class="arsenal__pieza">
+        <figure class="arsenal__visual">
+          <img src="img/arsenal-gestion.jpg" width="900" height="506" loading="lazy" decoding="async"
+               alt="Módulo de evaluación de inversiones: el flujo de fondos anual y, debajo, el VAN, la TIR y el período de recupero.">
+          <figcaption>Modelo ilustrativo, el mismo del gráfico de arriba · no es ningún cliente</figcaption>
+        </figure>
+        <div class="arsenal__cuerpo">
+          <p class="arsenal__nombre">Jano</p>
+          <h3>Si el proyecto paga o no paga</h3>
+          <p>
+            El flujo de fondos año por año, con su valor actual neto, su tasa
+            interna de retorno y el año en que la inversión termina de
+            recuperarse. Es el número del que depende la decisión.
+          </p>
+          <p class="arsenal__sostiene">
+            <strong>Sostiene</strong>
+            El análisis financiero: VAN, TIR y período de repago, contrastados
+            contra el costo de oportunidad del capital.
+          </p>
+        </div>
+      </article>
+
+      <article class="arsenal__pieza">
+        <figure class="arsenal__visual">
+          <img src="img/arsenal-3d.jpg" width="900" height="506" loading="lazy" decoding="async"
+               alt="Simulador en tres dimensiones: un monte de nogal implantado, con los controles de especie, variedad, sitio y escenario climático.">
+          <figcaption>Monte de nogal, variedad Chandler · sitio de ejemplo</figcaption>
+        </figure>
+        <div class="arsenal__cuerpo">
+          <p class="arsenal__nombre">Dédalo</p>
+          <h3>El monte, antes de plantarlo</h3>
+          <p>
+            Especie, variedad y sitio: el monte se arma en tres dimensiones y se
+            lo hace pasar por el año para ver cómo responde al clima del lugar.
+            Ver el proyecto terminado antes de poner un peso.
+          </p>
+          <p class="arsenal__sostiene">
+            <strong>Sostiene</strong>
+            El planeamiento de la producción: el diseño del monte y la elección
+            de la variedad.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="ciclo">
+      <h3 class="ciclo__titulo">El mismo monte, a lo largo del año</h3>
+      <p class="ciclo__bajada">
+        No dibuja un árbol: lo hace vivir el año. Mover el mes cambia lo que
+        el monte puede sostener, y ese es el número que después entra al flujo
+        de fondos.
+      </p>
+      <ol class="ciclo__lista">
+        <li>
+          <img src="img/arsenal-estadio-1-reposo.jpg" width="440" height="398" loading="lazy" decoding="async"
+               alt="El árbol en julio, sin una sola hoja: solo el tronco y las ramas principales.">
+          <p class="ciclo__mes">Julio · reposo</p>
+          <p>El monte sin hoja. El invierno define las horas de frío que la variedad necesita para brotar pareja.</p>
+        </li>
+        <li>
+          <img src="img/arsenal-estadio-2-brotacion.jpg" width="440" height="398" loading="lazy" decoding="async"
+               alt="El árbol en noviembre, con las primeras hojas y las flores blancas.">
+          <p class="ciclo__mes">Noviembre · brotación</p>
+          <p>Chandler brota tarde, y eso la salva: cuando abre, las heladas de primavera ya pasaron.</p>
+        </li>
+        <li>
+          <img src="img/arsenal-estadio-3-fruta.jpg" width="440" height="398" loading="lazy" decoding="async"
+               alt="El árbol en enero, con la copa llena y la fruta verde formada.">
+          <p class="ciclo__mes">Enero · fruta cuajada</p>
+          <p>Plena copa. Acá se juega el rinde: lo que el árbol logre sostener alimenta todo el análisis.</p>
+        </li>
+        <li>
+          <img src="img/arsenal-estadio-4-cosecha.jpg" width="440" height="398" loading="lazy" decoding="async"
+               alt="El árbol en abril, con la nuez madura lista para cosechar.">
+          <p class="ciclo__mes">Abril · cosecha</p>
+          <p>La nuez lista. Un mes que factura contra once que gastan: por eso el repago tarda.</p>
+        </li>
+      </ol>
+    </div>
+
+    <p class="arsenal__cierre">
+      Ninguna de las tres está a la venta. Las escribieron los mismos
+      profesionales que firman los informes, y existen por una sola razón: que
+      un proyecto no se decida con una planilla que no sabe de heladas ni de
+      años improductivos. Cuando un proyecto pide un cálculo que la herramienta
+      no hacía, se agrega.
+    </p>
+
+  </div>
+</section>
+
 <section id="caso">
   <div class="contenedor">
 
@@ -477,9 +583,6 @@
       <h2>Un caso donde el número más alto era la peor opción</h2>
     </div>
 
-    <!-- Caso representativo. NO es un cliente real identificable: la
-         metodología es la que se aplica de verdad, la situación está
-         construida a modo de ejemplo. -->
     <div class="caso">
       <p class="caso__cita">
         «La alternativa de mayor margen bruto exigía una inversión que el
@@ -527,7 +630,6 @@
   </div>
 </section>
 
-<!-- ═══ 6 · ETAPAS ═══════════════════════════════════════════════ -->
 <section class="banda" id="etapas">
   <div class="contenedor">
 
@@ -606,7 +708,6 @@
   </div>
 </section>
 
-<!-- ═══ 7 · RUBROS ═══════════════════════════════════════════════ -->
 <section id="rubros">
   <div class="contenedor">
 
@@ -643,7 +744,6 @@
   </div>
 </section>
 
-<!-- ═══ 8 · CÓMO EMPEZAMOS ═══════════════════════════════════════ -->
 <section class="banda" id="proceso">
   <div class="contenedor">
 
@@ -694,7 +794,6 @@
   </div>
 </section>
 
-<!-- ═══ 9 · SI YA TENÉS EL CAMPO ═════════════════════════════════ -->
 <section id="productores">
   <div class="contenedor">
     <div class="carril">
@@ -719,7 +818,6 @@
   </div>
 </section>
 
-<!-- ═══ 10 · CONTACTO ════════════════════════════════════════════ -->
 <section class="banda" id="contacto">
   <div class="contenedor">
 
@@ -776,8 +874,6 @@
       </aside>
     </div>
 
-    <!-- Formulario · no envía nada a ningún servidor: arma el mensaje y
-         abre WhatsApp o el correo del visitante. Ver js/contacto.js -->
     <form class="formulario" id="formularioContacto" novalidate>
       <h3 style="margin-bottom:.4rem">O completá los datos y te armamos el mensaje</h3>
       <p class="chico" style="margin-bottom:1.4rem">
@@ -822,8 +918,7 @@
 
         <div class="campo">
           <label for="rubro">Rubro de interés</label>
-          <!-- Texto libre con sugerencias: si el rubro del visitante no
-               está en la lista, igual lo puede escribir. -->
+
           <input type="text" id="rubro" name="rubro" list="listaRubros"
                  placeholder="Elegí una opción o escribí el tuyo"
                  autocomplete="off">
@@ -873,7 +968,6 @@
 
 </main>
 
-<!-- ═══ PIE ══════════════════════════════════════════════════════ -->
 <footer class="pie">
   <div class="contenedor">
 
@@ -899,6 +993,7 @@
         <a href="#quienes">Quiénes somos</a>
         <a href="#metodo">Método</a>
         <a href="#informe">El informe</a>
+      <a href="#arsenal">El arsenal</a>
         <a href="#etapas">Cómo trabajamos</a>
         <a href="#rubros">Rubros</a>
         <a href="#contacto">Contacto</a>
@@ -927,15 +1022,13 @@
   </div>
 </footer>
 
-<!-- Botón flotante de WhatsApp -->
 <a class="whatsapp-flotante" id="whatsappFlotante" href="#contacto"
    aria-label="Escribinos por WhatsApp" target="_blank" rel="noopener">
   <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.56-.36.75-.36l.54.01c.17 0 .41-.07.64.49.25.6.83 2.06.9 2.21.07.15.12.32.02.51-.1.19-.15.31-.29.48l-.44.51c-.14.15-.29.31-.13.6.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.7-.18 1.39Z"/></svg>
 </a>
 
-<!-- Mismo criterio que en el CSS: si cambiás un .js, subí el ?v= -->
-<script src="js/navegacion.js?v=2"></script>
-<script src="js/contacto.js?v=2"></script>
-<script src="js/grafico.js?v=2"></script>
+<script src="js/navegacion.js?v=3"></script>
+<script src="js/contacto.js?v=3"></script>
+<script src="js/grafico.js?v=3"></script>
 </body>
 </html>

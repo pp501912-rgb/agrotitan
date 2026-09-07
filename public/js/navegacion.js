@@ -1,12 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════
-   AGROTITAN · NAVEGACIÓN
-   Menú del teléfono, barra al desplazar y sección activa.
-   Sin librerías.
-   ═══════════════════════════════════════════════════════════════════ */
-
 "use strict";
-
-/* ── Menú del teléfono ──────────────────────────────────────────── */
 
 function prepararMenu() {
   const boton = document.getElementById("menuBoton");
@@ -25,12 +17,10 @@ function prepararMenu() {
     boton.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
   });
 
-  // Al tocar un enlace, el menú se cierra solo
   nav.querySelectorAll("a").forEach((enlace) => {
     enlace.addEventListener("click", cerrar);
   });
 
-  // Escape cierra y devuelve el foco al botón
   document.addEventListener("keydown", (evento) => {
     if (evento.key === "Escape" && nav.classList.contains("abierto")) {
       cerrar();
@@ -38,12 +28,8 @@ function prepararMenu() {
     }
   });
 
-  // Al pasar a pantalla ancha, el menú desplegable ya no aplica
   window.matchMedia("(min-width: 900px)").addEventListener("change", cerrar);
 }
-
-/* ── Barra al desplazar ─────────────────────────────────────────── */
-/* La línea dorada aparece recién al bajar, para que el hero respire. */
 
 function prepararBarra() {
   const barra = document.getElementById("barra");
@@ -54,14 +40,9 @@ function prepararBarra() {
   };
 
   actualizar();
-  // passive: el navegador sabe que no vamos a bloquear el scroll
+
   window.addEventListener("scroll", actualizar, { passive: true });
 }
-
-/* ── Sección activa ─────────────────────────────────────────────── */
-/* Marca en el menú la sección que se está viendo.
-   IntersectionObserver en vez de calcular posiciones en cada scroll:
-   el navegador lo resuelve sin trabar la página. */
 
 function prepararSeccionActiva() {
   const enlaces = [...document.querySelectorAll('.nav a[href^="#"]')];
@@ -90,14 +71,12 @@ function prepararSeccionActiva() {
         }
       });
     },
-    // Se considera activa cuando la sección cruza la franja central
+
     { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
   );
 
   secciones.forEach((seccion) => observador.observe(seccion));
 }
-
-/* ── Arranque ───────────────────────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
   prepararMenu();

@@ -1,44 +1,27 @@
-/* ═══════════════════════════════════════════════════════════════════
-   AGROTITAN · GRÁFICO DE SENSIBILIDAD
-   El capítulo 06 del informe, en vivo.
-
-   Modelo ILUSTRATIVO de una inversión frutal, expresado en índice: la
-   inversión inicial vale 100. No representa ningún proyecto real ni
-   ningún cliente. Sirve para que el visitante entienda, moviendo dos
-   perillas, qué significa "el proyecto deja de cerrar".
-
-   La curva es el flujo de fondos ACUMULADO y DESCONTADO. Arranca
-   negativa (la inversión, más los años improductivos del monte) y
-   cruza el cero cuando el proyecto termina de repagarse.
-   ═══════════════════════════════════════════════════════════════════ */
-
 "use strict";
 
 (function () {
   var svg = document.getElementById("grafico");
-  if (!svg) return;                       // la página no tiene el gráfico
+  if (!svg) return;
 
-  /* ── Parámetros del modelo ilustrativo ───────────────────────── */
-  var HORIZONTE = 20;        // años
-  var TASA = 0.09;           // costo de oportunidad del capital
-  var INVERSION = 100;       // índice: todo se mide contra esto
-  var MANTENIMIENTO = 12;    // costo anual mientras el monte no produce
-  var INGRESO_PLENO = 62;    // ingreso anual a plena producción
+  var HORIZONTE = 20;
+  var TASA = 0.09;
+  var INVERSION = 100;
+  var MANTENIMIENTO = 12;
+  var INGRESO_PLENO = 62;
   var COSTO_FIJO = 10;
   var COSTO_VARIABLE = 14;
 
-  // Cómo entra en producción el monte: recién al 4º año, y de a poco
   var NIVEL = { 4: 0.30, 5: 0.60, 6: 0.85 };
 
-  /* ── Geometría ───────────────────────────────────────────────── */
   var NS = "http://www.w3.org/2000/svg";
   var W = 520, H = 300;
-  var ML = 46, MR = 18, MT = 16, MB = 34;   // márgenes
+  var ML = 46, MR = 18, MT = 16, MB = 34;
   var IW = W - ML - MR, IH = H - MT - MB;
   var Y_MIN = -180, Y_MAX = 250;
 
   var tip = document.getElementById("tip");
-  var capa = document.createElementNS(NS, "g");   // lo que se redibuja
+  var capa = document.createElementNS(NS, "g");
   svg.appendChild(capa);
 
   function px(anio) { return ML + (anio / HORIZONTE) * IW; }
@@ -49,9 +32,8 @@
     return NIVEL[anio] !== undefined ? NIVEL[anio] : 1;
   }
 
-  /* ── El modelo ───────────────────────────────────────────────── */
   function modelo(factorPrecio, factorRinde) {
-    var flujos = [], acumulado = [], suma = 0;
+    var flujos = [], acumulado = [], caja = [], suma = 0, plata = 0;
 
     for (var a = 0; a <= HORIZONTE; a++) {
       var f;
@@ -65,20 +47,21 @@
             - (COSTO_FIJO + COSTO_VARIABLE * nivel(a));
       }
       flujos.push(f);
-      suma += f / Math.pow(1 + TASA, a);   // descontado al presente
+      suma += f / Math.pow(1 + TASA, a);
       acumulado.push(suma);
+      plata += f;
+      caja.push(plata);
     }
-    return { flujos: flujos, acumulado: acumulado, van: suma };
+    return { flujos: flujos, acumulado: acumulado, caja: caja, van: suma };
   }
 
-  /* TIR por bisección: la tasa que hace que el VAN sea cero */
   function tir(flujos) {
     function van(r) {
       var s = 0;
       for (var i = 0; i < flujos.length; i++) s += flujos[i] / Math.pow(1 + r, i);
       return s;
     }
-    if (van(0) <= 0) return null;          // ni sin descontar recupera
+    if (van(0) <= 0) return null;
     var bajo = 0, alto = 1.5;
     if (van(alto) > 0) return alto;
     for (var k = 0; k < 60; k++) {
@@ -88,12 +71,20 @@
     return (bajo + alto) / 2;
   }
 
-  function repago(acumulado) {
-    for (var a = 0; a < acumulado.length; a++) if (acumulado[a] >= 0) return a;
+  function repago(serie) {
+    for (var a = 0; a < serie.length; a++) if (serie[a] >= 0) return a;
     return null;
   }
 
-  /* ── Dibujo ──────────────────────────────────────────────────── */
+  function cruceEnCero(serie) {
+    for (var a = 1; a < serie.length; a++) {
+      if (serie[a - 1] < 0 && serie[a] >= 0) {
+        return a - 1 + (0 - serie[a - 1]) / (serie[a] - serie[a - 1]);
+      }
+    }
+    return null;
+  }
+
   function elemento(nombre, atributos, texto) {
     var n = document.createElementNS(NS, nombre);
     for (var k in atributos) n.setAttribute(k, atributos[k]);
@@ -109,17 +100,8 @@
     return d;
   }
 
-  /* El área se parte en el cero: el signo lleva color, y además va
-     rotulado con palabras, porque el color solo no alcanza. */
   function areas(acumulado) {
-    var y0 = py(0), cruce = null;
-
-    for (var a = 1; a <= HORIZONTE; a++) {
-      if (acumulado[a - 1] < 0 && acumulado[a] >= 0) {
-        cruce = a - 1 + (0 - acumulado[a - 1]) / (acumulado[a] - acumulado[a - 1]);
-        break;
-      }
-    }
+    var y0 = py(0), cruce = cruceEnCero(acumulado);
 
     var finNegativo = cruce === null ? HORIZONTE : cruce;
     var neg = "M" + px(0) + " " + y0;
@@ -149,7 +131,6 @@
     datos = m;
     while (capa.firstChild) capa.removeChild(capa.firstChild);
 
-    // Grilla horizontal y eje Y
     [-100, 0, 100, 200].forEach(function (v) {
       var esCero = v === 0;
       capa.appendChild(elemento("line", {
@@ -164,7 +145,6 @@
       }, v));
     });
 
-    // Eje X
     [0, 5, 10, 15, 20].forEach(function (a) {
       capa.appendChild(elemento("text", {
         x: px(a), y: H - MB + 19, "text-anchor": "middle",
@@ -181,19 +161,16 @@
       fill: "rgba(242,240,233,.40)", "font-size": 10.5
     }, "índice · inversión inicial = 100"));
 
-    // Áreas
     var A = areas(m.acumulado);
     if (A.neg) capa.appendChild(elemento("path", { d: A.neg, fill: "rgba(196,103,74,.22)", stroke: "none" }));
     if (A.pos) capa.appendChild(elemento("path", { d: A.pos, fill: "rgba(229,193,88,.26)", stroke: "none" }));
 
-    // La curva
     capa.appendChild(elemento("path", {
       d: ruta(m.acumulado), fill: "none", stroke: "#F2F0E9",
       "stroke-width": 2, "stroke-linejoin": "round",
       "stroke-linecap": "round", opacity: .92
     }));
 
-    // Rótulo del pozo: el color no viaja solo
     var minAnio = 0, minValor = 0;
     for (var a = 0; a <= HORIZONTE; a++) {
       if (m.acumulado[a] < minValor) { minValor = m.acumulado[a]; minAnio = a; }
@@ -205,22 +182,6 @@
       }, "capital inmovilizado"));
     }
 
-    // Línea del repago
-    var r = repago(m.acumulado);
-    if (r !== null && A.cruce !== null) {
-      capa.appendChild(elemento("line", {
-        x1: px(A.cruce), x2: px(A.cruce), y1: MT, y2: H - MB,
-        stroke: "#E5C158", "stroke-width": 1.2,
-        "stroke-dasharray": "3 3", opacity: .75
-      }));
-      var etiquetaX = Math.min(px(A.cruce) + 7, W - MR - 88);
-      capa.appendChild(elemento("text", {
-        x: etiquetaX, y: MT + 13, fill: "#F1D98C", "font-size": 11,
-        "font-family": "IBM Plex Mono, monospace"
-      }, "repago · año " + r));
-    }
-
-    // Punto final
     var valorFinal = m.acumulado[HORIZONTE];
     capa.appendChild(elemento("circle", {
       cx: px(HORIZONTE), cy: py(valorFinal), r: 4.5,
@@ -236,7 +197,7 @@
   }
 
   function actualizarLectura(m) {
-    var r = repago(m.acumulado), t = tir(m.flujos);
+    var r = repago(m.caja), t = tir(m.flujos);
 
     document.getElementById("van").textContent = fmt(m.van);
     document.getElementById("tir").textContent =
@@ -255,7 +216,6 @@
         "rendiría más en otro lado.";
   }
 
-  /* ── Puntero sobre el gráfico ────────────────────────────────── */
   var cursor = null;
 
   svg.addEventListener("pointermove", function (e) {
@@ -294,7 +254,6 @@
   }
   svg.addEventListener("pointerleave", ocultar);
 
-  /* ── Perillas ────────────────────────────────────────────────── */
   var iPrecio = document.getElementById("precio");
   var iRinde = document.getElementById("rinde");
 
