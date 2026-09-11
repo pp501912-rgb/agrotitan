@@ -1,0 +1,30 @@
+# ═══════════════════════════════════════════════════════════════
+#  AGROTITAN · CONFIGURACIÓN DE PUBLICACIÓN (Cloudflare Workers)
+# ═══════════════════════════════════════════════════════════════
+#
+#  Este archivo define QUÉ se publica. Antes esto vivía sólo en el
+#  panel de Cloudflare, donde no se puede revisar ni versionar: si
+#  alguien lo tocaba, no quedaba rastro. Ahora está acá.
+#
+#  Lo importante es una sola línea: directory = "./public".
+#  Se publica esa carpeta y nada más. Todo lo que esté fuera de
+#  public/ —documentos internos, propuestas, notas, este mismo
+#  archivo— queda del lado de acá y nunca sale a la web.
+#
+#  Es la misma intención del commit «Publicar solo el sitio: nada de
+#  archivos internos», pero garantizada por configuración en vez de
+#  por acordarse.
+# ═══════════════════════════════════════════════════════════════
+
+name = "agrotitan"
+
+# Fecha del conjunto de reglas de Cloudflare con el que se probó.
+# No es una fecha de vencimiento: fijarla evita que un cambio de
+# plataforma altere el comportamiento sin aviso.
+compatibility_date = "2026-09-05"
+
+[assets]
+# La carpeta que se publica. El sitio vive acá desde el commit
+# «Mover el sitio a public/ para que .git nunca quede junto a lo
+# que se publica».
+directory = "./public"

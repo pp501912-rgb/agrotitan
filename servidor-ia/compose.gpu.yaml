@@ -1,0 +1,17 @@
+# Override para GPU NVIDIA. No se usa solo: se suma al principal.
+#   docker compose -f compose.yaml -f compose.gpu.yaml up -d
+# o, más corto:
+#   make arriba-gpu
+#
+# Requiere el NVIDIA Container Toolkit instalado en el host.
+# Verificalo con:  make check-gpu
+
+services:
+  ollama:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: ["gpu"]

@@ -1,0 +1,66 @@
+# ═══════════════════════════════════════════════════════════════
+#  AGROTITAN · SERVIDOR DE IA LOCAL
+# ═══════════════════════════════════════════════════════════════
+#
+#  Dos servicios:
+#    ollama  → el motor. Expone una API compatible con OpenAI en
+#              http://localhost:11434/v1 . Es la que consume
+#              TITANOMAQUIA o cualquier otro cliente.
+#    web     → interfaz de chat en http://localhost:3000 para
+#              usarlo a mano, sin escribir código.
+#
+#  Levantar:   make arriba          (CPU)
+#              make arriba-gpu      (GPU NVIDIA)
+#
+#  Nada de esto sale a internet: los puertos se publican solo en
+#  127.0.0.1. Para exponerlo en la red local, ver README.
+# ═══════════════════════════════════════════════════════════════
+
+name: agrotitan-ia
+
+services:
+
+  ollama:
+    image: ollama/ollama:${OLLAMA_VERSION:-latest}
+    container_name: agrotitan-ollama
+    restart: unless-stopped
+    ports:
+      - "${BIND_HOST:-127.0.0.1}:${PUERTO_API:-11434}:11434"
+    volumes:
+      - modelos:/root/.ollama
+    environment:
+      # Cuántos modelos distintos mantiene cargados en memoria a la vez.
+      OLLAMA_MAX_LOADED_MODELS: ${OLLAMA_MAX_LOADED_MODELS:-1}
+      # Cuántas consultas atiende en paralelo por modelo.
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-2}
+      # Cuánto queda un modelo en RAM sin uso antes de descargarse.
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-15m}
+      # Ventana de contexto por defecto (tokens).
+      OLLAMA_CONTEXT_LENGTH: ${CONTEXTO:-8192}
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  web:
+    image: ghcr.io/open-webui/open-webui:${WEBUI_VERSION:-main}
+    container_name: agrotitan-ia-web
+    restart: unless-stopped
+    profiles: ["web"]
+    ports:
+      - "${BIND_HOST:-127.0.0.1}:${PUERTO_WEB:-3000}:8080"
+    volumes:
+      - web:/app/backend/data
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      WEBUI_AUTH: ${WEBUI_AUTH:-true}
+      WEBUI_NAME: AgroTitan IA
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+volumes:
+  modelos:
+  web:
